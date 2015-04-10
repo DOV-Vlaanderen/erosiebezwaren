@@ -6,7 +6,18 @@ from qgis.core import *
 import os
 import time
 
-from PIL import Image
+try:
+    from PIL import Image
+    import ExifTags
+except ImportError:
+    EXIFORIENTATION = None
+else:
+    EXIFORIENTATION = None
+    for i in ExifTags.TAGS.keys():
+        if ExifTags.TAGS[i] == 'Orientation':
+            EXIFORIENTATION = i
+            break
+
 from lib import flickcharm
 
 from ui_photodialog import Ui_PhotoDialog
@@ -15,20 +26,28 @@ class Photo(QLabel):
     def __init__(self, path):
         QLabel.__init__(self)
         self.path = path
+        self.pixmap = QPixmap(self.path)
 
         self.setScaledContents(False)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))
-        self.setMinimumSize(self.getScaledSize())
-        self.setPixmap(QPixmap(self.path).scaled(self.getScaledSize()))
 
-    def getSize(self):
-        if 'size' not in self.__dict__:
-            self.size = Image.open(self.path).size
-        return self.size
+        self.rotatePixmap()
+        self.pixmap = self.pixmap.scaledToWidth(500)
+        self.setMinimumSize(self.pixmap.size())
+        self.setPixmap(self.pixmap)
 
-    def getScaledSize(self):
-        width, height = self.getSize()
-        return QSize(500, height/(width/500.0))
+    def rotatePixmap(self):
+        if EXIFORIENTATION:
+            exif = dict(Image.open(self.path)._getexif().items())
+            rotation = 0
+            if exif[EXIFORIENTATION] == 3:
+                rotation = 180
+            elif exif[EXIFORIENTATION] == 6:
+                rotation = 270
+            elif exif[EXIFORIENTATION] == 8:
+                rotation = 90
+            if rotation > 0:
+                self.pixmap = self.pixmap.transformed(QTransform().rotate(-1*rotation))
 
 class PhotoDialog(QDialog, Ui_PhotoDialog):
     def __init__(self, iface, photoPath):
@@ -64,8 +83,8 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
 
         self.buttonBox.button(QDialogButtonBox.Save).setEnabled(len(self.loadedPhotos)>0)
         if len(self.loadedPhotos) == 0:
-            self.label.setText("Voeg volgende foto's' toe aan het dossier:")
+            self.label.setText("Voeg volgende foto's toe aan het dossier:")
         elif len(self.loadedPhotos) == 1:
             self.label.setText("Voeg volgende foto toe aan het dossier:")
         else:
-            self.label.setText("Voeg volgende foto's toe aan het dossier:" % len(self.loadedPhotos))
+            self.label.setText("Voeg volgende %i foto's toe aan het dossier:" % len(self.loadedPhotos))

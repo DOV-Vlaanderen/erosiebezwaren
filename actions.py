@@ -71,4 +71,4 @@ class Actions(object):
         QObject.connect(showPdf, SIGNAL('triggered(bool)'), self.showPdf)
         toolbar.addAction(showPdf)
         
-        toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'basis_erosiekaart_ALV'))
+        toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'bezwarenkaart'))

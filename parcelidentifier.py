@@ -36,7 +36,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
         if results:
             print [i.mFeature.attribute("GWS_NAAM") for i in results]
-            parcelDialog = ParcelDialog(self.main, results[0].mFeature)
+            parcelDialog = ParcelDialog(self.main, self.layer, results[0].mFeature)
             parcelDialog.show()
 
 class ParcelIdentifyAction(QAction):
