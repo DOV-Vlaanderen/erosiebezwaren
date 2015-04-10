@@ -9,6 +9,8 @@ import time
 
 import photodialog
 
+from parcelidentifier import ParcelIdentifyAction
+
 class Actions(object):
     def __init__(self, main, parent):
         self.main = main
@@ -69,6 +71,4 @@ class Actions(object):
         QObject.connect(showPdf, SIGNAL('triggered(bool)'), self.showPdf)
         toolbar.addAction(showPdf)
         
-        identifyFeature = QAction('IFY', self.parent)
-        QObject.connect(identifyFeature, SIGNAL('triggered(bool)'), self.main.utils.identifyFeature)
-        toolbar.addAction(identifyFeature)
+        toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'basis_erosiekaart_ALV'))

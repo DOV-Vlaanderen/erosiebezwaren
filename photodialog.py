@@ -61,4 +61,11 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
             if p.endswith('.JPG') and self.filter(p) and p not in self.loadedPhotos:
                 self.verticalPhotoLayout.addWidget(Photo(os.path.join(self.photoPath, p)))
                 self.loadedPhotos.add(p)
+
         self.buttonBox.button(QDialogButtonBox.Save).setEnabled(len(self.loadedPhotos)>0)
+        if len(self.loadedPhotos) == 0:
+            self.label.setText("Voeg volgende foto's' toe aan het dossier:")
+        elif len(self.loadedPhotos) == 1:
+            self.label.setText("Voeg volgende foto toe aan het dossier:")
+        else:
+            self.label.setText("Voeg volgende foto's toe aan het dossier:" % len(self.loadedPhotos))

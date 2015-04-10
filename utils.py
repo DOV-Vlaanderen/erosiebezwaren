@@ -4,12 +4,6 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-class FeatureIdentifier(QgsMapToolIdentify):
-    def canvasReleaseEvent(self, mouseEvent):
-        results = self.identify(mouseEvent.x(),mouseEvent.y(), self.TopDownStopAtFirst, self.VectorLayer)
-        if len(results) > 0:
-            self.emit( SIGNAL( "geomIdentified" ), results[0].mLayer, results[0].mFeature)
-
 class Utils(object):
     def __init__(self, main):
         self.main = main
@@ -24,7 +18,7 @@ class Utils(object):
         layer = self.getLayerByName(name)
         if layer:
             self.main.iface.setActiveLayer(layer)
-            layer.startEditing()
+            self.main.iface.actionToggleEditing().trigger()
             self.main.iface.actionAddFeature().trigger()
 
     def stopEditInLayer(self, name):
@@ -32,6 +26,7 @@ class Utils(object):
         if layer:
             layer.commitChanges()
             layer.endEditCommand()
+            layer.editingStopped()
 
     def toggleLayersGroups(self, enable, disable):
         legendInterface = self.main.iface.legendInterface()
@@ -48,15 +43,3 @@ class Utils(object):
                 legendInterface.setLayerVisible(l, True)
             if l.name() in disable:
                 legendInterface.setLayerVisible(l, False)
-
-    def identifyFeature(self, layerName=None):
-        def showDialog(layer, feature):
-            print 'LAYER:', layer
-            print 'FEATURE:', feature
-
-        canvas = self.main.iface.mapCanvas()
-        self.mapTool = FeatureIdentifier(canvas)
-        canvas.setMapTool(self.mapTool)
-        QObject.connect(self.mapTool , SIGNAL("geomIdentified") , showDialog )
-        #canvas.unsetMapTool(self.mapTool)
-        
