@@ -3,7 +3,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 
-from ui_parceldialog import Ui_ParcelDialog
+from ui_parcelwindow import Ui_ParcelWindow
 
 class AttributeModel(QAbstractItemModel):
     def __init__(self, parent, layer, attributeName):
@@ -37,19 +37,19 @@ class AttributeModel(QAbstractItemModel):
     def data(self, index, role):
         return self.values[index.row()]
 
-class ParcelDialog(QDialog, Ui_ParcelDialog):
+class ParcelWindow(QMainWindow, Ui_ParcelWindow):
     def __init__(self, main, layer, parcel):
-        QDialog.__init__(self, main.iface.mainWindow())
+        QMainWindow.__init__(self, main.iface.mainWindow())
         self.main = main
         self.layer = layer
         self.parcel = parcel
         self.setupUi(self)
 
-        QObject.connect(self, SIGNAL('finished(int)'), self.finished)
+        #QObject.connect(self, SIGNAL('finished(int)'), self.finished)
 
         self.led_gewas.setText(self.parcel.attribute('GWS_NAAM'))
         self.btn_advBehandeld.setState(self.parcel.attribute('advBehandeld')==1)
-        
+
         gewasModel = AttributeModel(self.cmb_gewasBezoek, self.layer, 'GWS_NAAM')
         self.cmb_gewasBezoek.setModel(gewasModel)
 

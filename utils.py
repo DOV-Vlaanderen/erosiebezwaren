@@ -26,7 +26,6 @@ class Utils(object):
         if layer:
             layer.commitChanges()
             layer.endEditCommand()
-            layer.editingStopped()
 
     def toggleLayersGroups(self, enable, disable):
         legendInterface = self.main.iface.legendInterface()

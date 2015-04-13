@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ParcelWindow</class>
+ <widget class="QMainWindow" name="ParcelWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Perceelsgegevens</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QFormLayout" name="formLayout">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="lbl_gewas">
+          <property name="text">
+           <string>Gewas</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="led_gewas"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lbl_advBehandeld">
+          <property name="text">
+           <string>Advies behandeld</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="BooleanButton" name="btn_advBehandeld" native="true"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lbl_gewasBezoek">
+          <property name="text">
+           <string>Gewas veldbezoek</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="cmb_gewasBezoek">
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Advies</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="SensitivityButtonBox" name="sensitivity" native="true"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>BooleanButton</class>
+   <extends>QWidget</extends>
+   <header>widgets/booleanbutton.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SensitivityButtonBox</class>
+   <extends>QWidget</extends>
+   <header>widgets/sensitivitybuttonbox.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

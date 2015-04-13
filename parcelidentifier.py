@@ -3,7 +3,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-from parceldialog import ParcelDialog
+from parcelwindow import ParcelWindow
 
 class MapToolParcelIdentifier(QgsMapToolIdentify):
     def __init__(self, main, layer=None):
@@ -36,7 +36,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
         if results:
             print [i.mFeature.attribute("GWS_NAAM") for i in results]
-            parcelDialog = ParcelDialog(self.main, self.layer, results[0].mFeature)
+            parcelDialog = ParcelWindow(self.main, self.layer, results[0].mFeature)
             parcelDialog.show()
 
 class ParcelIdentifyAction(QAction):
