@@ -3,7 +3,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-from parcelwindow import ParcelWindow
+from parcelinfowidget import ParcelInfoDock, ParcelInfoWidget
 
 class MapToolParcelIdentifier(QgsMapToolIdentify):
     def __init__(self, main, layer=None):
@@ -11,6 +11,10 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         self.layer = layer
         QgsMapToolIdentify.__init__(self, self.main.iface.mapCanvas())
         self.previousActiveLayer = None
+
+        self.parcelInfoDock = ParcelInfoDock(self.main.iface.mainWindow())
+        self.parcelInfoWidget = ParcelInfoWidget(self.parcelInfoDock)
+        self.parcelInfoDock.setWidget(self.parcelInfoWidget)
 
     def setLayerByName(self, layerName):
         layer = self.main.utils.getLayerByName(layerName)
@@ -36,8 +40,12 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
         if results:
             print [i.mFeature.attribute("GWS_NAAM") for i in results]
-            parcelDialog = ParcelWindow(self.main, self.layer, results[0].mFeature)
-            parcelDialog.show()
+            #parcelDialog = ParcelWindow(self.main, self.layer, results[0].mFeature)
+            #FIXME: wat bij meerdere resultaten
+            self.parcelInfoWidget.setParcel(results[0].mFeature)
+            self.parcelInfoDock.show()
+        else:
+            self.parcelInfoWidget.clear()
 
 class ParcelIdentifyAction(QAction):
     def __init__(self, main, parent, layerName):

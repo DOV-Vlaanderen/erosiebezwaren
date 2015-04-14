@@ -56,14 +56,14 @@ class SensitivityButtonBox(QWidget):
         for btn in self.buttons:
             self.layout.addWidget(btn)
 
+    def setUnchecked(self):
+        for btn in self.buttons:
+            btn.setChecked(False)
+
     def setCheckedButton(self, btn):
         for i in range(len(self.buttons)):
             if self.buttons[i] != btn:
                 self.buttons[i].setChecked(False)
-
-    def setUnchecked(self):
-        for btn in self.buttons:
-            btn.setChecked(False)
 
     def getCheckedButton(self):
         for btn in self.buttons:
