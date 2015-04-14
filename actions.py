@@ -11,6 +11,21 @@ import photodialog
 
 from parcelidentifier import ParcelIdentifyAction
 
+class MapViewGroup(QToolButton):
+    def __init__(self, main, text, parent):
+        QToolButton.__init__(self, parent)
+        self.main = main
+        self.setText(text)
+        self.setPopupMode(self.InstantPopup)
+        self.menu = QMenu(self)
+        self.setMenu(self.menu)
+
+    def addMapView(self, name, layersEnabled, layersDisabled):
+        action = QAction(name, self.menu)
+        QObject.connect(action, SIGNAL('triggered(bool)'),
+            lambda x: self.main.utils.toggleLayersGroups(layersEnabled, layersDisabled))
+        self.menu.addAction(action)
+
 class Actions(object):
     def __init__(self, main, parent):
         self.main = main
@@ -50,9 +65,6 @@ class Actions(object):
         cmd = os.path.join(os.environ['COMMONPROGRAMFILES'], 'microsoft shared', 'ink', 'TabTip.exe')
         sp = subprocess.Popen(cmd, env=os.environ, shell=True)
 
-    def testToggle(self):
-        self.main.utils.toggleLayersGroups(enable=['Annotaties'], disable=['Overzichtskaart', 'Topokaart'])
-
     def addToToolbar(self, toolbar):
         annotateArrow = QAction('APY', self.parent)
         annotateArrow.setCheckable(True)
@@ -63,12 +75,15 @@ class Actions(object):
         QObject.connect(takePhotos, SIGNAL('triggered(bool)'), self.takePhotos)
         toolbar.addAction(takePhotos)
 
-        testToggle = QAction('TOG', self.parent)
-        QObject.connect(testToggle, SIGNAL('triggered(bool)'), self.testToggle)
-        toolbar.addAction(testToggle)
+        loketOverzichtskaart = MapViewGroup(self.main, 'OZK', toolbar)
+        loketOverzichtskaart.addMapView('Routekaart', layersEnabled=['Annotaties'], layersDisabled=['Overzichtskaart', 'Topokaart'])
+        loketOverzichtskaart.addMapView('Luchtfoto', layersEnabled=['Annotaties'], layersDisabled=['Overzichtskaart', 'Topokaart'])
+        toolbar.addWidget(loketOverzichtskaart)
 
         showPdf = QAction('PDF', self.parent)
         QObject.connect(showPdf, SIGNAL('triggered(bool)'), self.showPdf)
         toolbar.addAction(showPdf)
-        
+
         toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'bezwarenkaart'))
+
+

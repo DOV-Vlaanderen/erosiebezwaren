@@ -4,29 +4,35 @@ from PyQt4.QtGui import *
 from qgis.core import *
 
 from ui_parcelinfowidget import Ui_ParcelInfoWidget
+from widgets import valuelabel
 
 class ParcelInfoWidget(QWidget, Ui_ParcelInfoWidget):
     def __init__(self, parent, parcel=None):
         QWidget.__init__(self, parent)
         self.parcel = parcel
         self.setupUi(self)
+
         self.populate()
 
     def populate(self):
         if self.parcel:
             self.toolBox.show()
-            self.lb_id.setText(self.parcel.attribute('obj_id'))
-            self.lb_gps.setText('GPS: ')
+            self.lbv_id.setText(self.parcel.attribute('OBJ_ID'))
+            self.lbv_gps.setText('GPS: ')
+            self.lbv_beheersovereenkomst.setText(self.parcel.attribute('BO'))
         else:
             self.clear()
 
     def clear(self):
-        self.lb_id.setText("Geen selectie")
-        self.lb_gps.clear()
+        self.lbv_id.setText("Geen selectie")
+        self.lbv_gps.clear()
+        self.lbv_beheersovereenkomst.clear()
         self.toolBox.hide()
 
     def setParcel(self, parcel):
-        if parcel != self.parcel:
+        if not parcel:
+            self.clear()
+        elif parcel != self.parcel:
             self.parcel = parcel
             self.populate()
 

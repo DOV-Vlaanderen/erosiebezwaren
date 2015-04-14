@@ -17,7 +17,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="lb_id">
+      <widget class="QLabel" name="lbv_id">
        <property name="styleSheet">
         <string notr="true">QLabel {
 font-weight: bold;
@@ -32,7 +32,7 @@ font-weight: bold;
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="lb_gps">
+      <widget class="QLabel" name="lbv_gps">
        <property name="text">
         <string/>
        </property>
@@ -58,12 +58,62 @@ font-weight: bold;
           <x>0</x>
           <y>0</y>
           <width>411</width>
-          <height>431</height>
+          <height>433</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Details</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QFormLayout" name="formLayout">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="lb_herindiening">
+             <property name="text">
+              <string>Herindiening bezwaar</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="lb_beheersovereenkomst">
+             <property name="text">
+              <string>Beheersovereenkomst</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="AutohideValueLabel" name="lbv_beheersovereenkomst">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="buddy">
+              <cstring>lb_beheersovereenkomst</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Test</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="AutohideValueLabel" name="lbv_herindiening">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="buddy">
+              <cstring>lb_herindiening</cstring>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="pg_landbouwer">
         <property name="geometry">
@@ -71,7 +121,7 @@ font-weight: bold;
           <x>0</x>
           <y>0</y>
           <width>411</width>
-          <height>160</height>
+          <height>433</height>
          </rect>
         </property>
         <attribute name="label">
@@ -81,6 +131,14 @@ font-weight: bold;
        <widget class="QWidget" name="pg_advies">
         <property name="enabled">
          <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>411</width>
+          <height>433</height>
+         </rect>
         </property>
         <attribute name="label">
          <string>Advies</string>
@@ -92,6 +150,13 @@ font-weight: bold;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AutohideValueLabel</class>
+   <extends>QLabel</extends>
+   <header>widgets/valuelabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

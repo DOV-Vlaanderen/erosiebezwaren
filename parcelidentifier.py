@@ -34,12 +34,13 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
     def deactivate(self):
         if self.previousActiveLayer:
             self.main.iface.setActiveLayer(self.previousActiveLayer)
-        QgsMapToolIdentify.deactivate(self)
+        if QgsMapToolIdentify:
+            QgsMapToolIdentify.deactivate(self)
 
     def canvasReleaseEvent(self, mouseEvent):
         results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
         if results:
-            print [i.mFeature.attribute("GWS_NAAM") for i in results]
+            #print [i.mFeature.attribute("GWS_NAAM") for i in results]
             #parcelDialog = ParcelWindow(self.main, self.layer, results[0].mFeature)
             #FIXME: wat bij meerdere resultaten
             self.parcelInfoWidget.setParcel(results[0].mFeature)
