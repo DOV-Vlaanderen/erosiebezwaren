@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>431</width>
-    <height>610</height>
+    <width>606</width>
+    <height>761</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,138 +15,130 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="lbv_id">
-       <property name="styleSheet">
-        <string notr="true">QLabel {
+    <widget class="QLabel" name="lb_geenselectie">
+     <property name="styleSheet">
+      <string notr="true">* { font-weight: bold; }</string>
+     </property>
+     <property name="text">
+      <string>Geen selectie</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="infoWidget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="vw_obj_id">
+        <property name="styleSheet">
+         <string notr="true">QLabel {
 font-weight: bold;
 }</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="lbv_gps">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolBox" name="toolBox">
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Sunken</enum>
-       </property>
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <widget class="QWidget" name="pg_details">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>411</width>
-          <height>433</height>
-         </rect>
         </property>
-        <attribute name="label">
-         <string>Details</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <layout class="QFormLayout" name="formLayout">
-           <property name="fieldGrowthPolicy">
-            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-           </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="lb_herindiening">
-             <property name="text">
-              <string>Herindiening bezwaar</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="lb_beheersovereenkomst">
-             <property name="text">
-              <string>Beheersovereenkomst</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="AutohideValueLabel" name="lbv_beheersovereenkomst">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="buddy">
-              <cstring>lb_beheersovereenkomst</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Test</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="AutohideValueLabel" name="lbv_herindiening">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="buddy">
-              <cstring>lb_herindiening</cstring>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
        </widget>
-       <widget class="QWidget" name="pg_landbouwer">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>411</width>
-          <height>433</height>
-         </rect>
+      </item>
+      <item>
+       <widget class="QLabel" name="lb_gps">
+        <property name="text">
+         <string>GPS</string>
         </property>
-        <attribute name="label">
-         <string>Landbouwer</string>
-        </attribute>
        </widget>
-       <widget class="QWidget" name="pg_advies">
-        <property name="enabled">
-         <bool>true</bool>
+      </item>
+      <item>
+       <widget class="QLabel" name="lbv_gps">
+        <property name="styleSheet">
+         <string notr="true">* { font-style: italic; }</string>
         </property>
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>411</width>
-          <height>433</height>
-         </rect>
+        <property name="text">
+         <string/>
         </property>
-        <attribute name="label">
-         <string>Advies</string>
-        </attribute>
+        <property name="indent">
+         <number>20</number>
+        </property>
+        <property name="buddy">
+         <cstring></cstring>
+        </property>
        </widget>
-      </widget>
-     </item>
-    </layout>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="tabPosition">
+         <enum>QTabWidget::North</enum>
+        </property>
+        <property name="tabShape">
+         <enum>QTabWidget::Rounded</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>Details</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="lb_beheersovereenkomst">
+            <property name="text">
+             <string>Beheersovereenkomst</string>
+            </property>
+            <property name="indent">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="AutohideValueLabel" name="vw_bo">
+            <property name="styleSheet">
+             <string notr="true">* { font-style: italic; }</string>
+            </property>
+            <property name="text">
+             <string>Beheersovereenkomst</string>
+            </property>
+            <property name="indent">
+             <number>20</number>
+            </property>
+            <property name="buddy">
+             <cstring>lb_beheersovereenkomst</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>Landbouwer</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="tab_3">
+         <attribute name="title">
+          <string>Advies</string>
+         </attribute>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -157,6 +149,8 @@ font-weight: bold;
    <header>widgets/valuelabel.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

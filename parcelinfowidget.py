@@ -6,35 +6,61 @@ from qgis.core import *
 from ui_parcelinfowidget import Ui_ParcelInfoWidget
 from widgets import valuelabel
 
-class ParcelInfoWidget(QWidget, Ui_ParcelInfoWidget):
-    def __init__(self, parent, parcel=None):
+class ElevatedFeatureWidget(QWidget):
+    def __init__(self, parent, feature=None):
         QWidget.__init__(self, parent)
-        self.parcel = parcel
-        self.setupUi(self)
+        self.feature = feature
+        self.fieldMap = {}
 
+    def _setValue(self, widget, value):
+        fnSetValue = None
+
+        if type(widget) in (QLabel, valuelabel.AutohideValueLabel):
+            fnSetValue = type(widget).setText
+
+        if fnSetValue:
+            fnSetValue(widget, value)
+
+    def _mapWidgets(self, fields):
+        for field in fields:
+            fieldName = field.name()
+            if 'vw_%s' % fieldName.lower() in self.__dict__:
+                self.fieldMap[fieldName] = self.__dict__['vw_%s' % fieldName.lower()]
+
+    def populate(self):
+        if self.feature:
+            if len(self.fieldMap) < 1:
+                self._mapWidgets(self.feature.fields())
+
+            for field in self.feature.fields():
+                widget = self.fieldMap.get(field.name(), None)
+                if widget:
+                    self._setValue(widget, self.feature.attribute(field.name()))
+
+    def setFeature(self, feature):
+        self.feature = feature
+        self.populate()
+
+class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
+    def __init__(self, parent, parcel=None):
+        ElevatedFeatureWidget.__init__(self, parent, parcel)
+        self.setupUi(self)
         self.populate()
 
     def populate(self):
-        if self.parcel:
-            self.toolBox.show()
-            self.lbv_id.setText(self.parcel.attribute('OBJ_ID'))
-            self.lbv_gps.setText('GPS: ')
-            self.lbv_beheersovereenkomst.setText(self.parcel.attribute('BO'))
+        ElevatedFeatureWidget.populate(self)
+        if self.feature:
+            self.showInfo()
         else:
             self.clear()
 
     def clear(self):
-        self.lbv_id.setText("Geen selectie")
-        self.lbv_gps.clear()
-        self.lbv_beheersovereenkomst.clear()
-        self.toolBox.hide()
+        self.lb_geenselectie.show()
+        self.infoWidget.hide()
 
-    def setParcel(self, parcel):
-        if not parcel:
-            self.clear()
-        elif parcel != self.parcel:
-            self.parcel = parcel
-            self.populate()
+    def showInfo(self):
+        self.infoWidget.show()
+        self.lb_geenselectie.hide()
 
 class ParcelInfoDock(QDockWidget):
     def __init__(self, parent):
