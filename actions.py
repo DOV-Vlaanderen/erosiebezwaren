@@ -38,19 +38,12 @@ class Actions(object):
             self.main.utils.stopEditInLayer('Pijlen')
 
     def takePhotos(self):
-        def save(result):
-            if result == QDialog.Accepted:
-                print "Photos have been saved"
-            elif result == QDialog.Rejected:
-                print "Photos NOT SAVED"
-
         #cmd = "C:\\Windows\\explorer.exe shell:AppsFolder\\Panasonic.CameraPlus_ehmb8xpdwb7p4!App"
         cmd = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe')
         cmd += " shell:AppsFolder\\Microsoft.MoCamera_cw5n1h2txyewy!Microsoft.Camera"
         photoPath = os.path.join(os.environ['USERPROFILE'], 'Pictures', 'Camera Roll')
 
         d = photodialog.PhotoDialog(self.main.iface, photoPath)
-        QObject.connect(d, SIGNAL('finished(int)'), save)
 
         sp = subprocess.Popen(cmd)
         d.show()

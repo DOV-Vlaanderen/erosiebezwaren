@@ -66,6 +66,13 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
         self.timer = QTimer()
         QObject.connect(self.timer, SIGNAL('timeout()'), self.loadPhotos)
         QObject.connect(self, SIGNAL('finished(int)'), self.timer, SLOT('stop()'))
+        QObject.connect(self, SIGNAL('finished(int)'), self.closed)
+
+    def closed(self, result):
+        if result == self.Accepted:
+            print "PHOTOS SAVED"
+        elif result == self.Rejected:
+            print "PHOTOS NOT SAVED"
 
     def show(self):
         QDialog.show(self)

@@ -3,6 +3,9 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 
+import re
+import subprocess
+
 from ui_parcelinfowidget import Ui_ParcelInfoWidget
 from widgets import valuelabel
 
@@ -11,21 +14,28 @@ class ElevatedFeatureWidget(QWidget):
         QWidget.__init__(self, parent)
         self.feature = feature
         self.fieldMap = {}
+        self.mapRegex = re.compile(r'^vw_.*_(.*)$')
 
     def _setValue(self, widget, value):
         fnSetValue = None
 
-        if type(widget) in (QLabel, valuelabel.AutohideValueLabel):
-            fnSetValue = type(widget).setText
+        if issubclass(type(widget), QLabel):
+            fnSetValue = widget.setText
+        elif issubclass(type(widget), valuelabel.EnabledBooleanButton):
+            fnSetValue = widget.setValue
 
         if fnSetValue:
-            fnSetValue(widget, value)
+            fnSetValue(value)
 
     def _mapWidgets(self, fields):
         for field in fields:
             fieldName = field.name()
-            if 'vw_%s' % fieldName.lower() in self.__dict__:
-                self.fieldMap[fieldName] = self.__dict__['vw_%s' % fieldName.lower()]
+            regex = re.compile(r'^vw[^_]*_%s$' % fieldName, re.I)
+            for dictfield in self.__dict__:
+                if regex.match(dictfield):
+                    if fieldName not in self.fieldMap:
+                        self.fieldMap[fieldName] = set()
+                    self.fieldMap[fieldName].add(self.__dict__[dictfield])
 
     def populate(self):
         if self.feature:
@@ -33,9 +43,9 @@ class ElevatedFeatureWidget(QWidget):
                 self._mapWidgets(self.feature.fields())
 
             for field in self.feature.fields():
-                widget = self.fieldMap.get(field.name(), None)
-                if widget:
-                    self._setValue(widget, self.feature.attribute(field.name()))
+                widgets = self.fieldMap.get(field.name(), [])
+                for w in widgets:
+                    self._setValue(w, self.feature.attribute(field.name()))
 
     def setFeature(self, feature):
         self.feature = feature
@@ -45,6 +55,9 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
     def __init__(self, parent, parcel=None):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.setupUi(self)
+
+        QObject.connect(self.vw_btn_pdf, SIGNAL('triggered(bool)'), self.showPdf)
+
         self.populate()
 
     def populate(self):
@@ -61,6 +74,11 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
     def showInfo(self):
         self.infoWidget.show()
         self.lb_geenselectie.hide()
+
+    def showPdf(self):
+        if self.feature.attribute('bezwaarformulier'):
+            cmd = os.environ['COMSPEC'] + ' /c "start %s"'
+            sp = subprocess.Popen(cmd % self.feature.attribute('bezwaarformulier'))
 
 class ParcelInfoDock(QDockWidget):
     def __init__(self, parent):
