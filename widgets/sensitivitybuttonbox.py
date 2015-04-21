@@ -12,6 +12,7 @@ class SensitivityButton(QPushButton):
         self.textcolor = textcolor
         self.parent = parent
 
+        self.setContentsMargins(4, 4, 4, 4)
         self.setCheckable(True)
         self.__setStyleSheet()
 

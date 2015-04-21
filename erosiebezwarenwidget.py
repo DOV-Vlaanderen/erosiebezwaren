@@ -4,6 +4,7 @@ from PyQt4.QtGui import QIcon, QPixmap
 from qgis.core import *
 from qgis.gui import *
 
+import resources_rc
 from ui_erosiebezwarenwidget import Ui_ErosiebezwarenWidget as Ui_Widget
 
 # create the widget

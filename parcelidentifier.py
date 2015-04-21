@@ -13,7 +13,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         self.previousActiveLayer = None
 
         self.parcelInfoDock = ParcelInfoDock(self.main.iface.mainWindow())
-        self.parcelInfoWidget = ParcelInfoWidget(self.parcelInfoDock)
+        self.parcelInfoWidget = ParcelInfoWidget(self.parcelInfoDock, self.main)
         self.parcelInfoDock.setWidget(self.parcelInfoWidget)
 
     def setLayerByName(self, layerName):
@@ -43,6 +43,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
             #print [i.mFeature.attribute("GWS_NAAM") for i in results]
             #parcelDialog = ParcelWindow(self.main, self.layer, results[0].mFeature)
             #FIXME: wat bij meerdere resultaten
+            self.parcelInfoWidget.layer = self.layer
             self.parcelInfoWidget.setFeature(results[0].mFeature)
             self.parcelInfoDock.show()
         else:
@@ -52,7 +53,7 @@ class ParcelIdentifyAction(QAction):
     def __init__(self, main, parent, layerName):
         self.main = main
         self.layerName = layerName
-        QAction.__init__(self, 'IFY', parent)
+        QAction.__init__(self, QIcon(':/icons/icons/identify.png'), 'Identify', parent)
 
         self.mapCanvas = self.main.iface.mapCanvas()
         self.previousMapTool = None

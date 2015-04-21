@@ -38,6 +38,7 @@ class Utils(object):
                 legendInterface.setGroupVisible(i, False)
 
         for l in legendInterface.layers():
+            print l.name()
             if l.name() in enable:
                 legendInterface.setLayerVisible(l, True)
             if l.name() in disable:

@@ -1,0 +1,20 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/zoomto.png</file>
+    <file>icons/pixelkaart_bewerkingserosie.png</file>
+    <file>icons/pixelkaart_watererosie.png</file>
+    <file>icons/pixelkaarten.png</file>
+    <file>icons/erosiekaart_2013.png</file>
+    <file>icons/erosiekaart_2014.png</file>
+    <file>icons/erosiekaart_2015.png</file>
+    <file>icons/erosiekaart.png</file>
+    <file>icons/edit.png</file>
+    <file>icons/identify.png</file>
+    <file>icons/luchtfoto.png</file>
+    <file>icons/overzichtskaart.png</file>
+    <file>icons/pdf.png</file>
+    <file>icons/photo.png</file>
+    <file>icons/pijlen.png</file>
+    <file>icons/routekaart.png</file>
+  </qresource>
+</RCC>

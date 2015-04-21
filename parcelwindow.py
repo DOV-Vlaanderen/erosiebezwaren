@@ -45,12 +45,12 @@ class ParcelWindow(QMainWindow, Ui_ParcelWindow):
         self.parcel = parcel
         self.setupUi(self)
 
-        #QObject.connect(self, SIGNAL('finished(int)'), self.finished)
+        QObject.connect(self, SIGNAL('finished(int)'), self.finished)
 
-        self.led_gewas.setText(self.parcel.attribute('GWS_NAAM'))
-        self.btn_advBehandeld.setState(self.parcel.attribute('advBehandeld')==1)
+        self.led_gewas.setText(self.parcel.attribute('klasse_VA'))
+        self.btn_advBehandeld.setState(self.parcel.attribute('aanpassing')=='A')
 
-        gewasModel = AttributeModel(self.cmb_gewasBezoek, self.layer, 'GWS_NAAM')
+        gewasModel = AttributeModel(self.cmb_gewasBezoek, self.layer, 'klasse_VA')
         self.cmb_gewasBezoek.setModel(gewasModel)
 
     def finished(self, result):

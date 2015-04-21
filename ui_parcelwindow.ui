@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>ParcelWindow</class>
  <widget class="QMainWindow" name="ParcelWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -25,7 +28,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="lbl_gewas">
           <property name="text">
-           <string>Gewas</string>
+           <string>Klasse VA</string>
           </property>
          </widget>
         </item>
@@ -45,7 +48,7 @@
         <item row="2" column="0">
          <widget class="QLabel" name="lbl_gewasBezoek">
           <property name="text">
-           <string>Gewas veldbezoek</string>
+           <string>klasse VA</string>
           </property>
          </widget>
         </item>

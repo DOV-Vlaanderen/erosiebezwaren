@@ -8,6 +8,9 @@ import subprocess
 
 from ui_parcelinfowidget import Ui_ParcelInfoWidget
 from widgets import valuelabel
+from parcelwindow import ParcelWindow
+from photodialog import PhotoDialog
+from parcellistdialog import ParcelListDialog
 
 class ElevatedFeatureWidget(QWidget):
     def __init__(self, parent, feature=None):
@@ -52,11 +55,17 @@ class ElevatedFeatureWidget(QWidget):
         self.populate()
 
 class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
-    def __init__(self, parent, parcel=None):
+    def __init__(self, parent, main, layer=None, parcel=None):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
+        self.main = main
+        self.layer = layer
         self.setupUi(self)
 
-        QObject.connect(self.vw_btn_pdf, SIGNAL('triggered(bool)'), self.showPdf)
+        QObject.connect(self.vwBtn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showPdf_mock)
+        QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
+        QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
+        QObject.connect(self.btn_photo, SIGNAL('clicked(bool)'), self.takePhotos)
+        QObject.connect(self.btn_anderePercelen, SIGNAL('clicked(bool)'), self.showParcelList)
 
         self.populate()
 
@@ -80,10 +89,40 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             cmd = os.environ['COMSPEC'] + ' /c "start %s"'
             sp = subprocess.Popen(cmd % self.feature.attribute('bezwaarformulier'))
 
+    def showPdf_mock(self):
+        cmd = os.environ['COMSPEC'] + ' /c "start %s"'
+        path = "C:\\Users\\Elke\\Documents\\qgis\\testpdf.pdf"
+        sp = subprocess.Popen(cmd % path)
+
+    def showEditWindow(self):
+        p = ParcelWindow(self.main, self.layer, self.feature)
+        p.show()
+
+    def zoomTo(self):
+        self.layer.removeSelection()
+        self.layer.select(self.feature.id())
+        self.main.iface.mapCanvas().zoomToSelected(self.layer)
+        self.layer.removeSelection()
+
+    def takePhotos(self):
+        #cmd = "C:\\Windows\\explorer.exe shell:AppsFolder\\Panasonic.CameraPlus_ehmb8xpdwb7p4!App"
+        cmd = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe')
+        cmd += " shell:AppsFolder\\Microsoft.MoCamera_cw5n1h2txyewy!Microsoft.Camera"
+        photoPath = os.path.join(os.environ['USERPROFILE'], 'Pictures', 'Camera Roll')
+
+        d = PhotoDialog(self.main.iface, photoPath)
+
+        sp = subprocess.Popen(cmd)
+        d.show()
+
+    def showParcelList(self):
+        d = ParcelListDialog(self, self.layer, self.feature)
+        d.show()
+
 class ParcelInfoDock(QDockWidget):
     def __init__(self, parent):
-        QDockWidget.__init__(self, "Perceelsinformatie", parent)
-        self.setObjectName("Perceelsinformatie")
+        QDockWidget.__init__(self, "Bezwaren bodemerosie", parent)
+        self.setObjectName("Bezwaren bodemerosie")
         parent.addDockWidget(Qt.RightDockWidgetArea, self)
 
         QObject.connect(self, SIGNAL('topLevelChanged(bool)'), self.resizeToMinimum)

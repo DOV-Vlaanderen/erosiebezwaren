@@ -9,8 +9,7 @@ import actions
 import utils
 import parcelinfowidget
 
-class Erosiebezwaren:
-
+class Erosiebezwaren(object):
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
