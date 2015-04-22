@@ -53,7 +53,7 @@ class ParcelListWidget(QWidget):
         lb2 = QLabel(parcel.attribute('bewerking'), self)
         self.layout.addWidget(lb2, row, 2)
 
-class ParcelListDialog(QDialog, Ui_ParcelListDialog):
+class ParcelListDialog(QDialog, Ui_ParcelListDialog):   
     def __init__(self, parcelInfoWidget, layer, feature):
         self.parcelInfoWidget = parcelInfoWidget
         self.main = self.parcelInfoWidget.main

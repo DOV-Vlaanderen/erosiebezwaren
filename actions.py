@@ -10,6 +10,7 @@ import subprocess
 import time
 
 from parcelidentifier import ParcelIdentifyAction
+from mapswitchdialog import MapSwitchAction
 
 class IconSize64Style(QCommonStyle):
     def pixelMetric(self, metric, option=0, widget=0):
@@ -51,48 +52,11 @@ class Actions(object):
         sp = subprocess.Popen(cmd, env=os.environ, shell=True)
 
     def addToToolbar(self, toolbar):
+        toolbar.addAction(MapSwitchAction(self.main, self.parent))
+
         annotateArrow = QAction(QIcon(':/icons/icons/pijlen.png'), 'APY', self.parent)
         annotateArrow.setCheckable(True)
         QObject.connect(annotateArrow, SIGNAL('triggered(bool)'), self.annotateArrow)
         toolbar.addAction(annotateArrow)
 
-        loketOverzichtskaart = MapViewGroup(self.main, QIcon(':/icons/icons/overzichtskaart.png'), 'OZK', toolbar)
-        loketOverzichtskaart.addMapView(
-            QIcon(':/icons/icons/routekaart.png'), 'Routekaart',
-            layersEnabled=['Overzichtskaart', 'bezwarenkaart', 'Topokaart'],
-            layersDisabled=['Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'])
-        loketOverzichtskaart.addMapView(
-            QIcon(':/icons/icons/luchtfoto.png'), 'Luchtfoto',
-            layersEnabled=['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'luchtfoto'],
-            layersDisabled=['Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'])
-        toolbar.addWidget(loketOverzichtskaart)
-
-        loketErosiekaart = MapViewGroup(self.main, QIcon(':/icons/icons/erosiekaart.png'), 'EZK', toolbar)
-        loketErosiekaart.addMapView(
-            QIcon(':/icons/icons/erosiekaart_2015.png'), 'Erosiekaart 2015',
-            layersEnabled=['Overzichtskaart', 'bezwarenkaart', 'Topokaart', '2015 potentiele bodemerosie'],
-            layersDisabled=['Afstromingskaart', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'])
-        loketErosiekaart.addMapView(
-            QIcon(':/icons/icons/erosiekaart_2014.png'), 'Erosiekaart 2014',
-            layersEnabled=['Overzichtskaart', 'bezwarenkaart', 'Topokaart', '2014 potentiele bodemerosie'],
-            layersDisabled=['Afstromingskaart', '2015 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'])
-        loketErosiekaart.addMapView(
-            QIcon(':/icons/icons/erosiekaart_2013.png'), 'Erosiekaart 2013',
-            layersEnabled=['Overzichtskaart', 'bezwarenkaart', 'Topokaart', '2013 potentiele bodemerosie'],
-            layersDisabled=['Afstromingskaart', '2014 potentiele bodemerosie', '2015 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'])
-        toolbar.addWidget(loketErosiekaart)
-
-        loketPixelkaart = MapViewGroup(self.main, QIcon(':/icons/icons/pixelkaarten.png'), 'PXK', toolbar)
-        loketPixelkaart.addMapView(
-            QIcon(':/icons/icons/pixelkaart_watererosie.png'), 'Watererosie',
-            layersEnabled=['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'watererosie', 'Afstromingskaart'],
-            layersDisabled=['2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'bewerkingserosie'])
-        loketPixelkaart.addMapView(
-            QIcon(':/icons/icons/pixelkaart_bewerkingserosie.png'), 'Bewerkingserosie',
-            layersEnabled=['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'bewerkingserosie'],
-            layersDisabled=['Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie'])
-        toolbar.addWidget(loketPixelkaart)
-
         toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'bezwarenkaart'))
-
-
