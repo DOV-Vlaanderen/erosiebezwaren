@@ -79,17 +79,21 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         self.toMapView({
             'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'bewerkingserosie'],
             'disabledLayers': ['2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'Afstromingskaart'],
-            'label': 'Watererosie'
+            'label': 'Bewerkingserosie'
         })
 
-
-class MapSwitchAction(QAction):
+class MapSwitchButton(QToolButton):
     def __init__(self, main, parent):
         self.main = main
-        QAction.__init__(self, parent)
+        QToolButton.__init__(self, parent)
         self.dialog = MapSwitchDialog(self)
-        QObject.connect(self, SIGNAL('triggered(bool)'), self.showDialog)
+
         self.setText('Kies kaartbeeld')
+        self.setToolButtonStyle(Qt.ToolButtonTextOnly)
+        self.setSizePolicy(self.sizePolicy().horizontalPolicy(), QSizePolicy.Fixed)
+        self.setMinimumHeight(64)
+
+        QObject.connect(self, SIGNAL('clicked(bool)'), self.showDialog)
 
     def showDialog(self):
         self.dialog.show()

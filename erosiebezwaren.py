@@ -9,6 +9,8 @@ import actions
 import utils
 import parcelinfowidget
 
+from selectionmanager import SelectionManager
+
 class Erosiebezwaren(object):
     def __init__(self, iface):
         # Save reference to the QGIS interface
@@ -26,6 +28,7 @@ class Erosiebezwaren(object):
         self.iface.addPluginToMenu('DOV - Erosiebezwaren', self.action)
 
         self.utils = utils.Utils(self)
+        self.selectionManager = SelectionManager(self, 'bezwaren_selectie')
         self.actions = actions.Actions(self, self.iface.mainWindow())
         self.actions.addToToolbar(self.toolbar)
 
@@ -38,6 +41,7 @@ class Erosiebezwaren(object):
     def unload(self):
         # Remove the plugin menu item and icon
         self.iface.removePluginMenu('DOV - Erosiebezwaren', self.action)
+        #self.selectionManager.deactivate()
         #self.iface.removeToolBarIcon(self.action)
         #remove the dock
         #self.iface.removeDockWidget(self.dockWidget)

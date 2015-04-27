@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>684</width>
-    <height>450</height>
+    <width>600</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -51,8 +51,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>664</width>
-        <height>354</height>
+        <width>580</width>
+        <height>504</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="scrollAreaLayout">

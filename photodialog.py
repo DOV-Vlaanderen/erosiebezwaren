@@ -4,6 +4,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 
 import os
+import re
 import time
 
 try:
@@ -57,6 +58,7 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
         self.photoPath = photoPath
         self.initTime = time.localtime()
         self.loadedPhotos = set()
+        self.filterRegex = re.compile(r'^WIN_([0-9]{8}_[0-9]{6}).*\.JPG$')
 
         self.setupUi(self)
         self.buttonBox.button(QDialogButtonBox.Save).setEnabled(False)
@@ -79,12 +81,19 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
         self.timer.start(1000)
 
     def filter(self, photoName):
-        photoTime = time.strptime(photoName, "WIN_%Y%m%d_%H%M%S.JPG")
-        return photoTime >= self.initTime
+        r = self.filterRegex.search(photoName)
+        if not r:
+            return False
+
+        try:
+            photoTime = time.strptime(r.group(1), "%Y%m%d_%H%M%S")
+            return photoTime >= self.initTime
+        except IndexError:
+            return False
 
     def loadPhotos(self):
         for p in os.listdir(self.photoPath):
-            if p.endswith('.JPG') and self.filter(p) and p not in self.loadedPhotos:
+            if self.filter(p) and p not in self.loadedPhotos:
                 self.verticalPhotoLayout.addWidget(Photo(os.path.join(self.photoPath, p)))
                 self.loadedPhotos.add(p)
 

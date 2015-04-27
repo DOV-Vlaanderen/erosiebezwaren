@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>426</width>
-    <height>800</height>
+    <width>427</width>
+    <height>907</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>0</width>
             <height>20</height>
            </size>
           </property>
@@ -86,7 +86,7 @@
          </widget>
         </item>
         <item>
-         <widget class="EnabledBooleanButton" name="vwBtn_bezwaarformulier">
+         <widget class="EnabledBooleanButton" name="efwBtn_bezwaarformulier">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -131,10 +131,23 @@
           </property>
          </widget>
         </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="vw_obj_id">
+       <widget class="QLabel" name="efw_obj_id">
         <property name="styleSheet">
          <string notr="true">QLabel {
 font-weight: bold;
@@ -179,7 +192,7 @@ font-weight: bold;
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="vw_naam">
+       <widget class="QLabel" name="efw_naam">
         <property name="styleSheet">
          <string notr="true">* { font-style: italic; }</string>
         </property>
@@ -195,39 +208,6 @@ font-weight: bold;
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="lb_telefoon">
-        <property name="text">
-         <string>Telefoon</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="AutohideValueLabel" name="vw_gsm">
-        <property name="styleSheet">
-         <string notr="true">* { font-style: italic; }</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="indent">
-         <number>20</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="AutohideValueLabel" name="vw_telefoon">
-        <property name="styleSheet">
-         <string notr="true">* { font-style: italic; }</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="indent">
-         <number>20</number>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QLabel" name="lb_perceelsnummer">
         <property name="text">
          <string>Perceelsnummer</string>
@@ -235,7 +215,7 @@ font-weight: bold;
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="vw_perceelsnr_va_2015">
+       <widget class="QLabel" name="efw_perceelsnr_va_2015">
         <property name="styleSheet">
          <string notr="true">* { font-style: italic; }</string>
         </property>
@@ -255,7 +235,7 @@ font-weight: bold;
        </widget>
       </item>
       <item>
-       <widget class="AutohideValueLabel" name="vw_perceelsnaam">
+       <widget class="AutohideValueLabel" name="efw_perceelsnaam">
         <property name="styleSheet">
          <string notr="true">* { font-style: italic; }</string>
         </property>
@@ -282,7 +262,7 @@ font-weight: bold;
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
         <item>
-         <widget class="DefaultColorValueLabel" name="vw_advies_behandeld">
+         <widget class="DefaultColorValueLabel" name="efw_advies_behandeld">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -314,7 +294,7 @@ font-weight: bold;
          </spacer>
         </item>
         <item>
-         <widget class="SensitivityColorLabel" name="vw2_kleur_2015">
+         <widget class="SensitivityColorLabel" name="efw2_kleur_2015">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -330,7 +310,7 @@ font-weight: bold;
          </widget>
         </item>
         <item>
-         <widget class="SensitivityColorLabel" name="vw_advies_nieuwe_kleur">
+         <widget class="SensitivityColorLabel" name="efw_advies_nieuwe_kleur">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -376,13 +356,13 @@ font-weight: bold;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>353</width>
+               <width>354</width>
                <height>639</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
-               <widget class="VisibilityBooleanLabel" name="vw_bezwaarsch">
+               <widget class="VisibilityBooleanLabel" name="efw_bezwaarsch">
                 <property name="styleSheet">
                  <string notr="true">* { color: #C8282F; }</string>
                 </property>
@@ -408,7 +388,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="AutohideValueLabel" name="vw_bo">
+               <widget class="AutohideValueLabel" name="efw_bo">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; color: #C8282F; }</string>
                 </property>
@@ -440,7 +420,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_gespec_pm">
+               <widget class="QLabel" name="efw_gespec_pm">
                 <property name="styleSheet">
                  <string notr="true">* { color: #C8282F; font-style: italic; }</string>
                 </property>
@@ -459,6 +439,137 @@ font-weight: bold;
                </widget>
               </item>
               <item>
+               <widget class="QLabel" name="lb_historiek">
+                <property name="text">
+                 <string>Historiek</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="SensitivityColorLabel" name="efw_kleur_2015">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+                  </property>
+                  <property name="text">
+                   <string>2015</string>
+                  </property>
+                  <property name="margin">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="SensitivityColorLabel" name="efw_kleur_2014">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+                  </property>
+                  <property name="text">
+                   <string>2014</string>
+                  </property>
+                  <property name="margin">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="SensitivityColorLabel" name="efw_kleur_2013">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+                  </property>
+                  <property name="text">
+                   <string>2013</string>
+                  </property>
+                  <property name="margin">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QLabel" name="lb_watererosie_30_2015">
+                <property name="text">
+                 <string>Watererosie 30</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="efw_watererosie_30_2015">
+                <property name="styleSheet">
+                 <string notr="true">* { font-style: italic;}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="indent">
+                 <number>20</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lb_bewerkingserosie_2015">
+                <property name="text">
+                 <string>Bewerkingserosie</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="efw_bewerkingserosie_2015">
+                <property name="styleSheet">
+                 <string notr="true">* { font-style: italic;}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="indent">
+                 <number>20</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lb_totale_erosie_2015">
+                <property name="text">
+                 <string>Totale erosie</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="efw_totale_erosie_2015">
+                <property name="styleSheet">
+                 <string notr="true">* { font-style: italic;}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="indent">
+                 <number>20</number>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLabel" name="lb_perceelsnr_2015">
                 <property name="text">
                  <string>Perceelsnummer VA2015</string>
@@ -466,7 +577,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw2_perceelsnr_va_2015">
+               <widget class="QLabel" name="efw2_perceelsnr_va_2015">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -499,14 +610,14 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_4">
+               <widget class="QLabel" name="lb_datum_in">
                 <property name="text">
                  <string>Datum in</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_datum_bezwaar">
+               <widget class="QLabel" name="efw_datum_bezwaar">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -526,7 +637,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_erosieklasse_lv_2015">
+               <widget class="QLabel" name="efw_erosieklasse_lv_2015">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -549,7 +660,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_erosieklasse_lv_2014">
+               <widget class="QLabel" name="efw_erosieklasse_lv_2014">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -558,137 +669,6 @@ font-weight: bold;
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
-                </property>
-                <property name="indent">
-                 <number>20</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lb_kleur">
-                <property name="text">
-                 <string>Kleur</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_2">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="SensitivityColorLabel" name="vw_kleur_2015">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
-                  </property>
-                  <property name="text">
-                   <string>2015</string>
-                  </property>
-                  <property name="margin">
-                   <number>4</number>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="SensitivityColorLabel" name="vw_kleur_2014">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
-                  </property>
-                  <property name="text">
-                   <string>2014</string>
-                  </property>
-                  <property name="margin">
-                   <number>4</number>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="SensitivityColorLabel" name="vw_kleur_2013">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
-                  </property>
-                  <property name="text">
-                   <string>2013</string>
-                  </property>
-                  <property name="margin">
-                   <number>4</number>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QLabel" name="lb_watererosie_30_2015">
-                <property name="text">
-                 <string>Watererosie 30</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="vw_watererosie_30_2015">
-                <property name="styleSheet">
-                 <string notr="true">* { font-style: italic;}</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="indent">
-                 <number>20</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lb_bewerkingserosie_2015">
-                <property name="text">
-                 <string>Bewerkingserosie</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="vw_bewerkingserosie_2015">
-                <property name="styleSheet">
-                 <string notr="true">* { font-style: italic;}</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="indent">
-                 <number>20</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lb_totale_erosie_2015">
-                <property name="text">
-                 <string>Totale erosie</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="vw_totale_erosie_2015">
-                <property name="styleSheet">
-                 <string notr="true">* { font-style: italic;}</string>
-                </property>
-                <property name="text">
-                 <string/>
                 </property>
                 <property name="indent">
                  <number>20</number>
@@ -738,7 +718,7 @@ font-weight: bold;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>355</width>
+               <width>356</width>
                <height>531</height>
               </rect>
              </property>
@@ -758,7 +738,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_producentnr">
+               <widget class="QLabel" name="efw_producentnr">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -771,14 +751,14 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_3">
+               <widget class="QLabel" name="lb_naam">
                 <property name="text">
                  <string>Naam</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw2_naam">
+               <widget class="QLabel" name="efw2_naam">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -794,14 +774,14 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label">
+               <widget class="QLabel" name="lb_adres">
                 <property name="text">
                  <string>Adres</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_straat_met_nr">
+               <widget class="QLabel" name="efw_straat_met_nr">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -840,7 +820,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_email">
+               <widget class="QLabel" name="efw_email">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -863,7 +843,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="AutohideValueLabel" name="vw2_telefoon">
+               <widget class="AutohideValueLabel" name="efw2_telefoon">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -876,7 +856,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="AutohideValueLabel" name="vw2_gsm">
+               <widget class="AutohideValueLabel" name="efw2_gsm">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -896,7 +876,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="AutohideValueLabel" name="vw_hoofdteelt">
+               <widget class="AutohideValueLabel" name="efw_hoofdteelt">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -922,7 +902,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="AutohideValueLabel" name="vw_voorteelt">
+               <widget class="AutohideValueLabel" name="efw_voorteelt">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -948,7 +928,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="AutohideValueLabel" name="vw_nateelt">
+               <widget class="AutohideValueLabel" name="efw_nateelt">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -1015,8 +995,8 @@ font-weight: bold;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>355</width>
-               <height>389</height>
+               <width>369</width>
+               <height>432</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1028,7 +1008,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_advies_aanvaarding">
+               <widget class="QLabel" name="efw_advies_aanvaarding">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -1048,7 +1028,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_datum_veldbezoek">
+               <widget class="QLabel" name="efw_datum_veldbezoek">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -1068,7 +1048,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_gewas_veldbezoek">
+               <widget class="QLabel" name="efw_gewas_veldbezoek">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -1100,7 +1080,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_observaties_watererosie">
+               <widget class="QLabel" name="efw_observaties_watererosie">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -1126,7 +1106,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_observaties_bewerkingserosie">
+               <widget class="QLabel" name="efw_observaties_bewerkingserosie">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -1149,7 +1129,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_andere_observaties">
+               <widget class="QLabel" name="efw_andere_observaties">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -1172,7 +1152,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="vw_opmerkingen_veld">
+               <widget class="QLabel" name="efw_opmerkingen_veld">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>

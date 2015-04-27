@@ -24,6 +24,9 @@
        <property name="title">
         <string>Erosiekaart</string>
        </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QToolButton" name="btn_erosie2015">
@@ -107,7 +110,7 @@
         <string>Overzichtskaart</string>
        </property>
        <property name="flat">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
@@ -171,6 +174,9 @@
        <property name="title">
         <string>Pixelkaart</string>
        </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QToolButton" name="btn_watererosie">
@@ -232,6 +238,9 @@
       <widget class="QGroupBox" name="groupBox_4">
        <property name="title">
         <string>Hoogtemodel</string>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

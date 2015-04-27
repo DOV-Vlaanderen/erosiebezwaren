@@ -3,56 +3,16 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 
+import os
 import re
 import subprocess
 
 from ui_parcelinfowidget import Ui_ParcelInfoWidget
 from widgets import valuelabel
+from widgets.elevatedfeaturewidget import ElevatedFeatureWidget
 from parcelwindow import ParcelWindow
 from photodialog import PhotoDialog
 from parcellistdialog import ParcelListDialog
-
-class ElevatedFeatureWidget(QWidget):
-    def __init__(self, parent, feature=None):
-        QWidget.__init__(self, parent)
-        self.feature = feature
-        self.fieldMap = {}
-        self.mapRegex = re.compile(r'^vw_.*_(.*)$')
-
-    def _setValue(self, widget, value):
-        fnSetValue = None
-
-        if issubclass(type(widget), QLabel):
-            fnSetValue = widget.setText
-        elif issubclass(type(widget), valuelabel.EnabledBooleanButton):
-            fnSetValue = widget.setValue
-
-        if fnSetValue:
-            fnSetValue(value)
-
-    def _mapWidgets(self, fields):
-        for field in fields:
-            fieldName = field.name()
-            regex = re.compile(r'^vw[^_]*_%s$' % fieldName, re.I)
-            for dictfield in self.__dict__:
-                if regex.match(dictfield):
-                    if fieldName not in self.fieldMap:
-                        self.fieldMap[fieldName] = set()
-                    self.fieldMap[fieldName].add(self.__dict__[dictfield])
-
-    def populate(self):
-        if self.feature:
-            if len(self.fieldMap) < 1:
-                self._mapWidgets(self.feature.fields())
-
-            for field in self.feature.fields():
-                widgets = self.fieldMap.get(field.name(), [])
-                for w in widgets:
-                    self._setValue(w, self.feature.attribute(field.name()))
-
-    def setFeature(self, feature):
-        self.feature = feature
-        self.populate()
 
 class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
     def __init__(self, parent, main, layer=None, parcel=None):
@@ -61,7 +21,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.layer = layer
         self.setupUi(self)
 
-        QObject.connect(self.vwBtn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showPdf_mock)
+        QObject.connect(self.efwBtn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showPdf_mock)
         QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
         QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
         QObject.connect(self.btn_photo, SIGNAL('clicked(bool)'), self.takePhotos)
@@ -73,12 +33,15 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         ElevatedFeatureWidget.populate(self)
         if self.feature:
             self.showInfo()
+            self.main.selectionManager.clearWithMode(mode=0, toggleRendering=False)
+            self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
         else:
             self.clear()
 
     def clear(self):
         self.lb_geenselectie.show()
         self.infoWidget.hide()
+        self.main.selectionManager.clear()
 
     def showInfo(self):
         self.infoWidget.show()
@@ -96,7 +59,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
     def showEditWindow(self):
         p = ParcelWindow(self.main, self.layer, self.feature)
-        p.show()
+        p.showMaximized()
 
     def zoomTo(self):
         self.layer.removeSelection()

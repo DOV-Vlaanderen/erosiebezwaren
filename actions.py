@@ -10,31 +10,7 @@ import subprocess
 import time
 
 from parcelidentifier import ParcelIdentifyAction
-from mapswitchdialog import MapSwitchAction
-
-class IconSize64Style(QCommonStyle):
-    def pixelMetric(self, metric, option=0, widget=0):
-        if metric == QStyle.PM_SmallIconSize:
-            return 64
-        else:
-            return QCommonStyle.pixelMetric(self, metric, option, widget)
-
-class MapViewGroup(QToolButton):
-    def __init__(self, main, icon, text, parent):
-        QToolButton.__init__(self, parent)
-        self.main = main
-        self.setText(text)
-        self.setIcon(icon)
-        self.setPopupMode(self.InstantPopup)
-        self.menu = QMenu(self)
-        #self.menu.setStyle(IconSize64Style())
-        self.setMenu(self.menu)
-
-    def addMapView(self, icon, name, layersEnabled, layersDisabled):
-        action = QAction(icon, name, self.menu)
-        QObject.connect(action, SIGNAL('triggered(bool)'),
-            lambda x: self.main.utils.toggleLayersGroups(layersEnabled, layersDisabled))
-        self.menu.addAction(action)
+from mapswitchdialog import MapSwitchButton
 
 class Actions(object):
     def __init__(self, main, parent):
@@ -51,8 +27,19 @@ class Actions(object):
         cmd = os.path.join(os.environ['COMMONPROGRAMFILES'], 'microsoft shared', 'ink', 'TabTip.exe')
         sp = subprocess.Popen(cmd, env=os.environ, shell=True)
 
+    def exit(self):
+        self.main.selectionManager.deactivate()
+        while True:
+            QgsApplication.exitQgis()
+            time.sleep(0.05)
+
     def addToToolbar(self, toolbar):
-        toolbar.addAction(MapSwitchAction(self.main, self.parent))
+        #toolbar.addAction(MapSwitchAction(self.main, self.parent))
+        exitAction = QAction(QIcon(':/icons/icons/exit.png'), 'EXI', self.parent)
+        QObject.connect(exitAction, SIGNAL('triggered(bool)'), self.exit)
+        toolbar.addAction(exitAction)
+
+        toolbar.addWidget(MapSwitchButton(self.main, self.parent))
 
         annotateArrow = QAction(QIcon(':/icons/icons/pijlen.png'), 'APY', self.parent)
         annotateArrow.setCheckable(True)

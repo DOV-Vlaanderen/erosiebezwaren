@@ -41,6 +41,7 @@ class ParcelListWidget(QWidget):
     def addParcel(self, parcel):
         row = self.layout.rowCount()
         self.parcelList.append(parcel)
+        self.main.selectionManager.select(parcel, mode=1)
 
         btn = QPushButton(parcel.attribute('OBJ_ID'), self)
         btn.setSizePolicy(self.btnSizePolicy)
@@ -66,4 +67,8 @@ class ParcelListDialog(QDialog, Ui_ParcelListDialog):
         self.scrollAreaLayout.insertWidget(0, self.parcelListWidget)
 
         QObject.connect(self.btn_zoomExtent, SIGNAL('clicked(bool)'), self.parcelListWidget.zoomExtent)
+        QObject.connect(self, SIGNAL('finished(int)'), self.__clearSelection)
+
+    def __clearSelection(self):
+        self.main.selectionManager.clearWithMode(mode=1, toggleRendering=True)
 

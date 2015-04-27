@@ -44,7 +44,7 @@ class SensitivityButtonBox(QWidget):
 
     def __init__(self, parent):
         QWidget.__init__(self, parent)
-        self.layout = QHBoxLayout(self)
+        self.layout = QGridLayout(self)
         self.setLayout(self.layout)
 
         self.buttons = [SensitivityButton(self, 'verwaarloosbaar', 'Verw.', '#38a800', '#000000'),
@@ -54,8 +54,8 @@ class SensitivityButtonBox(QWidget):
                         SensitivityButton(self, 'hoog', 'Hoog', '#ff0000', '#ffffff'),
                         SensitivityButton(self, 'zeer hoog', 'Zeer hoog', '#a800e6', '#ffffff')]
 
-        for btn in self.buttons:
-            self.layout.addWidget(btn)
+        for i in range(len(self.buttons)):
+            self.layout.addWidget(self.buttons[i], i/3, i%3)
 
     def setUnchecked(self):
         for btn in self.buttons:

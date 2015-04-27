@@ -29,12 +29,14 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
     def activate(self):
         self.previousActiveLayer = self.main.iface.activeLayer()
         self.main.iface.setActiveLayer(self.layer)
+        self.main.selectionManager.activate()
         QgsMapToolIdentify.activate(self)
 
     def deactivate(self):
         if self.previousActiveLayer:
             self.main.iface.setActiveLayer(self.previousActiveLayer)
         if QgsMapToolIdentify:
+            #self.main.selectionManager.deactivate()
             QgsMapToolIdentify.deactivate(self)
 
     def canvasReleaseEvent(self, mouseEvent):
@@ -45,6 +47,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
             #FIXME: wat bij meerdere resultaten
             self.parcelInfoWidget.layer = self.layer
             self.parcelInfoWidget.setFeature(results[0].mFeature)
+            self.main.selectionManager.select(results[0].mFeature)
             self.parcelInfoDock.show()
         else:
             self.parcelInfoWidget.clear()
