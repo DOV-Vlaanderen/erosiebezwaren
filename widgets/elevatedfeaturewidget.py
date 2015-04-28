@@ -44,19 +44,27 @@ class ElevatedFeatureWidget(QWidget):
         elif _s(widget, SensitivityButtonBox) or \
              _s(widget, DefaultValueDateEdit):
             fnGetValue = widget.getValue
+        elif _s(widget, QComboBox):
+            fnGetValue = widget.lineEdit().text
 
         if fnGetValue:
             return fnGetValue()
 
     def _mapWidgets(self, fields):
-        for field in fields:
-            fieldName = field.name()
-            regex = re.compile(r'^efw[^_]*_%s$' % fieldName, re.I)
+        for i in range(fields.size()):
+            field = fields.at(i)
+            field.index = i
+            regex = re.compile(r'^efw[^_]*_%s$' % field.name(), re.I)
             for dictfield in self.__dict__:
                 if regex.match(dictfield):
-                    if fieldName not in self.fieldMap:
-                        self.fieldMap[fieldName] = set()
-                    self.fieldMap[fieldName].add(self.__dict__[dictfield])
+                    if field not in self.fieldMap:
+                        self.fieldMap[field] = set()
+                    self.fieldMap[field].add(self.__dict__[dictfield])
+
+    def _getField(self, name):
+        for field in self.fieldMap:
+            if field.name() == name:
+                return field
 
     def populate(self):
         if self.feature:
@@ -64,7 +72,7 @@ class ElevatedFeatureWidget(QWidget):
                 self._mapWidgets(self.feature.fields())
 
             for field in self.feature.fields():
-                widgets = self.fieldMap.get(field.name(), [])
+                widgets = self.fieldMap.get(self._getField(field.name()), [])
                 for w in widgets:
                     self._setValue(w, self.feature.attribute(field.name()))
 
@@ -76,7 +84,14 @@ class ElevatedFeatureWidget(QWidget):
         if not self.feature:
             return
 
+        if 'layer' not in self.feature.__dict__:
+            return
+
+        attrMap = {}
         for field in self.fieldMap:
-            value = self._getValue(self.fieldMap[field])
-            if value:
-                self.feature.setAttribute(field, value)
+            for widget in self.fieldMap[field]:
+                value = self._getValue(widget)
+                if value:
+                    self.feature.setAttribute(field.name(), value)
+                    attrMap[field.index] = value
+        self.feature.layer.dataProvider().changeAttributeValues({self.feature.id(): attrMap})

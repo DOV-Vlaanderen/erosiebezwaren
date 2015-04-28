@@ -54,17 +54,22 @@ class DetailsFarmer(ElevatedFeatureWidget, Ui_DetailsFarmer):
             self.populate()
 
 class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
-    def __init__(self, parent, main, layer=None, parcel=None):
+    def __init__(self, parent, main, layer, parcel):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.main = main
         self.layer = layer
+        self.settings = QSettings()
         self.setupUi(self)
+        self.widgets = [self]
 
         self.header = Header(self, self.main, self.feature)
+        self.widgets.append(self.header)
         self.verticalLayout.insertWidget(0, self.header)
 
         self.quickedit = QuickEdit(self, self.main, self.feature)
         self.quickedit.efwCmb_gewas.setSource(self.layer, 'erosie_tot')
+        #self.quickedit.efw_editor.setText(self.settings.value('/Qgis/plugins/Erosiebezwaren/editor'))
+        self.widgets.append(self.quickedit)
         self.verticalLayout_3.insertWidget(0, self.quickedit)
 
         self.edt_watererosie.setTitle('Observaties watererosie')
@@ -75,6 +80,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.detailsObjection = DetailsObjection(self, self.main, self.feature)
         self.detailsFarmer = DetailsFarmer(self, self.main, self.feature)
         self.detailsParcel = DetailsParcel(self, self.main, self.feature)
+        self.widgets.extend([self.detailsObjection, self.detailsFarmer, self.detailsParcel])
         self.verticalLayout_4.addWidget(self.detailsObjection)
         self.verticalLayout_4.addWidget(self.detailsFarmer)
         self.verticalLayout_5.addWidget(self.detailsParcel)
@@ -85,7 +91,12 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.populate()
 
     def save(self):
-        self.saveFeature()
+        #self.settings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.efw_editor)
+        self.layer.beginEditCommand("Update perceel %s" % self.feature.attribute('OBJ_ID'))
+        for w in self.widgets:
+            w.saveFeature()
+        self.layer.commitChanges()
+        self.layer.endEditCommand()
         self.parent.close()
 
     def cancel(self):
@@ -97,6 +108,7 @@ class ParcelWindow(QMainWindow):
         self.main = main
         self.layer = layer
         self.parcel = parcel
+        self.parcel.layer = layer
 
         self.parcelEditWidget = ParcelEditWidget(self, self.main, self.layer, self.parcel)
         self.setCentralWidget(self.parcelEditWidget)
