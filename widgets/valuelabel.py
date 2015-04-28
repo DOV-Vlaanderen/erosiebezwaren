@@ -93,7 +93,8 @@ class SensitivityColorLabel(ColorLabel):
 
         self.colorMap = {'verwaarloosbaar': ('#38a800', '#000000'),
                          'zeer laag': ('#8ff041', '#000000'),
-                         'laag': ('#ffaa00', '#000000'),
+                         'laag': ('#ffff00', '#000000'),
+                         'medium': ('##ffaa00', '#000000'),
                          'hoog': ('#ff0000', '#ffffff'),
                          'zeer hoog': ('#a800e6', '#ffffff')}
 

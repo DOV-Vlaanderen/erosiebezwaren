@@ -16,6 +16,7 @@ class ElevatedFeatureWidget(QWidget):
     def __init__(self, parent, feature=None):
         QWidget.__init__(self, parent)
         self.parent = parent
+        self.layer = None
         self.feature = feature
         self.fieldMap = {}
 
@@ -74,6 +75,10 @@ class ElevatedFeatureWidget(QWidget):
                 widgets = self.fieldMap.get(self._getField(field.name()), [])
                 for w in widgets:
                     self._setValue(w, self.feature.attribute(field.name()))
+
+    def setLayer(self, layer):
+        if layer != self.layer:
+            self.layer = layer
 
     def setFeature(self, feature):
         self.feature = feature

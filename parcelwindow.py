@@ -96,12 +96,15 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             w.saveFeature()
         self.layer.commitChanges()
         self.layer.endEditCommand()
+        self.parent.saved.emit(self.feature)
         self.parent.close()
 
     def cancel(self):
         self.parent.close()
 
 class ParcelWindow(QMainWindow):
+    saved = pyqtSignal(QgsFeature)
+
     def __init__(self, main, layer, parcel):
         QMainWindow.__init__(self, main.iface.mainWindow())
         self.main = main

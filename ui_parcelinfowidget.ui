@@ -310,7 +310,7 @@ font-weight: bold;
          </widget>
         </item>
         <item>
-         <widget class="SensitivityColorLabel" name="efw_advies_nieuwe_kleur">
+         <widget class="SensitivityColorLabel" name="efw_erosie_tot">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -1197,27 +1197,27 @@ font-weight: bold;
   <customwidget>
    <class>AutohideValueLabel</class>
    <extends>QLabel</extends>
-   <header>widgets/valuelabel.h</header>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
   <customwidget>
    <class>VisibilityBooleanLabel</class>
    <extends>QLabel</extends>
-   <header>widgets/valuelabel.h</header>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
   <customwidget>
    <class>SensitivityColorLabel</class>
    <extends>QLabel</extends>
-   <header>widgets/valuelabel.h</header>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
   <customwidget>
    <class>DefaultColorValueLabel</class>
    <extends>QLabel</extends>
-   <header>widgets/valuelabel.h</header>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
   <customwidget>
    <class>EnabledBooleanButton</class>
    <extends>QPushButton</extends>
-   <header>widgets/valuelabel.h</header>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

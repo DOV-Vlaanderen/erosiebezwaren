@@ -45,7 +45,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
             #print [i.mFeature.attribute("GWS_NAAM") for i in results]
             #parcelDialog = ParcelWindow(self.main, self.layer, results[0].mFeature)
             #FIXME: wat bij meerdere resultaten
-            self.parcelInfoWidget.layer = self.layer
+            self.parcelInfoWidget.setLayer(self.layer)
             self.parcelInfoWidget.setFeature(results[0].mFeature)
             self.main.selectionManager.select(results[0].mFeature)
             self.parcelInfoDock.show()

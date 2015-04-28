@@ -59,6 +59,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
     def showEditWindow(self):
         p = ParcelWindow(self.main, self.layer, self.feature)
+        QObject.connect(p, SIGNAL('saved(QgsFeature)'), self.setFeature)
         p.showMaximized()
 
     def zoomTo(self):
