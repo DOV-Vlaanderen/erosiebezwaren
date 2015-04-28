@@ -3,7 +3,6 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 
-from ui_parcelwindow import Ui_ParcelWindow
 from ui_parceleditwidget import Ui_ParcelEditWidget
 from widgets.elevatedfeaturewidget import ElevatedFeatureWidget
 
@@ -113,12 +112,3 @@ class ParcelWindow(QMainWindow):
         self.parcelEditWidget = ParcelEditWidget(self, self.main, self.layer, self.parcel)
         self.setCentralWidget(self.parcelEditWidget)
         self.setWindowTitle("Behandel perceel")
-
-        #self.led_gewas.setText(self.parcel.attribute('klasse_VA'))
-        #self.btn_advBehandeld.setState(self.parcel.attribute('aanpassing')=='A')
-
-        #gewasModel = AttributeModel(self.cmb_gewasBezoek, self.layer, 'klasse_VA')
-        #self.cmb_gewasBezoek.setModel(gewasModel)  
-
-    #def resizeEvent(self, event):
-    #    self.label_3.setText("%ix%i" % (event.size().width(), event.size().height()))

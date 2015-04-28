@@ -9,7 +9,6 @@ from valuelabel import EnabledBooleanButton
 from sensitivitybuttonbox import SensitivityButtonBox
 from valueinput import DefaultValueDateEdit
 
-
 def _s(widget, parentclass):
     return issubclass(type(widget), parentclass)
 

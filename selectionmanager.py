@@ -62,19 +62,3 @@ class SelectionManager(object):
             self.layer.deleteFeature(feature.id())
         if toggleRendering:
             self.main.iface.mapCanvas().setRenderFlag(True)
-
-    def select_old(self, feature, mode=0, clear=True):
-        if not self.__getLayer():
-            return
-        self.main.iface.mapCanvas().setRenderFlag(False)
-        f = QgsFeature()
-        f.fields().append(QgsField('mode', QVariant.Int, 'int', 1, 0))
-        f.setGeometry(feature.geometry())
-        f.setAttributes([mode])
-        if clear:
-            self.layer.selectAll()
-            self.layer.deleteSelectedFeatures()
-        self.layer.addFeature(f)
-        self.main.iface.mapCanvas().setRenderFlag(True)
-        #self.layer.commitChanges()
-        #self.layer.triggerRepaint()
