@@ -15,99 +15,99 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="gb_detailsfarmer">
      <property name="title">
       <string>Details landbouwer</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lb_producentnr">
         <property name="text">
          <string>Producentnummer</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="label_2">
+       <widget class="ValueLabel" name="efw_producentnr">
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="lb_naam">
         <property name="text">
          <string>Naam</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLabel" name="label_4">
+       <widget class="ValueLabel" name="efw_naam">
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="lb_adres">
         <property name="text">
          <string>Adres</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLabel" name="label_6">
+       <widget class="ValueLabel" name="efw_straat_met_nr">
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLabel" name="label_7">
+       <widget class="ValueLabel" name="efw_postcode_gemeente">
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QLabel" name="label_8">
+       <widget class="QLabel" name="lb_email">
         <property name="text">
          <string>E-mail</string>
         </property>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLabel" name="label_9">
+       <widget class="ValueLabel" name="efw_email">
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QLabel" name="label_10">
+       <widget class="QLabel" name="lb_telefoon">
         <property name="text">
          <string>Telefoon</string>
         </property>
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QLabel" name="label_11">
+       <widget class="ValueLabel" name="efw_telefoon">
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item row="6" column="0">
-       <widget class="QLabel" name="label_12">
+       <widget class="QLabel" name="lb_gsm">
         <property name="text">
          <string>GSM</string>
         </property>
        </widget>
       </item>
       <item row="6" column="1">
-       <widget class="QLabel" name="label_13">
+       <widget class="ValueLabel" name="efw_gsm">
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -116,6 +116,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ValueLabel</class>
+   <extends>QLabel</extends>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

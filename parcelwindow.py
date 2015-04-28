@@ -13,39 +13,6 @@ from parceleditwindow.ui_detailsparcel import Ui_DetailsParcel
 from parceleditwindow.ui_detailsfarmer import Ui_DetailsFarmer
 from parceleditwindow.ui_detailsobjection import Ui_DetailsObjection
 
-class AttributeModel(QAbstractItemModel):
-    def __init__(self, parent, layer, attributeName):
-        self.layer = layer
-        self.attributeName = attributeName
-        QAbstractItemModel.__init__(self, parent)
-
-        self.values = []
-        self.updateValues()
-
-    def updateValues(self):
-        values = [''] #FIXME
-        for feature in self.layer.getFeatures():
-            v = feature.attribute(self.attributeName)
-            if v not in values:
-                values.append(v)
-        self.values = values
-
-    def columnCount(self, parent):
-        return 1
-
-    def rowCount(self, parent):
-        return len(self.values)
-
-    def index(self, row, col, parent):
-        return self.createIndex(row, col, None)
-
-    def parent(self, index):
-        return QModelIndex()
-
-    def data(self, index, role):
-        return self.values[index.row()]
-
-
 class Header(ElevatedFeatureWidget, Ui_Header):
     def __init__(self, parent, main, parcel=None):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
@@ -97,6 +64,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.verticalLayout.insertWidget(0, self.header)
 
         self.quickedit = QuickEdit(self, self.main, self.feature)
+        self.quickedit.efwCmb_gewas.setSource(self.layer, 'erosie_tot')
         self.verticalLayout_3.insertWidget(0, self.quickedit)
 
         self.edt_watererosie.setTitle('Observaties watererosie')

@@ -7,6 +7,11 @@ import re
 
 from valuelabel import EnabledBooleanButton
 from sensitivitybuttonbox import SensitivityButtonBox
+from valueinput import DefaultValueDateEdit
+
+
+def _s(widget, parentclass):
+    return issubclass(type(widget), parentclass)
 
 class ElevatedFeatureWidget(QWidget):
     def __init__(self, parent, feature=None):
@@ -14,17 +19,19 @@ class ElevatedFeatureWidget(QWidget):
         self.parent = parent
         self.feature = feature
         self.fieldMap = {}
-        self.mapRegex = re.compile(r'^vw_.*_(.*)$')
 
     def _setValue(self, widget, value):
         fnSetValue = None
 
-        if issubclass(type(widget), QLabel) or \
-           issubclass(type(widget), QLineEdit):
+        if _s(widget, QLabel) or \
+           _s(widget, QLineEdit):
             fnSetValue = widget.setText
-        elif issubclass(type(widget), EnabledBooleanButton) or \
-             issubclass(type(widget), SensitivityButtonBox):
+        elif _s(widget, EnabledBooleanButton) or \
+             _s(widget, SensitivityButtonBox) or \
+             _s(widget, DefaultValueDateEdit):
             fnSetValue = widget.setValue
+        elif _s(widget, QComboBox):
+            fnSetValue = widget.lineEdit().setText
 
         if fnSetValue:
             fnSetValue(value)
@@ -32,9 +39,10 @@ class ElevatedFeatureWidget(QWidget):
     def _getValue(self, widget):
         fnGetValue = None
 
-        if issubclass(type(widget), QLineEdit):
+        if _s(widget, QLineEdit):
             fnGetValue = widget.text
-        elif issubclass(type(widget), SensitivityButtonBox):
+        elif _s(widget, SensitivityButtonBox) or \
+             _s(widget, DefaultValueDateEdit):
             fnGetValue = widget.getValue
 
         if fnGetValue:
