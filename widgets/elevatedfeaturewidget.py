@@ -8,6 +8,7 @@ import re
 from valuelabel import EnabledBooleanButton
 from sensitivitybuttonbox import SensitivityButtonBox
 from valueinput import DefaultValueDateEdit
+from titledtextedit import TitledTextEdit
 
 def _s(widget, parentclass):
     return issubclass(type(widget), parentclass)
@@ -24,7 +25,8 @@ class ElevatedFeatureWidget(QWidget):
         fnSetValue = None
 
         if _s(widget, QLabel) or \
-           _s(widget, QLineEdit):
+           _s(widget, QLineEdit) or \
+           _s(widget, TitledTextEdit):
             fnSetValue = widget.setText
         elif _s(widget, EnabledBooleanButton) or \
              _s(widget, SensitivityButtonBox) or \
@@ -39,7 +41,8 @@ class ElevatedFeatureWidget(QWidget):
     def _getValue(self, widget):
         fnGetValue = None
 
-        if _s(widget, QLineEdit):
+        if _s(widget, QLineEdit) or \
+           _s(widget, TitledTextEdit):
             fnGetValue = widget.text
         elif _s(widget, SensitivityButtonBox) or \
              _s(widget, DefaultValueDateEdit):

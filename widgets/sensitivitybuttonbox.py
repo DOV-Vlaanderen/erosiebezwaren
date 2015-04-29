@@ -13,6 +13,7 @@ class SensitivityButton(QPushButton):
         self.parent = parent
 
         self.setContentsMargins(4, 4, 4, 4)
+        self.setMinimumHeight(32)
         self.setCheckable(True)
         self.__setStyleSheet()
 
