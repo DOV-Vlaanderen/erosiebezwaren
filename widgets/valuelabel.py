@@ -6,7 +6,7 @@ from qgis.core import *
 class ValueLabel(QLabel):
     def setText(self, text):
         if text:
-            QLabel.setText(self, text)
+            QLabel.setText(self, unicode(text))
         else:
             self.clear()
 

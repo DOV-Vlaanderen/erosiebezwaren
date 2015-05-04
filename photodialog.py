@@ -5,6 +5,8 @@ from qgis.core import *
 
 import os
 import re
+import shutil
+import subprocess
 import time
 
 try:
@@ -51,11 +53,17 @@ class Photo(QLabel):
                 self.pixmap = self.pixmap.transformed(QTransform().rotate(-1*rotation))
 
 class PhotoDialog(QDialog, Ui_PhotoDialog):
-    def __init__(self, iface, photoPath):
+    def __init__(self, iface, parcelId):
         QDialog.__init__(self, iface.mainWindow())
         self.flick = flickcharm.FlickCharm(self)
         self.iface = iface
-        self.photoPath = photoPath
+
+        #cmd = "C:\\Windows\\explorer.exe shell:AppsFolder\\Panasonic.CameraPlus_ehmb8xpdwb7p4!App"
+        self.cmd = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe')
+        self.cmd += " shell:AppsFolder\\Microsoft.MoCamera_cw5n1h2txyewy!Microsoft.Camera"
+        self.photoPath = os.path.join(os.environ['USERPROFILE'], 'Pictures', 'Camera Roll')
+        self.savePath = os.path.join(os.path.dirname(QgsProject.instance().fileName()), 'fotos', parcelId)
+
         self.initTime = time.localtime()
         self.loadedPhotos = set()
         self.filterRegex = re.compile(r'^WIN_([0-9]{8}_[0-9]{6}).*\.JPG$')
@@ -72,12 +80,14 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
 
     def closed(self, result):
         if result == self.Accepted:
-            print "PHOTOS SAVED"
-        elif result == self.Rejected:
-            print "PHOTOS NOT SAVED"
+            if not os.path.exists(self.savePath):
+                os.makedirs(self.savePath)
+            for photo in self.loadedPhotos:
+                shutil.move(os.path.join(self.photoPath, photo), self.savePath)
 
     def show(self):
         QDialog.show(self)
+        sp = subprocess.Popen(self.cmd)
         self.timer.start(1000)
 
     def filter(self, photoName):

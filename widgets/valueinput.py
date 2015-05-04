@@ -11,9 +11,16 @@ class DefaultValueDateEdit(QDateEdit):
 
     def setValue(self, date):
         if date:
-            self.setDate(QDate.fromString(date, fmt))
+            self.setDate(QDate.fromString(date, self.format))
         else:
-            self.setDate(QDate.currentDate(self.format))
+            self.setDate(QDate.currentDate())
 
     def getValue(self):
         return self.date().toString(self.format)
+
+class ValueLineEdit(QLineEdit):
+    def setText(self, text):
+        if text:
+            QLineEdit.setText(self, text)
+        else:
+            self.clear()

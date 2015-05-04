@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/polygonen.png</file>
     <file>icons/exit.png</file>
     <file>icons/zoomto.png</file>
     <file>icons/pixelkaart_bewerkingserosie.png</file>

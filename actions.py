@@ -11,17 +11,12 @@ import time
 
 from parcelidentifier import ParcelIdentifyAction
 from mapswitchdialog import MapSwitchButton
+from annotate import AnnotationManager
 
 class Actions(object):
     def __init__(self, main, parent):
         self.main = main
         self.parent = parent
-
-    def annotateArrow(self, start):
-        if start:
-            self.main.utils.editInLayer('Pijlen')
-        else:
-            self.main.utils.stopEditInLayer('Pijlen')
 
     def showKeyboard(self):
         cmd = os.path.join(os.environ['COMMONPROGRAMFILES'], 'microsoft shared', 'ink', 'TabTip.exe')
@@ -41,9 +36,7 @@ class Actions(object):
 
         toolbar.addWidget(MapSwitchButton(self.main, self.parent))
 
-        annotateArrow = QAction(QIcon(':/icons/icons/pijlen.png'), 'APY', self.parent)
-        annotateArrow.setCheckable(True)
-        QObject.connect(annotateArrow, SIGNAL('triggered(bool)'), self.annotateArrow)
-        toolbar.addAction(annotateArrow)
+        annotationManager = AnnotationManager(self.main)
+        annotationManager.addActionsToToolbar(toolbar)
 
         toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'bezwarenkaart'))

@@ -18,7 +18,7 @@
   </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="lb_datum_veldbezoek">
      <property name="text">
       <string>Datum veldbezoek</string>
      </property>
@@ -38,14 +38,14 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="label_7">
+    <widget class="QLabel" name="lb_editor">
      <property name="text">
       <string>Veldcontrole door</string>
      </property>
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="efw_klasse_va">
+    <widget class="ValueLineEdit" name="efw_veldcontrole_door">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -61,21 +61,21 @@
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QLabel" name="label_8">
+    <widget class="QLabel" name="lb_gewas_veldbezoek">
      <property name="text">
       <string>Gewas veldbezoek</string>
      </property>
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="AttributeFilledCombobox" name="efwCmb_gewas">
+    <widget class="QComboBox" name="cmb_gewas_veldbezoek">
      <property name="editable">
       <bool>true</bool>
      </property>
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QLabel" name="label_9">
+    <widget class="QLabel" name="lb_advies_behandeld">
      <property name="text">
       <string>Advies behandeld</string>
      </property>
@@ -101,7 +101,7 @@
     </widget>
    </item>
    <item row="4" column="0">
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="lb_advies_aanvaarding">
      <property name="text">
       <string>Advies aanvaarding</string>
      </property>
@@ -127,14 +127,14 @@
     </widget>
    </item>
    <item row="5" column="0">
-    <widget class="QLabel" name="label_10">
+    <widget class="QLabel" name="lb_advies_nieuwe_kleur">
      <property name="text">
       <string>Advies nieuwe kleur</string>
      </property>
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="SensitivityButtonBox" name="efw_erosie_tot" native="true"/>
+    <widget class="SensitivityButtonBox" name="efw_advies_nieuwe_kleur" native="true"/>
    </item>
   </layout>
  </widget>
@@ -146,13 +146,13 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>AttributeFilledCombobox</class>
-   <extends>QComboBox</extends>
-   <header>Erosiebezwaren/widgets/attributecombobox.h</header>
-  </customwidget>
-  <customwidget>
    <class>DefaultValueDateEdit</class>
    <extends>QDateEdit</extends>
+   <header>Erosiebezwaren/widgets/valueinput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ValueLineEdit</class>
+   <extends>QLineEdit</extends>
    <header>Erosiebezwaren/widgets/valueinput.h</header>
   </customwidget>
  </customwidgets>

@@ -17,6 +17,7 @@ class Erosiebezwaren(object):
         self.iface = iface
         self.erosiebezwarenWidget = None
         self.dockWidget = None
+        self.settings = QSettings()
 
     def initGui(self):
         # Create action that will start plugin configuration
@@ -34,8 +35,7 @@ class Erosiebezwaren(object):
 
         # create the loop widget
 
-        settings = QSettings()
-        if not settings.value('/Qgis/enable_render_caching', False, type=bool):
+        if not self.settings.value('/Qgis/enable_render_caching', False, type=bool):
             self.erosiebezwarenWidget.setStatus( 'Enable render caching to improve performance' )
 
     def unload(self):

@@ -57,7 +57,6 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.main = main
         self.layer = layer
-        self.settings = QSettings()
         self.setupUi(self)
         self.widgets = [self]
 
@@ -66,8 +65,8 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.verticalLayout.insertWidget(0, self.header)
 
         self.quickedit = QuickEdit(self, self.main, self.feature)
-        self.quickedit.efwCmb_gewas.setSource(self.layer, 'erosie_tot')
-        #self.quickedit.efw_editor.setText(self.settings.value('/Qgis/plugins/Erosiebezwaren/editor'))
+        #self.quickedit.efwCmb_gewas_veldbezoek.setSource(self.layer, 'gewas_veldbezoek')
+        #self.quickedit.efw_veldcontrole_door.setText(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/editor'))
         self.widgets.append(self.quickedit)
         self.verticalLayout_3.insertWidget(0, self.quickedit)
 
@@ -90,8 +89,8 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.populate()
 
     def save(self):
-        #self.settings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.efw_editor)
-        self.layer.beginEditCommand("Update perceel %s" % self.feature.attribute('OBJ_ID'))
+        #self.main.settings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.quickedit.efw_veldcontrole_door)
+        self.layer.beginEditCommand("Update perceel %s" % self.feature.attribute('uniek_id'))
         for w in self.widgets:
             w.saveFeature()
         self.layer.commitChanges()

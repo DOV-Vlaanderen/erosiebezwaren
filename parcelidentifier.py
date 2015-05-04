@@ -56,7 +56,7 @@ class ParcelIdentifyAction(QAction):
     def __init__(self, main, parent, layerName):
         self.main = main
         self.layerName = layerName
-        QAction.__init__(self, QIcon(':/icons/icons/identify.png'), 'Identify', parent)
+        QAction.__init__(self, QIcon(':/icons/icons/identify.png'), 'Identificeer perceel', parent)
 
         self.mapCanvas = self.main.iface.mapCanvas()
         self.previousMapTool = None

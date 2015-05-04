@@ -54,3 +54,12 @@ class AttributeFilledCombobox(QComboBox):
         if layer and attributename:
             self.model = AttributeModel(self.parent, self.layer, self.attributename)
             self.setModel(self.model)
+
+    def setValue(self, value):
+        if value:
+            self.lineEdit().setText(value)
+        else:
+            self.lineEdit().clear()
+
+    def getValue(self):
+        return self.lineEdit().text()

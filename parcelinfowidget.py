@@ -6,6 +6,7 @@ from qgis.core import *
 import os
 import re
 import subprocess
+import time
 
 from ui_parcelinfowidget import Ui_ParcelInfoWidget
 from widgets import valuelabel
@@ -21,6 +22,12 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.layer = layer
         self.setupUi(self)
 
+        self.btn_gpsDms.setChecked(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false') == 'true')
+        QObject.connect(self.btn_gpsDms, SIGNAL('clicked(bool)'), self.toggleGpsDms)
+
+        self.efw_status.setColorMap(
+            {'te behandelen': ('#00ffee', '#000000')})
+
         QObject.connect(self.efwBtn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showPdf_mock)
         QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
         QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
@@ -35,8 +42,30 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             self.showInfo()
             self.main.selectionManager.clearWithMode(mode=0, toggleRendering=False)
             self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
+            self.populateGps()
         else:
             self.clear()
+
+    def populateGps(self):
+        if self.feature:
+            gpsGeom = QgsGeometry(self.feature.geometry().centroid())
+            gpsGeom.transform(QgsCoordinateTransform(
+                QgsCoordinateReferenceSystem(31370, QgsCoordinateReferenceSystem.EpsgCrsId),
+                QgsCoordinateReferenceSystem(4326, QgsCoordinateReferenceSystem.EpsgCrsId)))
+            dms = self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false')
+            if dms == 'true':
+                self.lbv_gps.setText(gpsGeom.asPoint().toDegreesMinutesSeconds(0))
+            else:
+                self.lbv_gps.setText(gpsGeom.asPoint().toDegreesMinutes(3))
+        else:
+            self.lbv_gps.clear()
+
+    def toggleGpsDms(self, checked):
+        switch = {'true': 'false', 'false': 'true'}
+        self.main.settings.setValue('/Qgis/plugins/Erosiebezwaren/gps_dms',
+            switch[self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'true')])
+        self.btn_gpsDms.setChecked(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms') == 'true')
+        self.populateGps()
 
     def clear(self):
         self.lb_geenselectie.show()
@@ -69,18 +98,16 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.layer.removeSelection()
 
     def takePhotos(self):
-        #cmd = "C:\\Windows\\explorer.exe shell:AppsFolder\\Panasonic.CameraPlus_ehmb8xpdwb7p4!App"
-        cmd = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe')
-        cmd += " shell:AppsFolder\\Microsoft.MoCamera_cw5n1h2txyewy!Microsoft.Camera"
-        photoPath = os.path.join(os.environ['USERPROFILE'], 'Pictures', 'Camera Roll')
-
-        d = PhotoDialog(self.main.iface, photoPath)
-
-        sp = subprocess.Popen(cmd)
+        d = PhotoDialog(self.main.iface, self.feature.attribute('uniek_id'))
         d.show()
 
     def showParcelList(self):
-        d = ParcelListDialog(self, self.layer, self.feature)
+        self.btn_anderePercelen.setEnabled(False)
+        QCoreApplication.processEvents()
+        self.btn_anderePercelen.repaint()
+        d = ParcelListDialog(self)
+        QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.btn_anderePercelen.setEnabled(True))
+        d.populate(self.layer, self.feature)
         d.show()
 
 class ParcelInfoDock(QDockWidget):

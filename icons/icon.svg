@@ -15,7 +15,7 @@
    version="1.1"
    inkscape:version="0.48.5 r10040"
    sodipodi:docname="icon.svg"
-   inkscape:export-filename="/home/roel/.qgis2/python/plugins/Erosiebezwaren/icons/zoomto.png"
+   inkscape:export-filename="/home/roel/.qgis2/python/plugins/Erosiebezwaren/icons/polygonen.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.5"
-     inkscape:cx="-0.27272727"
+     inkscape:cx="0.090909094"
      inkscape:cy="32"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -74,6 +74,6 @@
          sodipodi:role="line"
          id="tspan3784"
          x="30.880859"
-         y="40.566406">Z++</tspan></text>
+         y="40.566406">POL</tspan></text>
   </g>
 </svg>

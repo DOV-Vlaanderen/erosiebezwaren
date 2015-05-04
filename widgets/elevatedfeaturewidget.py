@@ -8,6 +8,7 @@ import re
 from valuelabel import EnabledBooleanButton
 from sensitivitybuttonbox import SensitivityButtonBox
 from valueinput import DefaultValueDateEdit
+from attributecombobox import AttributeFilledCombobox
 from titledtextedit import TitledTextEdit
 
 def _s(widget, parentclass):
@@ -30,10 +31,9 @@ class ElevatedFeatureWidget(QWidget):
             fnSetValue = widget.setText
         elif _s(widget, EnabledBooleanButton) or \
              _s(widget, SensitivityButtonBox) or \
-             _s(widget, DefaultValueDateEdit):
+             _s(widget, DefaultValueDateEdit) or \
+             _s(widget, AttributeFilledCombobox):
             fnSetValue = widget.setValue
-        elif _s(widget, QComboBox):
-            fnSetValue = widget.lineEdit().setText
 
         if fnSetValue:
             fnSetValue(value)
@@ -45,10 +45,9 @@ class ElevatedFeatureWidget(QWidget):
            _s(widget, TitledTextEdit):
             fnGetValue = widget.text
         elif _s(widget, SensitivityButtonBox) or \
-             _s(widget, DefaultValueDateEdit):
+             _s(widget, DefaultValueDateEdit) or \
+             _s(widget, AttributeFilledCombobox):
             fnGetValue = widget.getValue
-        elif _s(widget, QComboBox):
-            fnGetValue = widget.lineEdit().text
 
         if fnGetValue:
             return fnGetValue()
@@ -62,6 +61,7 @@ class ElevatedFeatureWidget(QWidget):
                 if regex.match(dictfield):
                     if field not in self.fieldMap:
                         self.fieldMap[field] = set()
+                    print "mapped field %s to %s, %s" % (field.name(), dictfield, str(self.__dict__[dictfield]))
                     self.fieldMap[field].add(self.__dict__[dictfield])
 
     def _getField(self, name):
