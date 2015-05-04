@@ -240,20 +240,20 @@
            </spacer>
           </item>
           <item>
-           <widget class="TitledTextEdit" name="edt_opmerkingen" native="true"/>
+           <widget class="TitledTextEdit" name="efwEdt_opmerkingen_veldbezoek" native="true"/>
           </item>
          </layout>
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="TitledTextEdit" name="edt_watererosie" native="true"/>
+           <widget class="TitledTextEdit" name="efwEdt_observaties_watererosie" native="true"/>
           </item>
           <item>
-           <widget class="TitledTextEdit" name="edt_bewerkingserosie" native="true"/>
+           <widget class="TitledTextEdit" name="efwEdt_observaties_bewerkingserosie" native="true"/>
           </item>
           <item>
-           <widget class="TitledTextEdit" name="edt_andereobservaties" native="true"/>
+           <widget class="TitledTextEdit" name="efwEdt_andere_observaties" native="true"/>
           </item>
           <item>
            <spacer name="verticalSpacer">
@@ -291,15 +291,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SensitivityButtonBox</class>
+   <class>TitledTextEdit</class>
    <extends>QWidget</extends>
-   <header>widgets/sensitivitybuttonbox.h</header>
+   <header>Erosiebezwaren/widgets/titledtextedit.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>TitledTextEdit</class>
+   <class>SensitivityButtonBox</class>
    <extends>QWidget</extends>
-   <header>widgets/titledtextedit.h</header>
+   <header>Erosiebezwaren/widgets/sensitivitybuttonbox.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

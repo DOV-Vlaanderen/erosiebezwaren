@@ -70,10 +70,10 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.widgets.append(self.quickedit)
         self.verticalLayout_3.insertWidget(0, self.quickedit)
 
-        self.edt_watererosie.setTitle('Observaties watererosie')
-        self.edt_bewerkingserosie.setTitle('Observaties bewerkingserosie')
-        self.edt_andereobs.setTitle('Andere observaties')
-        self.edt_opmerkingen.setTitle('Opmerkingen veldbezoek')
+        self.efwEdt_observaties_watererosie.setTitle('Observaties watererosie')
+        self.efwEdt_observaties_bewerkingserosie.setTitle('Observaties bewerkingserosie')
+        self.efwEdt_andere_observaties.setTitle('Andere observaties')
+        self.efwEdt_opmerkingen_veldbezoek.setTitle('Opmerkingen veldbezoek')
 
         self.detailsObjection = DetailsObjection(self, self.main, self.feature)
         self.detailsFarmer = DetailsFarmer(self, self.main, self.feature)

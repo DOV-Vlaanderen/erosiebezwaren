@@ -21,7 +21,10 @@ class TitledTextEdit(QWidget, Ui_TitledTextEdit):
         return self.lb_title.text()
 
     def setText(self, text):
-        self.plaintextedit.setPlainText(text)
+        if text:
+            self.plaintextedit.setPlainText(text)
+        else:
+            self.plaintextedit.clear()
 
     def text(self):
         return self.plaintextedit.toPlainText()

@@ -61,7 +61,7 @@ class ElevatedFeatureWidget(QWidget):
                 if regex.match(dictfield):
                     if field not in self.fieldMap:
                         self.fieldMap[field] = set()
-                    print "mapped field %s to %s, %s" % (field.name(), dictfield, str(self.__dict__[dictfield]))
+                    #print "mapped field %s to %s, %s" % (field.name(), dictfield, str(self.__dict__[dictfield]))
                     self.fieldMap[field].add(self.__dict__[dictfield])
 
     def _getField(self, name):

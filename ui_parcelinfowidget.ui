@@ -262,7 +262,7 @@ font-weight: bold;
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
         <item>
-         <widget class="DefaultColorValueLabel" name="efw_status">
+         <widget class="DefaultColorValueLabel" name="efw_advies_behandeld">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -1186,12 +1186,12 @@ font-weight: bold;
               <item>
                <widget class="QLabel" name="lb_opmerkingen_veld">
                 <property name="text">
-                 <string>Opmerkingen veld</string>
+                 <string>Opmerkingen veldbezoek</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="ValueLabel" name="efw_opmerkingen_veld">
+               <widget class="ValueLabel" name="efw_opmerkingen_veldbezoek">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>

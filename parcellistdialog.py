@@ -45,13 +45,13 @@ class ParcelListWidget(QWidget):
         self.parcelList.append(parcel)
         self.main.selectionManager.select(parcel, mode=1)
 
-        btn = QPushButton(str(parcel.attribute('perceelsnr_va2015')), self)
+        btn = QPushButton(str(parcel.attribute('perceelsnr_va_2015')), self)
         btn.setSizePolicy(self.horMaxSizePolicy)
         QObject.connect(btn, SIGNAL('clicked(bool)'), lambda: self.goToParcel(parcel))
         self.layout.addWidget(btn, row, 0)
 
         lb1 = valuelabel.ValueLabel(self)
-        lb1.setText(parcel.attribute('status'))
+        lb1.setText(parcel.attribute('advies_behandeld'))
         self.layout.addWidget(lb1, row, 1)
 
         lb2 = valuelabel.DefaultColorValueLabel(self)

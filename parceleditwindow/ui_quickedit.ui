@@ -47,7 +47,7 @@
    <item row="1" column="1">
     <widget class="ValueLineEdit" name="efw_veldcontrole_door">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -67,13 +67,6 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QComboBox" name="cmb_gewas_veldbezoek">
-     <property name="editable">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="0">
     <widget class="QLabel" name="lb_advies_behandeld">
      <property name="text">
@@ -83,6 +76,18 @@
    </item>
    <item row="3" column="1">
     <widget class="QComboBox" name="comboBox_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
      <item>
       <property name="text">
        <string>Te behandelen</string>
@@ -109,6 +114,18 @@
    </item>
    <item row="4" column="1">
     <widget class="QComboBox" name="comboBox_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
      <item>
       <property name="text">
        <string/>
@@ -135,6 +152,22 @@
    </item>
    <item row="5" column="1">
     <widget class="SensitivityButtonBox" name="efw_advies_nieuwe_kleur" native="true"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="ValueLineEdit" name="efw_gewas_veldbezoek">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
