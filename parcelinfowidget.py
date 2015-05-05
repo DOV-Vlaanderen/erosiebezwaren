@@ -29,6 +29,11 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.efw_advies_behandeld.setColorMap(
             {'Te behandelen': ('#00ffee', '#000000')})
 
+        self.efw_advies_aanvaarding.setValues([
+            ('Aanvaard', 1),
+            ('Niet aanvaard', 0)
+        ])
+
         QObject.connect(self.efwBtn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showPdf_mock)
         QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
         QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)

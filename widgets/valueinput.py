@@ -28,7 +28,6 @@ class ValueLineEdit(QLineEdit):
 class ValueComboBox(QComboBox):
     def __init__(self, parent):
         QComboBox.__init__(self, parent)
-
         self.values = []
 
     def setValues(self, values):
@@ -46,4 +45,34 @@ class ValueComboBox(QComboBox):
     def getValue(self):
         if self.currentText():
             return self.currentText()
+        return None
+
+class ValueMappedComboBox(QComboBox):
+    def __init__(self, parent):
+        QComboBox.__init__(self, parent)
+        self.values = []
+        self.textValueMap = {}
+        self.valueTextMap = {}
+
+    def setValues(self, values):
+        self.textValueMap = {}
+        self.valueTextMap = {}
+        newValues = [('', None)]
+        newValues.extend(values)
+        self.clear()
+        for v in newValues:
+            self.addItem(v[0])
+            self.values.append(v[0])
+            self.textValueMap[v[0]] = v[1]
+            self.valueTextMap[v[1]] = v[0]
+
+    def setValue(self, value):
+        if value in self.valueTextMap:
+            self.setCurrentIndex(self.values.index(self.valueTextMap[value]))
+        else:
+            self.setCurrentIndex(0)
+
+    def getValue(self):
+        if self.currentText() in self.textValueMap:
+            return self.textValueMap[self.currentText()]
         return None

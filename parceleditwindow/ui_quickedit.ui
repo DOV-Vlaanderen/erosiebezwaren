@@ -98,7 +98,7 @@
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="ValueComboBox" name="efwCmb_advies_aanvaarding">
+    <widget class="ValueMappedComboBox" name="efwCmb_advies_aanvaarding">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -124,18 +124,9 @@
     <widget class="SensitivityButtonBox" name="efw_advies_nieuwe_kleur" native="true"/>
    </item>
    <item row="2" column="1">
-    <widget class="ValueLineEdit" name="efw_gewas_veldbezoek">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>250</width>
-       <height>0</height>
-      </size>
+    <widget class="AttributeFilledCombobox" name="efwCmb_gewas_veldbezoek">
+     <property name="editable">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -149,6 +140,11 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>AttributeFilledCombobox</class>
+   <extends>QComboBox</extends>
+   <header>Erosiebezwaren/widgets/attributecombobox.h</header>
+  </customwidget>
+  <customwidget>
    <class>DefaultValueDateEdit</class>
    <extends>QDateEdit</extends>
    <header>Erosiebezwaren/widgets/valueinput.h</header>
@@ -160,6 +156,11 @@
   </customwidget>
   <customwidget>
    <class>ValueComboBox</class>
+   <extends>QComboBox</extends>
+   <header>Erosiebezwaren/widgets/valueinput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ValueMappedComboBox</class>
    <extends>QComboBox</extends>
    <header>Erosiebezwaren/widgets/valueinput.h</header>
   </customwidget>

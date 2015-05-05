@@ -10,6 +10,25 @@ class ValueLabel(QLabel):
         else:
             self.clear()
 
+class ValueMappedLabel(QLabel):
+    def __init__(self, parent):
+        QLabel.__init__(self, parent)
+        self.valueTextMap = {}
+
+    def setValues(self, values):
+        self.valueTextMap.clear()
+        for v in values:
+            self.valueTextMap[v[1]] = v[0]
+
+    def setValueMap(self, valueMap):
+        self.valueTextMap = valueMap
+
+    def setText(self, value):
+        if value in self.valueTextMap:
+            QLabel.setText(self, unicode(self.valueTextMap[value]))
+        else:
+            self.clear()
+
 class DefaultValueLabel(QLabel):
     def __init__(self, parent):
         QLabel.__init__(self)

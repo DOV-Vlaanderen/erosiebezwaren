@@ -23,6 +23,7 @@ class Header(ElevatedFeatureWidget, Ui_Header):
 class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
     def __init__(self, parent, main, parcel=None):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
+        self.main = main
         self.setupUi(self)
 
         self.efwCmb_advies_behandeld.setValues([
@@ -32,9 +33,13 @@ class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
         ])
 
         self.efwCmb_advies_aanvaarding.setValues([
-            'Aanvaard',
-            'Niet aanvaard'
+            ('Aanvaard', 1),
+            ('Niet aanvaard', 0)
         ])
+
+        self.efwCmb_gewas_veldbezoek.setSource(
+            self.main.utils.getLayerByName('bezwarenkaart'),
+            'gewas_veldbezoek')
 
         if parcel:
             self.populate()

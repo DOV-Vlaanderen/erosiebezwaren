@@ -726,7 +726,7 @@ font-weight: bold;
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>0</y>
+               <y>-130</y>
                <width>356</width>
                <height>534</height>
               </rect>
@@ -1050,7 +1050,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="ValueLabel" name="efw_advies_aanvaarding">
+               <widget class="ValueMappedLabel" name="efw_advies_aanvaarding">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -1263,6 +1263,11 @@ font-weight: bold;
   </customwidget>
   <customwidget>
    <class>ValueLabel</class>
+   <extends>QLabel</extends>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ValueMappedLabel</class>
    <extends>QLabel</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
