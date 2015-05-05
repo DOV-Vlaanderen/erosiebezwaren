@@ -12,10 +12,11 @@ class ParcelListWidget(QWidget):
         self.main = self.parcelListDialog.main
         QWidget.__init__(self, parent)
 
+        self.horMaxSizePolicy = QSizePolicy()
+        self.horMaxSizePolicy.setHorizontalPolicy(QSizePolicy.Maximum)
         self.layout = QGridLayout(self)
         self.setLayout(self.layout)
 
-        self.horMaxSizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         self.parcelList = []
 
     def populate(self, layer, feature):
@@ -46,7 +47,6 @@ class ParcelListWidget(QWidget):
         self.main.selectionManager.select(parcel, mode=1)
 
         btn = QPushButton(str(parcel.attribute('perceelsnr_va_2015')), self)
-        btn.setSizePolicy(self.horMaxSizePolicy)
         QObject.connect(btn, SIGNAL('clicked(bool)'), lambda: self.goToParcel(parcel))
         self.layout.addWidget(btn, row, 0)
 
