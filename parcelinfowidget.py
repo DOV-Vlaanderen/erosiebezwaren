@@ -71,7 +71,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
     def clear(self):
         self.lb_geenselectie.show()
         self.infoWidget.hide()
-        self.main.selectionManager.clear()
+        self.main.selectionManager.clearWithMode(mode=0)
 
     def showInfo(self):
         self.infoWidget.show()

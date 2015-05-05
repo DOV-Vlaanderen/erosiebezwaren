@@ -134,9 +134,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="btn_luchtfoto">
+         <widget class="QToolButton" name="btn_orthofoto">
           <property name="text">
-           <string>Luchtfoto</string>
+           <string>Orthofoto</string>
           </property>
           <property name="icon">
            <iconset resource="resources.qrc">

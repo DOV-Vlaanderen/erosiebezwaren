@@ -13,6 +13,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         self.setupUi(self)
 
         QObject.connect(self.btn_routekaart, SIGNAL('clicked(bool)'), self.toMapRoutekaart)
+        QObject.connect(self.btn_orthofoto, SIGNAL('clicked(bool)'), self.toMapOrthofoto)
         QObject.connect(self.btn_erosie2013, SIGNAL('clicked(bool)'), self.toMapErosie2013)
         QObject.connect(self.btn_erosie2014, SIGNAL('clicked(bool)'), self.toMapErosie2014)
         QObject.connect(self.btn_erosie2015, SIGNAL('clicked(bool)'), self.toMapErosie2015)
@@ -43,42 +44,49 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
     def toMapRoutekaart(self):
         self.toMapView({
             'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart'],
-            'disabledLayers': ['Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
+            'disabledLayers': ['Orthofoto', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
+            'label': 'Routekaart'
+        })
+
+    def toMapOrthofoto(self):
+        self.toMapView({
+            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Orthofoto'],
+            'disabledLayers': ['Topokaart', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
             'label': 'Routekaart'
         })
 
     def toMapErosie2013(self):
         self.toMapView({
             'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', '2013 potentiele bodemerosie'],
-            'disabledLayers': ['Afstromingskaart', '2014 potentiele bodemerosie', '2015 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
+            'disabledLayers': ['Orthofoto', 'Afstromingskaart', '2014 potentiele bodemerosie', '2015 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
             'label': 'Erosiekaart 2013'
         })
 
     def toMapErosie2014(self):
         self.toMapView({
             'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', '2014 potentiele bodemerosie'],
-            'disabledLayers': ['Afstromingskaart', '2013 potentiele bodemerosie', '2015 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
+            'disabledLayers': ['Orthofoto', 'Afstromingskaart', '2013 potentiele bodemerosie', '2015 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
             'label': 'Erosiekaart 2014'
         })
 
     def toMapErosie2015(self):
         self.toMapView({
             'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', '2015 potentiele bodemerosie'],
-            'disabledLayers': ['Afstromingskaart', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
+            'disabledLayers': ['Orthofoto', 'Afstromingskaart', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
             'label': 'Erosiekaart 2015'
         })
 
     def toMapWatererosie(self):
         self.toMapView({
             'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'watererosie', 'Afstromingskaart'],
-            'disabledLayers': ['2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'bewerkingserosie'],
+            'disabledLayers': ['Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'bewerkingserosie'],
             'label': 'Watererosie'
         })
 
     def toMapBewerkingserosie(self):
         self.toMapView({
             'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'bewerkingserosie'],
-            'disabledLayers': ['2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'Afstromingskaart'],
+            'disabledLayers': ['Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'Afstromingskaart'],
             'label': 'Bewerkingserosie'
         })
 
