@@ -205,14 +205,14 @@ font-weight: bold;
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="lb_landbouwer">
+       <widget class="QLabel" name="lb_naam_2">
         <property name="text">
          <string>Landbouwer</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="ValueLabel" name="efw_naam">
+       <widget class="AutohideValueLabel" name="efw_naam">
         <property name="styleSheet">
          <string notr="true">* { font-style: italic; }</string>
         </property>
@@ -224,6 +224,9 @@ font-weight: bold;
         </property>
         <property name="indent">
          <number>20</number>
+        </property>
+        <property name="buddy">
+         <cstring>lb_naam_2</cstring>
         </property>
        </widget>
       </item>

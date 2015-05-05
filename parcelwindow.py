@@ -53,10 +53,11 @@ class DetailsFarmer(ElevatedFeatureWidget, Ui_DetailsFarmer):
             self.populate()
 
 class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
-    def __init__(self, parent, main, layer, parcel):
+    def __init__(self, parent, main, layer, writeLayer, parcel):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.main = main
         self.layer = layer
+        self.writeLayer = writeLayer
         self.setupUi(self)
         self.widgets = [self]
 
@@ -83,18 +84,28 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.verticalLayout_4.addWidget(self.detailsFarmer)
         self.verticalLayout_5.addWidget(self.detailsParcel)
 
+        for w in self.widgets:
+            w.setLayer(self.layer)
+            #w.setWriteLayer(self.writeLayer)
+
         QObject.connect(self.btn_save, SIGNAL('clicked()'), self.save)
         QObject.connect(self.btn_cancel, SIGNAL('clicked()'), self.cancel)
  
         self.populate()
 
     def save(self):
-        #self.main.settings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.quickedit.efw_veldcontrole_door)
-        self.layer.beginEditCommand("Update perceel %s" % self.feature.attribute('uniek_id'))
+        if self.writeLayer and self.writeLayer != self.layer:
+            result, addedFeatures = self.writeLayer.dataProvider().addFeatures([self.feature])
+            if result:
+                for w in self.widgets:
+                    w.feature = addedFeatures[0]
+                    w.layer = self.writeLayer
+                    print "REMAPPING WIDGETS"
+                    w._mapWidgets(w.feature.fields())
+
         for w in self.widgets:
             w.saveFeature()
-        self.layer.commitChanges()
-        self.layer.endEditCommand()
+        #self.main.settings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.quickedit.efw_veldcontrole_door)
         self.parent.saved.emit(self.feature)
         self.parent.close()
 
@@ -104,13 +115,13 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
 class ParcelWindow(QMainWindow):
     saved = pyqtSignal(QgsFeature)
 
-    def __init__(self, main, layer, parcel):
+    def __init__(self, main, layer, writeLayer, parcel):
         QMainWindow.__init__(self, main.iface.mainWindow())
         self.main = main
         self.layer = layer
+        self.writeLayer = writeLayer
         self.parcel = parcel
-        self.parcel.layer = layer
 
-        self.parcelEditWidget = ParcelEditWidget(self, self.main, self.layer, self.parcel)
+        self.parcelEditWidget = ParcelEditWidget(self, self.main, self.layer, self.writeLayer, self.parcel)
         self.setCentralWidget(self.parcelEditWidget)
         self.setWindowTitle("Behandel perceel")
