@@ -52,7 +52,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         self.toMapView({
             'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Orthofoto'],
             'disabledLayers': ['Topokaart', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
-            'label': 'Routekaart'
+            'label': 'Orthofoto'
         })
 
     def toMapErosie2013(self):

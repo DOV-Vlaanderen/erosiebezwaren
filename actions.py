@@ -22,8 +22,9 @@ class Actions(object):
         cmd = os.path.join(os.environ['COMMONPROGRAMFILES'], 'microsoft shared', 'ink', 'TabTip.exe')
         sp = subprocess.Popen(cmd, env=os.environ, shell=True)
 
-    def exit(self):
+    def exit(self, t):
         self.main.selectionManager.deactivate()
+        self.main.annotationManager.deactivate()
         while True:
             QgsApplication.exitQgis()
             time.sleep(0.05)
@@ -36,7 +37,6 @@ class Actions(object):
 
         toolbar.addWidget(MapSwitchButton(self.main, self.parent))
 
-        annotationManager = AnnotationManager(self.main)
-        annotationManager.addActionsToToolbar(toolbar)
+        self.main.annotationManager.addActionsToToolbar(toolbar)
 
         toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'bezwarenkaart'))

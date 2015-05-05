@@ -25,6 +25,17 @@ class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.setupUi(self)
 
+        self.efwCmb_advies_behandeld.setValues([
+            'Te behandelen',
+            'Veldcontrole gebeurd',
+            'Afgehandeld ALBON'
+        ])
+
+        self.efwCmb_advies_aanvaarding.setValues([
+            'Aanvaard',
+            'Niet aanvaard'
+        ])
+
         if parcel:
             self.populate()
 

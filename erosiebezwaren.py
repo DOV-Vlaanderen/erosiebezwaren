@@ -10,6 +10,7 @@ import utils
 import parcelinfowidget
 
 from selectionmanager import SelectionManager
+from annotate import AnnotationManager
 
 class Erosiebezwaren(object):
     def __init__(self, iface):
@@ -30,6 +31,7 @@ class Erosiebezwaren(object):
 
         self.utils = utils.Utils(self)
         self.selectionManager = SelectionManager(self, 'bezwaren_selectie')
+        self.annotationManager = AnnotationManager(self)
         self.actions = actions.Actions(self, self.iface.mainWindow())
         self.actions.addToToolbar(self.toolbar)
 
@@ -41,6 +43,8 @@ class Erosiebezwaren(object):
     def unload(self):
         # Remove the plugin menu item and icon
         self.iface.removePluginMenu('DOV - Erosiebezwaren', self.action)
+        self.selectionManager.deactivate()
+        self.annotationManager.deactivate()
         #self.selectionManager.deactivate()
         #self.iface.removeToolBarIcon(self.action)
         #remove the dock

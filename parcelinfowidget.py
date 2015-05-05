@@ -27,7 +27,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         QObject.connect(self.btn_gpsDms, SIGNAL('clicked(bool)'), self.toggleGpsDms)
 
         self.efw_advies_behandeld.setColorMap(
-            {'te behandelen': ('#00ffee', '#000000')})
+            {'Te behandelen': ('#00ffee', '#000000')})
 
         QObject.connect(self.efwBtn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showPdf_mock)
         QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)

@@ -8,7 +8,7 @@ import uuid
 
 from valuelabel import EnabledBooleanButton
 from sensitivitybuttonbox import SensitivityButtonBox
-from valueinput import DefaultValueDateEdit
+from valueinput import DefaultValueDateEdit, ValueComboBox
 from attributecombobox import AttributeFilledCombobox
 from titledtextedit import TitledTextEdit
 
@@ -35,7 +35,8 @@ class ElevatedFeatureWidget(QWidget):
         elif _s(widget, EnabledBooleanButton) or \
              _s(widget, SensitivityButtonBox) or \
              _s(widget, DefaultValueDateEdit) or \
-             _s(widget, AttributeFilledCombobox):
+             _s(widget, AttributeFilledCombobox) or \
+             _s(widget, ValueComboBox):
             fnSetValue = widget.setValue
 
         if fnSetValue:
@@ -49,7 +50,8 @@ class ElevatedFeatureWidget(QWidget):
             fnGetValue = widget.text
         elif _s(widget, SensitivityButtonBox) or \
              _s(widget, DefaultValueDateEdit) or \
-             _s(widget, AttributeFilledCombobox):
+             _s(widget, AttributeFilledCombobox) or \
+             _s(widget, ValueComboBox):
             fnGetValue = widget.getValue
 
         if fnGetValue:
