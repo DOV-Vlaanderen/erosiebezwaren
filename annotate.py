@@ -6,6 +6,7 @@ from qgis.core import *
 class AnnotationManager(object):
     def __init__(self, main):
         self.main = main
+        #QObject.connect(self.mapCanvas, SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
 
         self.annotateArrow = QAction(QIcon(':/icons/icons/pijlen.png'), 'Teken een pijl', self.main.iface)
         self.annotateArrow.setCheckable(True)

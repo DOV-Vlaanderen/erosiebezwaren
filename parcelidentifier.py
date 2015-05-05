@@ -10,7 +10,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         self.main = main
         self.layer = layer
         QgsMapToolIdentify.__init__(self, self.main.iface.mapCanvas())
-        #self.previousActiveLayer = None
+        self.previousActiveLayer = None
 
         self.parcelInfoDock = ParcelInfoDock(self.main.iface.mainWindow())
         self.parcelInfoWidget = ParcelInfoWidget(self.parcelInfoDock, self.main)
@@ -29,17 +29,9 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
             self.layer = layer
 
     def activate(self):
-    #    self.previousActiveLayer = self.main.iface.activeLayer()
-    #    self.main.iface.setActiveLayer(self.layer)
+        self.previousActiveLayer = self.main.iface.activeLayer()
         self.main.selectionManager.activate()
         QgsMapToolIdentify.activate(self)
-
-    #def deactivate(self):
-    #    if self.previousActiveLayer:
-    #        self.main.iface.setActiveLayer(self.previousActiveLayer)
-    #    if QgsMapToolIdentify:
-    #        #self.main.selectionManager.deactivate()
-    #        QgsMapToolIdentify.deactivate(self)
 
     def canvasReleaseEvent(self, mouseEvent):
         if len(self.identifyLayers) < 1:
@@ -49,11 +41,9 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
                     self.identifyLayers.append(l)
 
         for l in self.identifyLayers:
-            results = self.identify(mouseEvent.x(), mouseEvent.y(), [l], self.LayerSelection)
+            self.main.iface.setActiveLayer(l)
+            results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
             if results:
-                #print [i.mFeature.attribute("GWS_NAAM") for i in results]
-                #parcelDialog = ParcelWindow(self.main, self.layer, results[0].mFeature)
-                #FIXME: wat bij meerdere resultaten
                 self.parcelInfoWidget.setLayer(l)
                 self.parcelInfoWidget.setFeature(results[0].mFeature)
                 self.main.selectionManager.select(results[0].mFeature)
@@ -61,6 +51,9 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
                 break
             else:
                 self.parcelInfoWidget.clear()
+
+        if self.previousActiveLayer:
+            self.main.iface.setActiveLayer(self.previousActiveLayer)
 
 class ParcelIdentifyAction(QAction):
     def __init__(self, main, parent, layerName):

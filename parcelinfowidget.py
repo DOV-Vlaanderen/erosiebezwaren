@@ -101,7 +101,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.layer.removeSelection()
 
     def takePhotos(self):
-        d = PhotoDialog(self.main.iface, self.feature.attribute('uniek_id'))
+        d = PhotoDialog(self.main.iface, str(self.feature.attribute('uniek_id')))
         d.show()
 
     def showParcelList(self):

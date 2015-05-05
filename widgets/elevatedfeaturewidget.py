@@ -22,7 +22,6 @@ class ElevatedFeatureWidget(QWidget):
         QWidget.__init__(self, parent)
         self.parent = parent
         self.layer = None
-        #self.writeLayer = None
         self.feature = feature
         self.fieldMap = {}
 
@@ -67,7 +66,6 @@ class ElevatedFeatureWidget(QWidget):
                 if regex.match(dictfield):
                     if field not in self.fieldMap:
                         self.fieldMap[field] = set()
-                    print "mapped field %s to %s, %s" % (field.name(), dictfield, str(self.__dict__[dictfield]))
                     self.fieldMap[field].add(self.__dict__[dictfield])
 
     def _getField(self, name):
@@ -89,10 +87,6 @@ class ElevatedFeatureWidget(QWidget):
         if layer != self.layer:
             self.layer = layer
 
-    #def setWriteLayer(self, writeLayer):
-    #    if writeLayer != self.writeLayer:
-    #        self.writeLayer = writeLayer
-
     def setFeature(self, feature):
         self.feature = feature
         self.populate()
@@ -108,28 +102,14 @@ class ElevatedFeatureWidget(QWidget):
                 if value != ElevatedFeatureWidget.UNDEFINED:
                     self.feature.setAttribute(field.name(), value)
                     attrMap[field.index] = value
-        #if self.writeLayer and self.writeLayer != self.layer:
-        #    #FIXME: check if feature already exists
-        #    print "ADDING FEATURE"
-        #    r = self.writeLayer.dataProvider().addFeatures([self.feature])
-        #    if not r:
-        #        self.writeLayer.dataProvider().changeAttributeValues({self.feature.id(): attrMap})
-        #    print " success", r
-        #else:
-        #    print "UPDATING FEATURE in layer", self.layer.name()
+
         self.layer.dataProvider().changeAttributeValues({self.feature.id(): attrMap})
 
     def saveFeature(self):
         if not self.feature:
             return
 
-        #if self.writeLayer and self.writeLayer != self.layer:
-        #    layer = self.writeLayer
-        #else:
-        #    layer = self.layer
-
         self.layer.beginEditCommand("Update perceel %s" % self.feature.attribute('uniek_id'))
         self._saveFeature()
         self.layer.commitChanges()
         self.layer.endEditCommand()
-        #print "end edit command in layer", layer.name()

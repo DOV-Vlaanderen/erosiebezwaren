@@ -86,7 +86,6 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
 
         for w in self.widgets:
             w.setLayer(self.layer)
-            #w.setWriteLayer(self.writeLayer)
 
         QObject.connect(self.btn_save, SIGNAL('clicked()'), self.save)
         QObject.connect(self.btn_cancel, SIGNAL('clicked()'), self.cancel)
@@ -100,7 +99,6 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
                 for w in self.widgets:
                     w.feature = addedFeatures[0]
                     w.layer = self.writeLayer
-                    print "REMAPPING WIDGETS"
                     w._mapWidgets(w.feature.fields())
 
         for w in self.widgets:
