@@ -19,6 +19,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         QObject.connect(self.btn_erosie2015, SIGNAL('clicked(bool)'), self.toMapErosie2015)
         QObject.connect(self.btn_watererosie, SIGNAL('clicked(bool)'), self.toMapWatererosie)
         QObject.connect(self.btn_bewerkingserosie, SIGNAL('clicked(bool)'), self.toMapBewerkingserosie)
+        QObject.connect(self.btn_afstromingskaart, SIGNAL('clicked(bool)'), self.toMapAfstromingskaart)
 
     def toggleLayersGroups(self, enable, disable):
         legendInterface = self.main.iface.legendInterface()
@@ -43,51 +44,58 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
 
     def toMapRoutekaart(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart'],
+            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart'],
             'disabledLayers': ['Orthofoto', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
             'label': 'Routekaart'
         })
 
     def toMapOrthofoto(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Orthofoto'],
+            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Orthofoto'],
             'disabledLayers': ['Topokaart', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
             'label': 'Orthofoto'
         })
 
     def toMapErosie2013(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'Afstromingskaart', '2013 potentiele bodemerosie'],
-            'disabledLayers': ['Orthofoto', '2014 potentiele bodemerosie', '2015 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
+            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', '2013 potentiele bodemerosie'],
+            'disabledLayers': ['Orthofoto', '2014 potentiele bodemerosie', '2015 potentiele bodemerosie', 'Afstromingskaart', 'watererosie', 'bewerkingserosie'],
             'label': 'Erosiekaart 2013'
         })
 
     def toMapErosie2014(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'Afstromingskaart', '2014 potentiele bodemerosie'],
-            'disabledLayers': ['Orthofoto', '2013 potentiele bodemerosie', '2015 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
+            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', '2014 potentiele bodemerosie'],
+            'disabledLayers': ['Orthofoto', '2013 potentiele bodemerosie', '2015 potentiele bodemerosie', 'Afstromingskaart', 'watererosie', 'bewerkingserosie'],
             'label': 'Erosiekaart 2014'
         })
 
     def toMapErosie2015(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'Afstromingskaart', '2015 potentiele bodemerosie'],
-            'disabledLayers': ['Orthofoto', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie'],
+            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', '2015 potentiele bodemerosie'],
+            'disabledLayers': ['Orthofoto', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'Afstromingskaart', 'watererosie', 'bewerkingserosie'],
             'label': 'Erosiekaart 2015'
         })
 
     def toMapWatererosie(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'watererosie'],
+            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'watererosie'],
             'disabledLayers': ['Afstromingskaart', 'Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'bewerkingserosie'],
             'label': 'Watererosie'
         })
 
     def toMapBewerkingserosie(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'Topokaart', 'bewerkingserosie'],
+            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'bewerkingserosie'],
             'disabledLayers': ['Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'Afstromingskaart'],
             'label': 'Bewerkingserosie'
+        })
+
+    def toMapAfstromingskaart(self):
+        self.toMapView({
+            'enabledLayers': ['Overzichtskaart', 'Afstromingskaart', 'Topokaart'],
+            'disabledLayers': ['Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bezwarenkaart', 'percelenkaart'],
+            'label': 'Afstromingskaart'
         })
 
 class MapSwitchButton(QToolButton):

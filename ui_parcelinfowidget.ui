@@ -360,20 +360,17 @@ font-weight: bold;
                <x>0</x>
                <y>0</y>
                <width>354</width>
-               <height>639</height>
+               <height>676</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
-               <widget class="VisibilityBooleanLabel" name="efw_herindiening_bezwaar">
+               <widget class="VisibilityBooleanButton" name="efwBtn_herindiening_bezwaar">
                 <property name="styleSheet">
                  <string notr="true">* { color: #C8282F; }</string>
                 </property>
                 <property name="text">
-                 <string>Herindiening bezwaar</string>
-                </property>
-                <property name="wordWrap">
-                 <bool>false</bool>
+                 <string>Toon eerdere bezwaren</string>
                 </property>
                </widget>
               </item>
@@ -511,6 +508,13 @@ font-weight: bold;
                  </widget>
                 </item>
                </layout>
+              </item>
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QLabel" name="lb_watererosie_30_2015">
@@ -1242,11 +1246,6 @@ font-weight: bold;
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
   <customwidget>
-   <class>VisibilityBooleanLabel</class>
-   <extends>QLabel</extends>
-   <header>Erosiebezwaren/widgets/valuelabel.h</header>
-  </customwidget>
-  <customwidget>
    <class>SensitivityColorLabel</class>
    <extends>QLabel</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
@@ -1269,6 +1268,11 @@ font-weight: bold;
   <customwidget>
    <class>ValueMappedLabel</class>
    <extends>QLabel</extends>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>VisibilityBooleanButton</class>
+   <extends>QPushButton</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
  </customwidgets>

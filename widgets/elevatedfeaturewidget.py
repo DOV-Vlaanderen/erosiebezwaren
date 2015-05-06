@@ -6,7 +6,7 @@ from qgis.core import *
 import re
 import uuid
 
-from valuelabel import EnabledBooleanButton
+from valuelabel import EnabledBooleanButton, VisibilityBooleanButton
 from sensitivitybuttonbox import SensitivityButtonBox
 from valueinput import DefaultValueDateEdit, ValueComboBox, ValueMappedComboBox
 from attributecombobox import AttributeFilledCombobox
@@ -33,6 +33,7 @@ class ElevatedFeatureWidget(QWidget):
            _s(widget, TitledTextEdit):
             fnSetValue = widget.setText
         elif _s(widget, EnabledBooleanButton) or \
+             _s(widget, VisibilityBooleanButton) or \
              _s(widget, SensitivityButtonBox) or \
              _s(widget, DefaultValueDateEdit) or \
              _s(widget, AttributeFilledCombobox) or \
