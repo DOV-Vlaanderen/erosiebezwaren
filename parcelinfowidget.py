@@ -26,8 +26,10 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.btn_gpsDms.setChecked(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false') == 'true')
         QObject.connect(self.btn_gpsDms, SIGNAL('clicked(bool)'), self.toggleGpsDms)
 
-        self.efw_advies_behandeld.setColorMap(
-            {'Te behandelen': ('#00ffee', '#000000')})
+        self.efw_advies_behandeld.defaultColors = ('#5d5d5d', '#ffffff')
+        self.efw_advies_behandeld.setColorMap({
+            'Te behandelen': ('#00ffee', '#000000')
+        })
 
         self.efw_advies_aanvaarding.setValues([
             ('Aanvaard', 1),
@@ -38,7 +40,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
         QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
         QObject.connect(self.btn_photo, SIGNAL('clicked(bool)'), self.takePhotos)
-        QObject.connect(self.btn_anderePercelen, SIGNAL('clicked(bool)'), self.showParcelList)
+        QObject.connect(self.efwBtnAndereBezwaren_advies_behandeld, SIGNAL('clicked(bool)'), self.showParcelList)
 
         self.populate()
 
@@ -110,11 +112,11 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         d.show()
 
     def showParcelList(self):
-        self.btn_anderePercelen.setEnabled(False)
+        self.efwBtnAndereBezwaren_advies_behandeld.setEnabled(False)
         QCoreApplication.processEvents()
-        self.btn_anderePercelen.repaint()
+        self.efwBtnAndereBezwaren_advies_behandeld.repaint()
         d = ParcelListDialog(self)
-        QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.btn_anderePercelen.setEnabled(True))
+        QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtnAndereBezwaren_advies_behandeld.setEnabled(True))
         d.populate(self.layer, self.feature)
         d.show()
 

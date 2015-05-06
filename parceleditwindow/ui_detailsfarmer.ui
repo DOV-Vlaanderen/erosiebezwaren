@@ -19,7 +19,16 @@
      <property name="title">
       <string>Details landbouwer</string>
      </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
      <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+      </property>
+      <property name="labelAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="lb_producentnr">
         <property name="text">
@@ -57,13 +66,6 @@
       </item>
       <item row="2" column="1">
        <widget class="ValueLabel" name="efw_straat_met_nr">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="ValueLabel" name="efw_postcode_gemeente">
         <property name="text">
          <string/>
         </property>
@@ -110,6 +112,30 @@
          <string/>
         </property>
        </widget>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="ValueLabel" name="efw_postcode">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="ValueLabel" name="efw_gemeente">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

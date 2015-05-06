@@ -28,10 +28,11 @@ class ValueLineEdit(QLineEdit):
 class ValueComboBox(QComboBox):
     def __init__(self, parent):
         QComboBox.__init__(self, parent)
+        self.initialValues = ['']
         self.values = []
 
     def setValues(self, values):
-        self.values = ['']
+        self.values = self.initialValues
         self.values.extend(values)
         self.clear()
         self.addItems(self.values)
@@ -40,7 +41,7 @@ class ValueComboBox(QComboBox):
         if value and value in self.values:
             self.setCurrentIndex(self.values.index(value))
         else:
-            self.setCurrentIndex(0)
+            self.setCurrentIndex(-1)
 
     def getValue(self):
         if self.currentText():

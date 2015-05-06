@@ -16,7 +16,7 @@ class AttributeModel(QAbstractItemModel):
         values = [''] #FIXME
         for feature in self.layer.getFeatures():
             v = feature.attribute(self.attributeName)
-            if v not in values:
+            if v and v not in values:
                 values.append(v)
         self.values = values
 

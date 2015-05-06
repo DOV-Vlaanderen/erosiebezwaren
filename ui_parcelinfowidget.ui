@@ -257,6 +257,25 @@ font-weight: bold;
        </widget>
       </item>
       <item>
+       <widget class="DefaultColorValueLabel" name="efw_advies_behandeld">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">* { background-color: #5D5D5D; color: white; border-radius: 4px;}</string>
+        </property>
+        <property name="text">
+         <string>Geen bezwaar</string>
+        </property>
+        <property name="margin">
+         <number>4</number>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
          <number>6</number>
@@ -264,25 +283,6 @@ font-weight: bold;
         <property name="sizeConstraint">
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
-        <item>
-         <widget class="DefaultColorValueLabel" name="efw_advies_behandeld">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">* { background-color: cyan; border-radius: 4px;}</string>
-          </property>
-          <property name="text">
-           <string>Status</string>
-          </property>
-          <property name="margin">
-           <number>4</number>
-          </property>
-         </widget>
-        </item>
         <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
@@ -305,7 +305,7 @@ font-weight: bold;
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Bezwaar</string>
+           <string>2015</string>
           </property>
           <property name="margin">
            <number>4</number>
@@ -360,7 +360,7 @@ font-weight: bold;
                <x>0</x>
                <y>0</y>
                <width>354</width>
-               <height>640</height>
+               <height>639</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -580,7 +580,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="ValueLabel" name="efw2_perceelsnr_va2015">
+               <widget class="ValueLabel" name="efw2_perceelsnr_va_2015">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -726,14 +726,14 @@ font-weight: bold;
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>-130</y>
+               <y>0</y>
                <width>356</width>
-               <height>534</height>
+               <height>533</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <item>
-               <widget class="QPushButton" name="btn_anderePercelen">
+               <widget class="EnabledBooleanButton" name="efwBtnAndereBezwaren_advies_behandeld">
                 <property name="text">
                  <string>Toon alle bezwaren</string>
                 </property>
@@ -1037,8 +1037,8 @@ font-weight: bold;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>369</width>
-               <height>404</height>
+               <width>356</width>
+               <height>389</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">

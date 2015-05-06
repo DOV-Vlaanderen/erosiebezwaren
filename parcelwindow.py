@@ -26,6 +26,7 @@ class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
         self.main = main
         self.setupUi(self)
 
+        self.efwCmb_advies_behandeld.initialValues = []
         self.efwCmb_advies_behandeld.setValues([
             'Te behandelen',
             'Veldcontrole gebeurd',
@@ -41,8 +42,22 @@ class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
             self.main.utils.getLayerByName('bezwarenkaart'),
             'gewas_veldbezoek')
 
+        self.efwCmb_advies_behandeld.setEnabled(self.feature.attribute('advies_behandeld') != None)
+        self.efwCmb_advies_aanvaarding.setEnabled(self.feature.attribute('advies_behandeld') != None)
+
+        QObject.connect(self.btn_setToday, SIGNAL('clicked(bool)'), self.setToday)
+        QObject.connect(self.btn_setLastEditor, SIGNAL('clicked(bool)'), self.setLastEditor)
+
         if parcel:
             self.populate()
+
+    def setToday(self):
+        self.efw_datum_veldbezoek.setDate(QDate.currentDate())
+
+    def setLastEditor(self):
+        lastEditor = self.main.settings.value('/Qgis/plugins/Erosiebezwaren/editor')
+        if type(lastEditor) in [str, unicode]:
+            self.efw_veldcontrole_door.setText(lastEditor)
 
 class DetailsParcel(ElevatedFeatureWidget, Ui_DetailsParcel):
     def __init__(self, parent, main, parcel=None):
@@ -82,8 +97,6 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.verticalLayout.insertWidget(0, self.header)
 
         self.quickedit = QuickEdit(self, self.main, self.feature)
-        #self.quickedit.efwCmb_gewas_veldbezoek.setSource(self.layer, 'gewas_veldbezoek')
-        #self.quickedit.efw_veldcontrole_door.setText(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/editor'))
         self.widgets.append(self.quickedit)
         self.verticalLayout_3.insertWidget(0, self.quickedit)
 
@@ -119,7 +132,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
 
         for w in self.widgets:
             w.saveFeature()
-        #self.main.settings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.quickedit.efw_veldcontrole_door)
+        self.main.settings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.quickedit.efw_veldcontrole_door.text())
         self.parent.saved.emit(self.feature)
         self.parent.close()
 

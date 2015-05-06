@@ -80,6 +80,21 @@ class VisibilityBooleanLabel(QLabel):
         else:
             self.hide()
 
+class InvertedVisibilityBooleanLabel(QLabel):
+    def __init__(self, parent):
+        QLabel.__init__(self, parent)
+        self.fixedText = None
+
+    def setText(self, text):
+        if not self.fixedText:
+            self.fixedText = text
+            QLabel.setText(self, self.fixedText)
+
+        if text:
+            self.hide()
+        else:
+            self.show()
+
 class ColorLabel(QLabel):
     def __init__(self, parent):
         QLabel.__init__(self, parent)
@@ -131,11 +146,12 @@ class DefaultColorValueLabel(DefaultValueLabel, ColorLabel):
     def __init__(self, parent):
         ColorLabel.__init__(self, parent)
         DefaultValueLabel.__init__(self, parent)
+        self.defaultColors = ('#c6c6c6', '#000000')
         del(self.fixedText)
 
     def setText(self, text):
         DefaultValueLabel.setText(self, text)
-        bgcolor, textcolor = self.colorMap.get(text, ('#c6c6c6', '#000000'))
+        bgcolor, textcolor = self.colorMap.get(text, self.defaultColors)
         self._setStyleSheet(bgcolor, textcolor)
 
 class EnabledBooleanButton(QPushButton):

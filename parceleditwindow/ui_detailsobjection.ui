@@ -20,6 +20,9 @@
       <string>Details bezwaar</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
+      <property name="labelAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
@@ -63,28 +66,28 @@
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QLabel" name="label_9">
+       <widget class="QLabel" name="lb_campagne">
         <property name="text">
          <string>Campagne</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLabel" name="label_10">
+       <widget class="ValueLabel" name="efw_campagne">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QLabel" name="label_7">
+       <widget class="QLabel" name="lb_datum_bezwaar">
         <property name="text">
          <string>Datum bezwaar</string>
         </property>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLabel" name="label_8">
+       <widget class="ValueLabel" name="efw_datum_bezwaar">
         <property name="text">
          <string/>
         </property>
@@ -147,6 +150,11 @@
   <customwidget>
    <class>EnabledBooleanButton</class>
    <extends>QPushButton</extends>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ValueLabel</class>
+   <extends>QLabel</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
  </customwidgets>

@@ -20,6 +20,12 @@
       <string>Details perceel</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+      </property>
+      <property name="labelAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="lb_perceelsnr_va_2015">
         <property name="text">
@@ -49,69 +55,41 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="lb_gps">
-        <property name="text">
-         <string>Coördinaten</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="ValueLabel" name="efw_gps">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="lb_gemeente">
-        <property name="text">
-         <string>Gemeente</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="ValueLabel" name="efw_gemeente">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
        <widget class="QLabel" name="lb_gespec_pm">
         <property name="text">
          <string>Gespecialiseerde productiemethode</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="2" column="1">
        <widget class="ValueLabel" name="efw_gespec_pm">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="lb_bo">
         <property name="text">
          <string>Beheersovereenkomst</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="3" column="1">
        <widget class="ValueLabel" name="efw_bo">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="lb_historiek">
         <property name="text">
          <string>Historiek erosiekaart</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="4" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="SensitivityColorLabel" name="efw_kleur_2015">
@@ -154,14 +132,14 @@
         </item>
        </layout>
       </item>
-      <item row="7" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="lb_erosieklasse_lv">
         <property name="text">
          <string>Erosieklasse LV</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="1">
+      <item row="5" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2015">
@@ -191,56 +169,56 @@
         </item>
        </layout>
       </item>
-      <item row="8" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="lb_watererosie_0">
         <property name="text">
          <string>Watererosie 0 2015</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="1">
+      <item row="6" column="1">
        <widget class="ValueLabel" name="efw_watererosie_0_2015">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="9" column="0">
+      <item row="7" column="0">
        <widget class="QLabel" name="lb_watererosie_30">
         <property name="text">
          <string>Watererosie 30 2015</string>
         </property>
        </widget>
       </item>
-      <item row="9" column="1">
+      <item row="7" column="1">
        <widget class="ValueLabel" name="efw_watererosie_30_2015">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="10" column="0">
+      <item row="8" column="0">
        <widget class="QLabel" name="lb_bewerkingserosie">
         <property name="text">
          <string>Bewerkingserosie 2015</string>
         </property>
        </widget>
       </item>
-      <item row="10" column="1">
+      <item row="8" column="1">
        <widget class="ValueLabel" name="efw_bewerkingserosie_2015">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="11" column="0">
+      <item row="9" column="0">
        <widget class="QLabel" name="lb_totale_erosie">
         <property name="text">
          <string>Totale erosie 2015</string>
         </property>
        </widget>
       </item>
-      <item row="11" column="1">
+      <item row="9" column="1">
        <widget class="ValueLabel" name="efw_totale_erosie_2015">
         <property name="text">
          <string/>
