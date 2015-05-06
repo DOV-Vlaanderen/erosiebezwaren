@@ -116,8 +116,9 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         QCoreApplication.processEvents()
         self.efwBtnAndereBezwaren_advies_behandeld.repaint()
         d = ParcelListDialog(self)
+        d.setWindowTitle('Bezwarenlijst %s' % self.feature.attribute('naam'))
         QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtnAndereBezwaren_advies_behandeld.setEnabled(True))
-        d.populate(self.layer, self.feature)
+        d.populate(self.layer, self.feature.attribute('producentnr'))
         d.show()
 
 class ParcelInfoDock(QDockWidget):

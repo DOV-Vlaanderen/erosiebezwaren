@@ -14,6 +14,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
 
         self.parcelInfoDock = ParcelInfoDock(self.main.iface.mainWindow())
         self.parcelInfoWidget = ParcelInfoWidget(self.parcelInfoDock, self.main)
+        self.main.parcelInfoWidget = self.parcelInfoWidget
         self.parcelInfoDock.setWidget(self.parcelInfoWidget)
 
         self.identifyLayers = []

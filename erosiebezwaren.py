@@ -16,7 +16,7 @@ class Erosiebezwaren(object):
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
-        self.erosiebezwarenWidget = None
+        self.parcelInfoWidget = None
         self.dockWidget = None
         self.settings = QSettings()
 

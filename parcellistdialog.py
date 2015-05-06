@@ -19,14 +19,13 @@ class ParcelListWidget(QWidget):
 
         self.parcelList = []
 
-    def populate(self, layer, feature):
+    def populate(self, layer, producentnr):
         self.layer = layer
-        self.feature = feature
-        for p in self.__getParcelIterator():
+        for p in self.__getParcelIterator(producentnr):
             self.addParcel(p)
 
-    def __getParcelIterator(self):
-        expr = '"producentnr" = \'%s\'' % self.feature.attribute('producentnr')
+    def __getParcelIterator(self, producentnr):
+        expr = '"producentnr" = \'%s\'' % producentnr
         return self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr)))
 
     def __getParcels(self):
@@ -60,10 +59,6 @@ class ParcelListWidget(QWidget):
         lb2.setText(parcel.attribute('kleur_2015'))
         self.layout.addWidget(lb2, row, 2)
 
-        lb3 = valuelabel.ValueLabel(self)
-        lb3.setText(parcel.attribute('perceelsnaam'))
-        self.layout.addWidget(lb3, row, 3)
-
 class ParcelListDialog(QDialog, Ui_ParcelListDialog):
     def __init__(self, parcelInfoWidget):
         self.parcelInfoWidget = parcelInfoWidget
@@ -77,10 +72,9 @@ class ParcelListDialog(QDialog, Ui_ParcelListDialog):
         QObject.connect(self.btn_zoomExtent, SIGNAL('clicked(bool)'), self.parcelListWidget.zoomExtent)
         QObject.connect(self, SIGNAL('finished(int)'), self.__clearSelection)
 
-    def populate(self, layer, feature):
+    def populate(self, layer, producentnr):
         self.layer = layer
-        self.feature = feature
-        self.parcelListWidget.populate(self.layer, self.feature)
+        self.parcelListWidget.populate(self.layer, producentnr)
 
     def __clearSelection(self):
         self.main.selectionManager.clearWithMode(mode=1, toggleRendering=True)

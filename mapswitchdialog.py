@@ -93,8 +93,8 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
 
     def toMapAfstromingskaart(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'Afstromingskaart', 'Topokaart'],
-            'disabledLayers': ['Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bezwarenkaart', 'percelenkaart'],
+            'enabledLayers': ['Afstromingskaart', 'Topokaart'],
+            'disabledLayers': ['Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bezwarenkaart', 'percelenkaart', 'Overzichtskaart'],
             'label': 'Afstromingskaart'
         })
 

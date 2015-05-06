@@ -11,7 +11,7 @@ import time
 
 from parcelidentifier import ParcelIdentifyAction
 from mapswitchdialog import MapSwitchButton
-from annotate import AnnotationManager
+from farmersearchdialog import FarmerSearchDialog
 
 class Actions(object):
     def __init__(self, main, parent):
@@ -29,6 +29,10 @@ class Actions(object):
             QgsApplication.exitQgis()
             time.sleep(0.05)
 
+    def searchFarmer(self):
+        d = FarmerSearchDialog(self.main)
+        d.show()
+
     def addToToolbar(self, toolbar):
         #toolbar.addAction(MapSwitchAction(self.main, self.parent))
         exitAction = QAction(QIcon(':/icons/icons/exit.png'), 'EXI', self.parent)
@@ -40,3 +44,7 @@ class Actions(object):
         self.main.annotationManager.addActionsToToolbar(toolbar)
 
         toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'bezwarenkaart'))
+
+        farmerSearchAction = QAction("Zoek landbouwer", self.parent)
+        QObject.connect(farmerSearchAction, SIGNAL('triggered(bool)'), self.searchFarmer)
+        toolbar.addAction(farmerSearchAction)
