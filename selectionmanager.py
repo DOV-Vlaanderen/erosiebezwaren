@@ -25,13 +25,16 @@ class SelectionManager(object):
     def activate(self):
         if not self.__getLayer():
             return
-        self.layer.startEditing()
+        if not self.layer.isEditable():
+            self.layer.startEditing()
 
     def deactivate(self):
         if not self.__getLayer():
             return
-        self.layer.commitChanges()
-        self.layer.endEditCommand()
+
+        if self.layer.isEditable():
+            self.layer.commitChanges()
+            self.layer.endEditCommand()
 
     def clear(self, toggleRendering=True):
         if not self.__getLayer():

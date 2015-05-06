@@ -47,7 +47,6 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
             if results:
                 self.parcelInfoWidget.setLayer(l)
                 self.parcelInfoWidget.setFeature(results[0].mFeature)
-                self.main.selectionManager.select(results[0].mFeature)
                 self.parcelInfoDock.show()
                 break
             else:

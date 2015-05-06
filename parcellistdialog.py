@@ -32,6 +32,7 @@ class ParcelListWidget(QWidget):
         return [f for f in self.__getParcelIterator()]
 
     def goToParcel(self, parcel):
+        self.parcelListDialog.parcelInfoWidget.setLayer(self.parcelListDialog.layer)
         self.parcelListDialog.parcelInfoWidget.setFeature(parcel)
 
     def zoomExtent(self):
@@ -63,6 +64,7 @@ class ParcelListDialog(QDialog, Ui_ParcelListDialog):
     def __init__(self, parcelInfoWidget):
         self.parcelInfoWidget = parcelInfoWidget
         self.main = self.parcelInfoWidget.main
+        self.main.selectionManager.activate()
         QDialog.__init__(self, self.main.iface.mainWindow())
         self.setupUi(self)
 
