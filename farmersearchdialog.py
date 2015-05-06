@@ -3,6 +3,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 
+import difflib
 import re
 
 from ui_farmersearchdialog import Ui_FarmerSearchDialog
@@ -96,14 +97,24 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
         if not self.layer:
             self.layer = self.main.utils.getLayerByName('bezwarenkaart')
             if not self.layer:
+                self.btn_search.setEnabled(True)
                 return
 
         searchText = self.ldt_searchfield.text()
         if not searchText:
+            self.btn_search.setEnabled(True)
             return
 
         if self.reNumber.match(searchText):
             expr = '"producentnr" = \'%s\'' % searchText
-        else:
+            self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr))))
+        elif ' ' in searchText:
             expr = 'lower("naam") like lower(\'%%%s%%\')' % searchText
-        self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr))))
+            self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr))))
+        else:
+            for f in self.layer.getFeatures(QgsFeatureRequest(QgsExpression('"naam" is not null'))):
+                nl = set(f.attribute('naam').lower().strip().split(' '))
+                nl = nl - set(['van', 'de', 'der', 'en'])
+                if len(difflib.get_close_matches(searchText, nl)) > 0:
+                    self.farmerResultWidget.addResult(f)
+            self.farmerResultWidget.featuresAdded.emit()
