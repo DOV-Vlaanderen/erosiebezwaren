@@ -87,7 +87,7 @@
    <item row="7" column="0">
     <widget class="QLabel" name="lb_advies_nieuwe_kleur">
      <property name="text">
-      <string>Advies nieuwe kleur</string>
+      <string>Advies erosiegevoeligheid</string>
      </property>
     </widget>
    </item>

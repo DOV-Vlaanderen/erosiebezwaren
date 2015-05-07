@@ -119,6 +119,6 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
                 if searchText.startswith('"') and searchText.endswith('"'):
                     if searchText.strip('"') in nl:
                         self.farmerResultWidget.addResult(f)
-                elif len(difflib.get_close_matches(searchText, nl)) > 0:
+                elif len(difflib.get_close_matches(searchText, nl, cutoff=0.75)) > 0:
                     self.farmerResultWidget.addResult(f)
             self.farmerResultWidget.featuresAdded.emit()

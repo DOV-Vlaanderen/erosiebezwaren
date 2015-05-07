@@ -28,7 +28,8 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
         self.efw_advies_behandeld.defaultColors = ('#5d5d5d', '#ffffff')
         self.efw_advies_behandeld.setColorMap({
-            'Te behandelen': ('#00ffee', '#000000')
+            'Te behandelen': ('#00ffee', '#000000'),
+            'Veldcontrole gebeurd': ('#00aca1', '#000000')
         })
 
         self.efw_advies_aanvaarding.setValues([
@@ -49,7 +50,11 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         ElevatedFeatureWidget.populate(self)
         if self.feature:
             self.showInfo()
-            self.main.selectionManager.clearWithMode(mode=0, toggleRendering=False)
+            self.main.selectionManager.clear()
+            if self.feature.attribute('advies_behandeld'):
+                for f in self.layer.getFeatures(QgsFeatureRequest(QgsExpression(
+                    '"producentnr" = \'%s\'' % str(self.feature.attribute('producentnr'))))):
+                    self.main.selectionManager.select(f, mode=1, toggleRendering=False)
             self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
             self.populateGps()
             self.populatePhotos()
@@ -121,7 +126,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             self.writeLayer = self.main.utils.getLayerByName("bezwarenkaart")
         p = ParcelWindow(self.main, self.layer, self.writeLayer, self.feature)
         QObject.connect(p, SIGNAL('saved(QgsFeature)'), self.setFeature)
-        p.showMaximized()
+        p.show()
 
     def zoomTo(self):
         self.layer.removeSelection()

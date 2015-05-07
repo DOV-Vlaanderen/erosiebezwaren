@@ -48,7 +48,7 @@ class SensitivityButtonBox(QWidget):
         self.layout = QGridLayout(self)
         self.setLayout(self.layout)
 
-        self.buttons = [SensitivityButton(self, 'verwaarloosbaar', 'Verw.', '#38a800', '#000000'),
+        self.buttons = [SensitivityButton(self, 'verwaarloosbaar', 'Verwaarloosbaar', '#38a800', '#000000'),
                         SensitivityButton(self, 'zeer laag', 'Zeer laag', '#8ff041', '#000000'),
                         SensitivityButton(self, 'laag', 'Laag', '#ffff00', '#000000'),
                         SensitivityButton(self, 'medium', 'Medium', '#ffaa00', '#000000'),
