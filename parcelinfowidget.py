@@ -62,7 +62,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                 QgsCoordinateReferenceSystem(4326, QgsCoordinateReferenceSystem.EpsgCrsId)))
             dms = self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false')
             if dms == 'true':
-                self.lbv_gps.setText(gpsGeom.asPoint().toDegreesMinutesSeconds(0))
+                self.lbv_gps.setText(gpsGeom.asPoint().toDegreesMinutesSeconds(2))
             else:
                 self.lbv_gps.setText(gpsGeom.asPoint().toDegreesMinutes(3))
         else:

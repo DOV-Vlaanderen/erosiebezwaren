@@ -3,6 +3,20 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
 
+class ValueDateEdit(QDateEdit):
+    def __init__(self, parent):
+        QDateEdit.__init__(self, parent)
+        self.format = 'dd/MM/yyyy'
+
+    def setValue(self, date):
+        if date:
+            self.setDate(QDate.fromString(date, self.format))
+        else:
+            self.clear()
+
+    def getValue(self):
+        return self.date().toString(self.format)
+
 class DefaultValueDateEdit(QDateEdit):
     def __init__(self, parent, defaultDate=QDate.currentDate()):
         QDateEdit.__init__(self, parent)

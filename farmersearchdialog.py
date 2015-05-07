@@ -108,13 +108,17 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
         if self.reNumber.match(searchText):
             expr = '"producentnr" = \'%s\'' % searchText
             self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr))))
-        elif ' ' in searchText:
-            expr = 'lower("naam") like lower(\'%%%s%%\')' % searchText
-            self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr))))
         else:
             for f in self.layer.getFeatures(QgsFeatureRequest(QgsExpression('"naam" is not null'))):
-                nl = set(f.attribute('naam').lower().strip().split(' '))
-                nl = nl - set(['van', 'de', 'der', 'en'])
-                if len(difflib.get_close_matches(searchText, nl)) > 0:
+                if ' ' in searchText:
+                    nl = set([f.attribute('naam').lower().strip()])
+                else:
+                    nl = set(f.attribute('naam').lower().strip().split(' '))
+                    nl = nl - set(['van', 'de', 'der', 'en', 'vande'])
+
+                if searchText.startswith('"') and searchText.endswith('"'):
+                    if searchText.strip('"') in nl:
+                        self.farmerResultWidget.addResult(f)
+                elif len(difflib.get_close_matches(searchText, nl)) > 0:
                     self.farmerResultWidget.addResult(f)
             self.farmerResultWidget.featuresAdded.emit()
