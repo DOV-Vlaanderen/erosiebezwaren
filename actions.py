@@ -48,3 +48,11 @@ class Actions(object):
         farmerSearchAction = QAction("Zoek landbouwer", self.parent)
         QObject.connect(farmerSearchAction, SIGNAL('triggered(bool)'), self.searchFarmer)
         toolbar.addAction(farmerSearchAction)
+
+        zoomInAction = QAction("++", self.parent)
+        QObject.connect(zoomInAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomIn())
+        toolbar.addAction(zoomInAction)
+        
+        zoomOutAction = QAction("--", self.parent)
+        QObject.connect(zoomOutAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomOut())
+        toolbar.addAction(zoomOutAction)

@@ -1035,10 +1035,17 @@ font-weight: bold;
                <x>0</x>
                <y>0</y>
                <width>356</width>
-               <height>389</height>
+               <height>426</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="QPushButton" name="btn_showPhotos">
+                <property name="text">
+                 <string>Toon foto's</string>
+                </property>
+               </widget>
+              </item>
               <item>
                <widget class="QLabel" name="lb_advies_aanvaarding">
                 <property name="text">

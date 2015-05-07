@@ -40,6 +40,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
         QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
         QObject.connect(self.btn_photo, SIGNAL('clicked(bool)'), self.takePhotos)
+        QObject.connect(self.btn_showPhotos, SIGNAL('clicked(bool)'), self.showPhotos)
         QObject.connect(self.efwBtnAndereBezwaren_advies_behandeld, SIGNAL('clicked(bool)'), self.showParcelList)
 
         self.populate()
@@ -51,7 +52,10 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             self.main.selectionManager.clearWithMode(mode=0, toggleRendering=False)
             self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
             self.populateGps()
+            self.populatePhotos()
         else:
+            self.populateGps()
+            self.populatePhotos()
             self.clear()
 
     def populateGps(self):
@@ -67,6 +71,24 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                 self.lbv_gps.setText(gpsGeom.asPoint().toDegreesMinutes(3))
         else:
             self.lbv_gps.clear()
+
+    def populatePhotos(self):
+        if self.feature:
+            photoPath = os.path.join(os.path.dirname(QgsProject.instance().fileName()), 'fotos', str(self.feature.attribute('uniek_id')))
+            if os.path.exists(photoPath) and len(os.listdir(photoPath)) > 0:
+                self.photoPath = photoPath
+                self.btn_showPhotos.show()
+                return
+        self.photoPath = None
+        self.btn_showPhotos.hide()
+
+    def showPhotos(self):
+        if not self.photoPath:
+            return
+
+        cmd = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe')
+        cmd += ' "%s"' % self.photoPath
+        subprocess.Popen(cmd)
 
     def toggleGpsDms(self, checked):
         switch = {'true': 'false', 'false': 'true'}

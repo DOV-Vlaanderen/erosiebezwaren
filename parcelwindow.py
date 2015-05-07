@@ -42,7 +42,6 @@ class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
             self.main.utils.getLayerByName('bezwarenkaart'),
             'gewas_veldbezoek')
 
-        self.efwCmb_advies_behandeld.setEnabled(self.feature.attribute('advies_behandeld') != None)
         self.efwCmb_advies_aanvaarding.setEnabled(self.feature.attribute('advies_behandeld') != None)
 
         QObject.connect(self.btn_setToday, SIGNAL('clicked(bool)'), self.setToday)
