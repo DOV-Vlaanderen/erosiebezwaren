@@ -17,8 +17,13 @@ class Header(ElevatedFeatureWidget, Ui_Header):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.setupUi(self)
 
+        QObject.connect(self.btn_minimize, SIGNAL('clicked()'), self.minimize)
+
         if parcel:
             self.populate()
+
+    def minimize(self):
+        self.parent.parent.showMinimized()
 
 class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
     def __init__(self, parent, main, parcel=None):
@@ -108,9 +113,9 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.detailsFarmer = DetailsFarmer(self, self.main, self.feature)
         self.detailsParcel = DetailsParcel(self, self.main, self.feature)
         self.widgets.extend([self.detailsObjection, self.detailsFarmer, self.detailsParcel])
+        self.verticalLayout_4.addWidget(self.detailsParcel)
         self.verticalLayout_4.addWidget(self.detailsObjection)
-        self.verticalLayout_4.addWidget(self.detailsFarmer)
-        self.verticalLayout_5.addWidget(self.detailsParcel)
+        self.verticalLayout_5.addWidget(self.detailsFarmer)
 
         for w in self.widgets:
             w.setLayer(self.layer)

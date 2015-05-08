@@ -39,13 +39,6 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="TitledTextEdit" name="efwEdt_opmerkingen_veldbezoek" native="true"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
           <widget class="TitledTextEdit" name="efwEdt_observaties_watererosie" native="true"/>
          </item>
          <item>
@@ -58,8 +51,15 @@
            </property>
           </widget>
          </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="TitledTextEdit" name="efwEdt_andere_observaties" native="true"/>
+         </item>
+         <item>
+          <widget class="TitledTextEdit" name="efwEdt_opmerkingen_veldbezoek" native="true"/>
          </item>
         </layout>
        </item>

@@ -21,6 +21,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.main = main
         self.layer = layer
         self.writeLayer = self.main.utils.getLayerByName('bezwarenkaart')
+        self.editWindow = None
         self.setupUi(self)
 
         self.btn_gpsDms.setChecked(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false') == 'true')
@@ -47,6 +48,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.populate()
 
     def populate(self):
+        self.editWindow = None
         ElevatedFeatureWidget.populate(self)
         if self.feature:
             self.showInfo()
@@ -126,11 +128,18 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         sp = subprocess.Popen(cmd % path)
 
     def showEditWindow(self):
+        def clearEditWindow():
+            self.editWindow = None
+
         if not self.writeLayer:
             self.writeLayer = self.main.utils.getLayerByName("bezwarenkaart")
-        p = ParcelWindow(self.main, self.layer, self.writeLayer, self.feature)
-        QObject.connect(p, SIGNAL('saved(QgsFeature)'), self.setFeature)
-        p.show()
+        if not self.editWindow:
+            self.editWindow = ParcelWindow(self.main, self.layer, self.writeLayer, self.feature)
+            QObject.connect(self.editWindow, SIGNAL('saved(QgsFeature)'), self.setFeature)
+            QObject.connect(self.editWindow, SIGNAL('finished(int)'), clearEditWindow)
+
+        self.editWindow.setWindowState(Qt.WindowActive)
+        self.editWindow.show()
 
     def zoomTo(self):
         self.layer.removeSelection()
