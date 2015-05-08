@@ -35,24 +35,37 @@ class Actions(object):
 
     def addToToolbar(self, toolbar):
         #toolbar.addAction(MapSwitchAction(self.main, self.parent))
-        exitAction = QAction(QIcon(':/icons/icons/exit.png'), 'EXI', self.parent)
+        exitAction = QAction(QIcon(':/icons/icons/exit.png'), 'Applicatie afsluiten', self.parent)
         QObject.connect(exitAction, SIGNAL('triggered(bool)'), self.exit)
         toolbar.addAction(exitAction)
+        toolbar.addSeparator()
 
         toolbar.addWidget(MapSwitchButton(self.main, self.parent))
-
+        toolbar.addSeparator()
         self.main.annotationManager.addActionsToToolbar(toolbar)
+        toolbar.addSeparator()
+        
 
-        toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'bezwarenkaart'))
-
-        farmerSearchAction = QAction("Zoek landbouwer", self.parent)
+        farmerSearchAction = QAction(QIcon(':/icons/icons/searchfarmer.png'), "Landbouwer opzoeken", self.parent)
         QObject.connect(farmerSearchAction, SIGNAL('triggered(bool)'), self.searchFarmer)
         toolbar.addAction(farmerSearchAction)
-
-        zoomInAction = QAction("++", self.parent)
+        toolbar.addSeparator()
+        zoomInAction = QAction(QIcon(':/icons/icons/zoomin.png'), "Zoom in", self.parent)
         QObject.connect(zoomInAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomIn())
         toolbar.addAction(zoomInAction)
         
-        zoomOutAction = QAction("--", self.parent)
+        zoomOutAction = QAction(QIcon(':/icons/icons/zoomout.png'), "Zoom uit", self.parent)
         QObject.connect(zoomOutAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomOut())
         toolbar.addAction(zoomOutAction)
+        
+        #toggleFullscreenAction = self.main.iface.actionToggleFullscreen()
+        #toggleFullscreenAction.setIcon(QIcon(':/icons/icons/searchfarmer.png'))
+        #toolbar.addAction(toggleFullscrenAction)
+        
+        toolbar.addSeparator()
+
+        toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'bezwarenkaart'))
+        
+        #touchAction = self.main.iface.actionTouch()
+        #touchAction.setIcon(QIcon(':/icons/icons/searchfarmer.png'))
+        #toolbar.addAction(touchAction)

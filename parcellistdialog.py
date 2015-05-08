@@ -80,4 +80,5 @@ class ParcelListDialog(QDialog, Ui_ParcelListDialog):
         self.parcelListWidget.populate(self.layer, producentnr)
 
     def __clearSelection(self):
-        self.main.selectionManager.clearWithMode(mode=1, toggleRendering=True)
+        if not self.parcelInfoWidget.feature:
+            self.main.selectionManager.clear()

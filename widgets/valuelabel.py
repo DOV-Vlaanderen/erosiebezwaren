@@ -161,6 +161,15 @@ class EnabledBooleanButton(QPushButton):
         else:
             self.setEnabled(False)
 
+class EnabledFlatBooleanButton(QPushButton):
+    def setValue(self, value):
+        if value:
+            self.setEnabled(True)
+            self.setFlat(False)
+        else:
+            self.setEnabled(False)
+            self.setFlat(True)
+
 class VisibilityBooleanButton(QPushButton):
     def setValue(self, value):
         if value:

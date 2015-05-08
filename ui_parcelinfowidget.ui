@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>427</width>
+    <width>418</width>
     <height>839</height>
    </rect>
   </property>
@@ -33,42 +33,18 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btn_photo">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/icons/icons/photo.png</normaloff>:/icons/icons/photo.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="btn_zoomto">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
           <property name="text">
            <string/>
@@ -86,12 +62,47 @@
          </widget>
         </item>
         <item>
-         <widget class="EnabledBooleanButton" name="efwBtn_bezwaarformulier">
+         <widget class="QPushButton" name="btn_photo">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/icons/icons/photo.png</normaloff>:/icons/icons/photo.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="EnabledFlatBooleanButton" name="efwBtn_bezwaarformulier">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
           <property name="text">
            <string/>
@@ -116,6 +127,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -130,19 +147,6 @@
            </size>
           </property>
          </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </item>
@@ -359,7 +363,7 @@ font-weight: bold;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>354</width>
+               <width>345</width>
                <height>649</height>
               </rect>
              </property>
@@ -724,7 +728,7 @@ font-weight: bold;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>356</width>
+               <width>347</width>
                <height>533</height>
               </rect>
              </property>
@@ -1034,7 +1038,7 @@ font-weight: bold;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>356</width>
+               <width>347</width>
                <height>426</height>
               </rect>
              </property>
@@ -1272,6 +1276,11 @@ font-weight: bold;
   </customwidget>
   <customwidget>
    <class>VisibilityBooleanButton</class>
+   <extends>QPushButton</extends>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>EnabledFlatBooleanButton</class>
    <extends>QPushButton</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>

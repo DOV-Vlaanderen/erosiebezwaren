@@ -40,7 +40,7 @@ class FarmerResultWidget(QWidget):
             return
 
         d = ParcelListDialog(self.main.parcelInfoWidget)
-        d.setWindowTitle('Bezwarenlijst %s' % naam)
+        d.lbv_bezwaren_van.setText('Bezwaren van %s' % naam)
         d.populate(self.farmerSearchDialog.layer, producentnr)
         d.show()
 

@@ -79,7 +79,10 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
     def populatePhotos(self):
         if self.feature:
-            photoPath = os.path.join(os.path.dirname(QgsProject.instance().fileName()), 'fotos', str(self.feature.attribute('uniek_id')))
+            # QgsProject.instance().fileName() returns path with forward slashes, even on Windows. Append subdirectories with forward slashed too
+            # and replace all of them afterwards with backward slashes.
+            photoPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'fotos', str(self.feature.attribute('uniek_id'))])
+            photoPath = photoPath.replace('/', '\\')
             if os.path.exists(photoPath) and len(os.listdir(photoPath)) > 0:
                 self.photoPath = photoPath
                 self.btn_showPhotos.show()
@@ -103,9 +106,10 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.populateGps()
 
     def clear(self):
+        self.feature = None
         self.lb_geenselectie.show()
         self.infoWidget.hide()
-        self.main.selectionManager.clearWithMode(mode=0)
+        self.main.selectionManager.clear()
 
     def showInfo(self):
         self.infoWidget.show()
@@ -143,7 +147,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         QCoreApplication.processEvents()
         self.efwBtnAndereBezwaren_advies_behandeld.repaint()
         d = ParcelListDialog(self)
-        d.setWindowTitle('Bezwarenlijst %s' % self.feature.attribute('naam'))
+        d.lbv_bezwaren_van.setText('Bezwaren van %s' % str(self.feature.attribute('naam')))
         QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtnAndereBezwaren_advies_behandeld.setEnabled(True))
         d.populate(self.layer, self.feature.attribute('producentnr'))
         d.show()
