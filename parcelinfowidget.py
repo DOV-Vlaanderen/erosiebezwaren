@@ -21,7 +21,11 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.main = main
         self.layer = layer
         self.writeLayer = self.main.utils.getLayerByName('bezwarenkaart')
+
         self.editWindow = None
+        self.photoPath = None
+        self.objectionPath = []
+
         self.setupUi(self)
 
         self.btn_gpsDms.setChecked(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false') == 'true')
@@ -38,7 +42,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             ('Niet aanvaard', 0)
         ])
 
-        QObject.connect(self.efwBtn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showPdf_mock)
+        QObject.connect(self.btn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showObjection)
         QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
         QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
         QObject.connect(self.btn_photo, SIGNAL('clicked(bool)'), self.takePhotos)
@@ -58,12 +62,12 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                     '"producentnr" = \'%s\'' % str(self.feature.attribute('producentnr'))))):
                     self.main.selectionManager.select(f, mode=1, toggleRendering=False)
             self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
-            self.populateGps()
-            self.populatePhotos()
         else:
-            self.populateGps()
-            self.populatePhotos()
             self.clear()
+
+        self.populateGps()
+        self.populatePhotos()
+        self.populateObjectionForm()
 
     def populateGps(self):
         if self.feature:
@@ -91,6 +95,33 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                 return
         self.photoPath = None
         self.btn_showPhotos.hide()
+
+    def populateObjectionForm(self):
+        if self.feature:
+            cmdShow = os.environ['COMSPEC'] + ' /c start "" "%s"'
+            cmdExplore = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe') + ' "%s"'
+            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'bezwaren', str(self.feature.attribute('producentnr'))])
+            objectionPath.replace('/', '\\')
+            self.objectionPath = []
+            if os.path.exists(objectionPath):
+                fileList = [i.lower() for i in os.listdir(objectionPath)]
+                exts = set([f[f.rfind('.')+1:] for f in fileList])
+                if len(exts) == 1 and 'pdf' in exts:
+                    # only pdfs
+                    for f in fileList:
+                        self.objectionPath.append(cmdShow % objectionPath + '/' + f)
+                elif len(exts) > 0:
+                    # other thing(s)
+                    self.objectionPath.append(cmdExplore % objectionPath)
+                self.btn_bezwaarformulier.setEnabled(True)
+                self.btn_bezwaarformulier.setFlat(False)
+                return
+        self.btn_bezwaarformulier.setEnabled(False)
+        self.btn_bezwaarformulier.setFlat(True)
+
+    def showObjection(self):
+        for o in self.objectionPath:
+            subprocess.Popen(o)
 
     def showPhotos(self):
         if not self.photoPath:
@@ -149,6 +180,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
     def takePhotos(self):
         d = PhotoDialog(self.main.iface, str(self.feature.attribute('uniek_id')))
+        QObject.connect(d, SIGNAL('saved()'), self.populatePhotos)
         d.show()
 
     def showParcelList(self):

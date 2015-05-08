@@ -35,14 +35,10 @@ class Erosiebezwaren(object):
         self.actions = actions.Actions(self, self.iface.mainWindow())
         self.actions.addToToolbar(self.toolbar)
 
-        # create the loop widget
-
-        if not self.settings.value('/Qgis/enable_render_caching', False, type=bool):
-            self.erosiebezwarenWidget.setStatus( 'Enable render caching to improve performance' )
-
     def unload(self):
         # Remove the plugin menu item and icon
         self.iface.removePluginMenu('DOV - Erosiebezwaren', self.action)
+        self.iface.removeToolbar('DOV')
         self.selectionManager.deactivate()
         self.annotationManager.deactivate()
         #self.selectionManager.deactivate()

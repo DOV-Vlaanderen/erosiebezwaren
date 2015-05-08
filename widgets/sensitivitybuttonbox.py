@@ -42,6 +42,7 @@ class SensitivityButton(QPushButton):
 
 class SensitivityButtonBox(QWidget):
     VERWAARLOOSBAAR, ZEERLAAG, LAAG, MEDIUM, HOOG, ZEERHOOG = range(6)
+    valueChanged = pyqtSignal(str)
 
     def __init__(self, parent):
         QWidget.__init__(self, parent)
@@ -61,11 +62,13 @@ class SensitivityButtonBox(QWidget):
     def setUnchecked(self):
         for btn in self.buttons:
             btn.setChecked(False)
+        self.valueChanged.emit(None)
 
     def setCheckedButton(self, btn):
         for i in range(len(self.buttons)):
             if self.buttons[i] != btn:
                 self.buttons[i].setChecked(False)
+        self.valueChanged.emit(btn.value)
 
     def getCheckedButton(self):
         for btn in self.buttons:
@@ -86,4 +89,5 @@ class SensitivityButtonBox(QWidget):
             for btn in self.buttons:
                 if btn.value == value:
                     btn.setChecked(True)
+                    self.valueChanged.emit(value)
                     break

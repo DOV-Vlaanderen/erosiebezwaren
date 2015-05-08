@@ -17,6 +17,9 @@
    <string notr="true">* { font-size: 2em;}</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
+   <property name="labelAlignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="lb_datum_veldbezoek">
      <property name="text">
@@ -237,6 +240,14 @@
    <header>Erosiebezwaren/widgets/valueinput.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>efw_datum_veldbezoek</tabstop>
+  <tabstop>btn_setToday</tabstop>
+  <tabstop>efw_veldcontrole_door</tabstop>
+  <tabstop>btn_setLastEditor</tabstop>
+  <tabstop>efwCmb_gewas_veldbezoek</tabstop>
+  <tabstop>efwCmb_advies_behandeld</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

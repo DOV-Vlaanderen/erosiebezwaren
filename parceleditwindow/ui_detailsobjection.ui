@@ -20,6 +20,9 @@
       <string>Details bezwaar</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+      </property>
       <property name="labelAlignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
@@ -107,51 +110,12 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="label_13">
-        <property name="text">
-         <string>Herindiening bezwaar</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QLabel" name="label_14">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QLabel" name="label_15">
-        <property name="text">
-         <string>Bezwaarformulier</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="EnabledBooleanButton" name="efw_bezwaarformulier">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Open bezwaarschrift</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>EnabledBooleanButton</class>
-   <extends>QPushButton</extends>
-   <header>Erosiebezwaren/widgets/valuelabel.h</header>
-  </customwidget>
   <customwidget>
    <class>ValueLabel</class>
    <extends>QLabel</extends>

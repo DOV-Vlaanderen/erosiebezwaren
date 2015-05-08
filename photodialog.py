@@ -53,6 +53,8 @@ class Photo(QLabel):
                 self.pixmap = self.pixmap.transformed(QTransform().rotate(-1*rotation))
 
 class PhotoDialog(QDialog, Ui_PhotoDialog):
+    saved = pyqtSignal()
+
     def __init__(self, iface, parcelId):
         QDialog.__init__(self, iface.mainWindow())
         self.flick = flickcharm.FlickCharm(self)
@@ -84,6 +86,7 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
                 os.makedirs(self.savePath)
             for photo in self.loadedPhotos:
                 shutil.move(os.path.join(self.photoPath, photo), self.savePath)
+            self.saved.emit()
 
     def show(self):
         QDialog.show(self)
