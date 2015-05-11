@@ -128,7 +128,9 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.populate()
 
     def save(self):
+        layer = self.layer
         if self.writeLayer and self.writeLayer != self.layer:
+            layer = self.writeLayer
             result, addedFeatures = self.writeLayer.dataProvider().addFeatures([self.feature])
             if result:
                 for w in self.widgets:
@@ -139,14 +141,14 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         for w in self.widgets:
             w.saveFeature()
         self.main.settings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.quickedit.efw_veldcontrole_door.text())
-        self.parent.saved.emit(self.feature)
+        self.parent.saved.emit(layer, self.feature)
         self.parent.close()
 
     def cancel(self):
         self.parent.close()
 
 class ParcelWindow(QMainWindow):
-    saved = pyqtSignal(QgsFeature)
+    saved = pyqtSignal(QgsVectorLayer, QgsFeature)
 
     def __init__(self, main, layer, writeLayer, parcel):
         QMainWindow.__init__(self, main.iface.mainWindow())

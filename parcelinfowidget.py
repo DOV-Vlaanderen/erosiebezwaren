@@ -46,7 +46,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
         QObject.connect(self.btn_photo, SIGNAL('clicked(bool)'), self.takePhotos)
         QObject.connect(self.btn_showPhotos, SIGNAL('clicked(bool)'), self.showPhotos)
-        QObject.connect(self.efwBtnAndereBezwaren_advies_behandeld, SIGNAL('clicked(bool)'), self.showParcelList)
+        QObject.connect(self.efwBtnAndereBezwaren_datum_bezwaar, SIGNAL('clicked(bool)'), self.showParcelList)
 
         self.populate()
 
@@ -126,8 +126,14 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
     def populateObjectionForm(self):
         if self.feature:
-            cmdShow = os.environ['COMSPEC'] + ' /c start "" "%s"'
-            cmdExplore = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe') + ' "%s"'
+            try:
+                cmdShow = os.environ['COMSPEC'] + ' /c start "" "%s"'
+                cmdExplore = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe') + ' "%s"'
+            except KeyError:
+                self.btn_bezwaarformulier.setEnabled(False)
+                self.btn_bezwaarformulier.setFlat(True)
+                return
+
             objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'bezwaren', str(self.feature.attribute('producentnr'))])
             objectionPath.replace('/', '\\')
             self.objectionPath = []
@@ -190,11 +196,15 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         def clearEditWindow():
             self.editWindow = None
 
+        def reloadFeature(layer, feature):
+            self.setLayer(layer)
+            self.setFeature(feature)
+
         if not self.writeLayer:
             self.writeLayer = self.main.utils.getLayerByName("bezwarenkaart")
         if not self.editWindow:
             self.editWindow = ParcelWindow(self.main, self.layer, self.writeLayer, self.feature)
-            QObject.connect(self.editWindow, SIGNAL('saved(QgsFeature)'), self.setFeature)
+            QObject.connect(self.editWindow, SIGNAL('saved(QgsVectorLayer, QgsFeature)'), reloadFeature)
             QObject.connect(self.editWindow, SIGNAL('finished(int)'), clearEditWindow)
 
         self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))

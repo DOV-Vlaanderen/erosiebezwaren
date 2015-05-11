@@ -25,7 +25,7 @@ class ParcelListWidget(QWidget):
             self.addParcel(p)
 
     def __getParcelIterator(self, producentnr):
-        expr = '"producentnr" = \'%s\'' % producentnr
+        expr = '"datum_bezwaar" is not null and "producentnr" = \'%s\'' % producentnr
         return self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr)))
 
     def __getParcels(self):

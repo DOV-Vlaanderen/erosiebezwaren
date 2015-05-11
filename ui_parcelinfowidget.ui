@@ -767,7 +767,7 @@ font-weight: bold;
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <item>
-               <widget class="EnabledBooleanButton" name="efwBtnAndereBezwaren_advies_behandeld">
+               <widget class="EnabledBooleanButton" name="efwBtnAndereBezwaren_datum_bezwaar">
                 <property name="text">
                  <string>Toon alle bezwaren</string>
                 </property>
