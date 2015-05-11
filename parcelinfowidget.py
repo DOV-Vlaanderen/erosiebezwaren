@@ -84,8 +84,9 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                 self.lbv_advies.setText("Niet aanvaard", forceText=True)
                 color = self.lbv_advies.colorMap.get(self.feature.attribute('advies_nieuwe_kleur'), ('#5d5d5d',))[0]
                 self.lbv_advies.setStyleSheet(style % ('#5d5d5d', '#ffffff', color))
-            elif self.feature.attribute('advies_aanvaarding') == 1:
-                color, textcolor = self.lbv_advies.colorMap.get(self.feature.attribute('advies_nieuwe_kleur'), ('#5d5d5d', '#ffffff'))
+            elif self.feature.attribute('advies_aanvaarding') == 1 or \
+                (self.feature.attribute('advies_aanvaarding') == None and self.feature.attribute('datum_bezwaar') == None):
+                color, textcolor = self.lbv_advies.colorMap.get(self.feature.attribute('advies_nieuwe_kleur'), ('#c6c6c6', '#000000'))
                 self.lbv_advies.setText("Advies", forceText=True)
                 self.lbv_advies.setStyleSheet(style % (color, textcolor, color))
             else:

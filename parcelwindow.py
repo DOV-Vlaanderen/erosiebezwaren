@@ -49,7 +49,7 @@ class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
             self.main.utils.getLayerByName('bezwarenkaart'),
             'gewas_veldbezoek')
 
-        self.efwCmb_advies_aanvaarding.setEnabled(self.feature.attribute('advies_behandeld') != None)
+        self.efwCmb_advies_aanvaarding.setEnabled(self.feature.attribute('datum_bezwaar') != None)
 
         QObject.connect(self.btn_setToday, SIGNAL('clicked(bool)'), self.setToday)
         QObject.connect(self.btn_setLastEditor, SIGNAL('clicked(bool)'), self.setLastEditor)
