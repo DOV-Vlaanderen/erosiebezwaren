@@ -44,28 +44,29 @@ class Actions(object):
         toolbar.addSeparator()
         self.main.annotationManager.addActionsToToolbar(toolbar)
         toolbar.addSeparator()
-        
 
         farmerSearchAction = QAction(QIcon(':/icons/icons/searchfarmer.png'), "Landbouwer opzoeken", self.parent)
         QObject.connect(farmerSearchAction, SIGNAL('triggered(bool)'), self.searchFarmer)
         toolbar.addAction(farmerSearchAction)
         toolbar.addSeparator()
+
         zoomInAction = QAction(QIcon(':/icons/icons/zoomin.png'), "Zoom in", self.parent)
         QObject.connect(zoomInAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomIn())
         toolbar.addAction(zoomInAction)
-        
+
         zoomOutAction = QAction(QIcon(':/icons/icons/zoomout.png'), "Zoom uit", self.parent)
         QObject.connect(zoomOutAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomOut())
         toolbar.addAction(zoomOutAction)
-        
-        #toggleFullscreenAction = self.main.iface.actionToggleFullscreen()
-        #toggleFullscreenAction.setIcon(QIcon(':/icons/icons/searchfarmer.png'))
-        #toolbar.addAction(toggleFullscrenAction)
-        
+
+        toggleFullscreenAction = self.main.iface.actionToggleFullScreen()
+        toggleFullscreenAction.setIcon(QIcon(':/icons/icons/fullscreen.png'))
+        toggleFullscreenAction.setCheckable(True)
+        toolbar.addAction(toggleFullscreenAction)
+
         toolbar.addSeparator()
 
         toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, 'bezwarenkaart'))
         
-        #touchAction = self.main.iface.actionTouch()
-        #touchAction.setIcon(QIcon(':/icons/icons/searchfarmer.png'))
-        #toolbar.addAction(touchAction)
+        touchAction = self.main.iface.actionTouch()
+        touchAction.setIcon(QIcon(':/icons/icons/movemap.png'))
+        toolbar.addAction(touchAction)

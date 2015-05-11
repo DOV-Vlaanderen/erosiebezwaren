@@ -109,7 +109,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                 if len(exts) == 1 and 'pdf' in exts:
                     # only pdfs
                     for f in fileList:
-                        self.objectionPath.append(cmdShow % objectionPath + '/' + f)
+                        self.objectionPath.append(cmdShow % (objectionPath + '/' + f))
                 elif len(exts) > 0:
                     # other thing(s)
                     self.objectionPath.append(cmdExplore % objectionPath)
