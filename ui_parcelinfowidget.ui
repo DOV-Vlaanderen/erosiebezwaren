@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
+    <width>400</width>
     <height>839</height>
    </rect>
   </property>
@@ -30,37 +30,11 @@
    <item>
     <widget class="QWidget" name="infoWidget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>12</number>
+      </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QPushButton" name="btn_zoomto">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/icons/icons/zoomto.png</normaloff>:/icons/icons/zoomto.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QPushButton" name="btn_photo">
           <property name="sizePolicy">
@@ -81,6 +55,35 @@
           <property name="icon">
            <iconset resource="resources.qrc">
             <normaloff>:/icons/icons/photo.png</normaloff>:/icons/icons/photo.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_zoomto">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/icons/icons/zoomto.png</normaloff>:/icons/icons/zoomto.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -152,11 +155,17 @@
       </item>
       <item>
        <widget class="InvertedVisibilityBooleanLabel" name="efw2_datum_bezwaar">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="styleSheet">
          <string notr="true">* { background-color: #5D5D5D; color: white; border-radius: 4px;}</string>
         </property>
         <property name="text">
-         <string>Voor dit perceel werd geen bezwaar ingediend</string>
+         <string>Geen bezwaar ingediend</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -209,7 +218,7 @@ font-weight: bold;
         <item>
          <widget class="QPushButton" name="btn_gpsDms">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -317,22 +326,6 @@ font-weight: bold;
          </spacer>
         </item>
         <item>
-         <widget class="SensitivityColorLabel" name="efw2_kleur_2015">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>2015</string>
-          </property>
-          <property name="margin">
-           <number>4</number>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="SensitivityColorLabel" name="lbv_advies">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -378,8 +371,8 @@ font-weight: bold;
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>0</y>
-               <width>345</width>
+               <y>-294</y>
+               <width>327</width>
                <height>661</height>
               </rect>
              </property>
@@ -660,7 +653,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="ValueLabel" name="efw_datum_bezwaar">
+               <widget class="AutohideValueLabel" name="efw_datum_bezwaar">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -669,6 +662,9 @@ font-weight: bold;
                 </property>
                 <property name="indent">
                  <number>20</number>
+                </property>
+                <property name="buddy">
+                 <cstring>lb_datum_bezwaar</cstring>
                 </property>
                </widget>
               </item>
@@ -761,7 +757,7 @@ font-weight: bold;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>347</width>
+               <width>329</width>
                <height>533</height>
               </rect>
              </property>
@@ -1071,7 +1067,7 @@ font-weight: bold;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>347</width>
+               <width>329</width>
                <height>426</height>
               </rect>
              </property>

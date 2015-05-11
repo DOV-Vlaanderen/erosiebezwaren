@@ -29,6 +29,11 @@ class Actions(object):
             QgsApplication.exitQgis()
             time.sleep(0.05)
 
+    def toggleFullscreen(self, t):
+        self.main.iface.actionToggleFullScreen().trigger()
+        mB = self.main.iface.mainWindow().menuBar()
+        mB.setVisible(not mB.isVisible())
+
     def searchFarmer(self):
         d = FarmerSearchDialog(self.main)
         d.show()
@@ -58,8 +63,8 @@ class Actions(object):
         QObject.connect(zoomOutAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomOut())
         toolbar.addAction(zoomOutAction)
 
-        toggleFullscreenAction = self.main.iface.actionToggleFullScreen()
-        toggleFullscreenAction.setIcon(QIcon(':/icons/icons/fullscreen.png'))
+        toggleFullscreenAction = QAction(QIcon(':/icons/icons/fullscreen.png'), "Volledig scherm aan/uit", self.parent)
+        QObject.connect(toggleFullscreenAction, SIGNAL('triggered(bool)'), self.toggleFullscreen)
         toggleFullscreenAction.setCheckable(True)
         toolbar.addAction(toggleFullscreenAction)
 

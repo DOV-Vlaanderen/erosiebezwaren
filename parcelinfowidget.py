@@ -98,6 +98,11 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             self.lbv_advies.setStyleSheet(style % ('#c6c6c6', '#000000', '#c6c6c6'))
 
     def populateGps(self):
+        def rewriteText(t):
+            tl = [i for i in t.split(',')]
+            r = tl[1] + '<br>' + tl[0]
+            return r
+
         if self.feature:
             gpsGeom = QgsGeometry(self.feature.geometry().centroid())
             gpsGeom.transform(QgsCoordinateTransform(
@@ -105,9 +110,9 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                 QgsCoordinateReferenceSystem(4326, QgsCoordinateReferenceSystem.EpsgCrsId)))
             dms = self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false')
             if dms == 'true':
-                self.lbv_gps.setText(gpsGeom.asPoint().toDegreesMinutesSeconds(2))
+                self.lbv_gps.setText(rewriteText(gpsGeom.asPoint().toDegreesMinutesSeconds(2)))
             else:
-                self.lbv_gps.setText(gpsGeom.asPoint().toDegreesMinutes(3))
+                self.lbv_gps.setText(rewriteText(gpsGeom.asPoint().toDegreesMinutes(3)))
         else:
             self.lbv_gps.clear()
 
@@ -195,8 +200,11 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
     def showEditWindow(self):
         def clearEditWindow():
             self.editWindow = None
+            QObject.disconnect(self.editWindow, SIGNAL('saved(QgsVectorLayer, QgsFeature)'))
+            QObject.disconnect(self.editWindow, SIGNAL('finished(int)'))
 
         def reloadFeature(layer, feature):
+            print "RELOAD FEATURE THAT HAS BEEN SAVED!!!!"
             self.setLayer(layer)
             self.setFeature(feature)
 
@@ -223,15 +231,15 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         d.show()
 
     def showParcelList(self):
-        self.efwBtnAndereBezwaren_advies_behandeld.setEnabled(False)
+        self.efwBtnAndereBezwaren_datum_bezwaar.setEnabled(False)
         QCoreApplication.processEvents()
-        self.efwBtnAndereBezwaren_advies_behandeld.repaint()
+        self.efwBtnAndereBezwaren_datum_bezwaar.repaint()
         d = ParcelListDialog(self)
         if self.feature.attribute('naam'):
             d.lbv_bezwaren_van.setText('Bezwaren van %s' % str(self.feature.attribute('naam')))
         else:
             d.lbv_bezwaren_van.clear()
-        QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtnAndereBezwaren_advies_behandeld.setEnabled(True))
+        QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtnAndereBezwaren_datum_bezwaar.setEnabled(True))
         d.populate(self.layer, self.feature.attribute('producentnr'))
         d.show()
 
