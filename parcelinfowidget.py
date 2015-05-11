@@ -55,6 +55,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.editWindow = None
         ElevatedFeatureWidget.populate(self)
         if self.feature:
+            #self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
             self.showInfo()
             self.main.selectionManager.clear()
             if self.feature.attribute('advies_behandeld'):
@@ -169,6 +170,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             QObject.connect(self.editWindow, SIGNAL('saved(QgsFeature)'), self.setFeature)
             QObject.connect(self.editWindow, SIGNAL('finished(int)'), clearEditWindow)
 
+        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
         self.editWindow.setWindowState(Qt.WindowActive)
         self.editWindow.show()
 
@@ -188,7 +190,10 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         QCoreApplication.processEvents()
         self.efwBtnAndereBezwaren_advies_behandeld.repaint()
         d = ParcelListDialog(self)
-        d.lbv_bezwaren_van.setText('Bezwaren van %s' % str(self.feature.attribute('naam')))
+        if self.feature.attribute('naam'):
+            d.lbv_bezwaren_van.setText('Bezwaren van %s' % str(self.feature.attribute('naam')))
+        else:
+            d.lbv_bezwaren_van.clear()
         QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtnAndereBezwaren_advies_behandeld.setEnabled(True))
         d.populate(self.layer, self.feature.attribute('producentnr'))
         d.show()

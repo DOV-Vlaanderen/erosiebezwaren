@@ -15,6 +15,7 @@ from parceleditwindow.ui_detailsobjection import Ui_DetailsObjection
 class Header(ElevatedFeatureWidget, Ui_Header):
     def __init__(self, parent, main, parcel=None):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
+        self.main = main
         self.setupUi(self)
 
         QObject.connect(self.btn_minimize, SIGNAL('clicked()'), self.minimize)
@@ -24,6 +25,7 @@ class Header(ElevatedFeatureWidget, Ui_Header):
 
     def minimize(self):
         self.parent.parent.showMinimized()
+        #self.main.parcelInfoWidget.btn_edit.setIcon(QIcon(':/icons/icons/maximize.png'))
 
 class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
     def __init__(self, parent, main, parcel=None):

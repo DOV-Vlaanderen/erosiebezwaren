@@ -364,7 +364,7 @@ font-weight: bold;
                <x>0</x>
                <y>0</y>
                <width>345</width>
-               <height>649</height>
+               <height>607</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -514,6 +514,49 @@ font-weight: bold;
                </layout>
               </item>
               <item>
+               <widget class="QLabel" name="lb_erosieklasse_lv">
+                <property name="text">
+                 <string>Erosieklasse LV</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2015">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>2015</string>
+                  </property>
+                  <property name="margin">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2014">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>2014</string>
+                  </property>
+                  <property name="margin">
+                   <number>4</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
                <widget class="QLabel" name="lb_watererosie_30_2015">
                 <property name="text">
                  <string>Watererosie 30</string>
@@ -610,55 +653,6 @@ font-weight: bold;
                 </property>
                 <property name="indent">
                  <number>20</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lb_erosieklasse_lv_2015">
-                <property name="text">
-                 <string>Erosieklasse LV2015</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="ValueLabel" name="efw_erosieklasse_lv_2015">
-                <property name="styleSheet">
-                 <string notr="true">* { font-style: italic; }</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-                <property name="indent">
-                 <number>20</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lb_erosieklasse_lv_2014">
-                <property name="text">
-                 <string>Erosieklasse LV2014</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="AutohideValueLabel" name="efw_erosieklasse_lv_2014">
-                <property name="styleSheet">
-                 <string notr="true">* { font-style: italic; }</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-                <property name="indent">
-                 <number>20</number>
-                </property>
-                <property name="buddy">
-                 <cstring>lb_erosieklasse_lv_2014</cstring>
                 </property>
                </widget>
               </item>
