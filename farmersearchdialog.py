@@ -11,8 +11,6 @@ from parcellistdialog import ParcelListDialog
 from widgets import valuelabel
 
 class FarmerResultWidget(QWidget):
-    featuresAdded = pyqtSignal()
-
     def __init__(self, parent, farmerSearchDialog):
         self.farmerSearchDialog = farmerSearchDialog
         self.main = self.farmerSearchDialog.main
@@ -22,18 +20,24 @@ class FarmerResultWidget(QWidget):
         self.horMaxSizePolicy.setHorizontalPolicy(QSizePolicy.Maximum)
         self.layout = QGridLayout(self)
         self.setLayout(self.layout)
+        
+        self.layout.addWidget(QLabel('<i>Zoek landbouwer op basis van naam of, indien u<br>enkel cijfers invoert, op producentnummer.</i>'), 0, 0)
 
         self.resultSet = set()
 
     def addFromFeatureIterator(self, iterator):
         for feature in iterator:
             self.addResult(feature)
-        self.featuresAdded.emit()
 
     def clear(self):
         self.resultSet.clear()
         while self.layout.count():
             self.layout.takeAt(0).widget().deleteLater()
+
+    def setNoResult(self, clear=True):
+        if clear:
+            self.clear()
+        self.layout.addWidget(QLabel('Geen resultaat'), 0, 0)
 
     def showParcelList(self, naam, producentnr):
         if not self.main.parcelInfoWidget:
@@ -88,7 +92,6 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
         self.scrollAreaLayout.insertWidget(0, self.farmerResultWidget)
 
         QObject.connect(self.btn_search, SIGNAL('clicked(bool)'), self.search)
-        QObject.connect(self.farmerResultWidget, SIGNAL('featuresAdded()'), lambda: self.btn_search.setEnabled(True))
 
     def search(self):
         self.btn_search.setEnabled(False)
@@ -98,11 +101,13 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
             self.layer = self.main.utils.getLayerByName('bezwarenkaart')
             if not self.layer:
                 self.btn_search.setEnabled(True)
+                self.farmerResultWidget.setNoResult(clear=False)
                 return
 
         searchText = self.ldt_searchfield.text()
         if not searchText:
             self.btn_search.setEnabled(True)
+            self.farmerResultWidget.setNoResult(clear=False)
             return
 
         if self.reNumber.match(searchText):
@@ -121,4 +126,5 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
                         self.farmerResultWidget.addResult(f)
                 elif len(difflib.get_close_matches(searchText, nl, cutoff=0.75)) > 0:
                     self.farmerResultWidget.addResult(f)
-            self.farmerResultWidget.featuresAdded.emit()
+
+        self.btn_search.setEnabled(True)
