@@ -106,7 +106,7 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
             return
 
         if self.reNumber.match(searchText):
-            expr = '"producentnr" = \'%s\'' % searchText
+            expr = '"producentnr" like \'%%%s%%\' and "naam" is not null' % searchText
             self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr))))
         else:
             for f in self.layer.getFeatures(QgsFeatureRequest(QgsExpression('"naam" is not null'))):
