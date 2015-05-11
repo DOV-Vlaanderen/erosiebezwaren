@@ -151,6 +151,22 @@
        </layout>
       </item>
       <item>
+       <widget class="InvertedVisibilityBooleanLabel" name="efw2_datum_bezwaar">
+        <property name="styleSheet">
+         <string notr="true">* { background-color: #5D5D5D; color: white; border-radius: 4px;}</string>
+        </property>
+        <property name="text">
+         <string>Voor dit perceel werd geen bezwaar ingediend</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="margin">
+         <number>4</number>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="ValueLabel" name="efw_uniek_id">
         <property name="styleSheet">
          <string notr="true">QLabel {
@@ -269,10 +285,10 @@ font-weight: bold;
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">* { background-color: #5D5D5D; color: white; border-radius: 4px;}</string>
+         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
         </property>
         <property name="text">
-         <string>Geen bezwaar</string>
+         <string>Status</string>
         </property>
         <property name="margin">
          <number>4</number>
@@ -317,7 +333,7 @@ font-weight: bold;
          </widget>
         </item>
         <item>
-         <widget class="SensitivityColorLabel" name="efw_advies_nieuwe_kleur">
+         <widget class="SensitivityColorLabel" name="lbv_advies">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -364,7 +380,7 @@ font-weight: bold;
                <x>0</x>
                <y>0</y>
                <width>345</width>
-               <height>607</height>
+               <height>661</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -637,9 +653,9 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lb_datum_in">
+               <widget class="QLabel" name="lb_datum_bezwaar">
                 <property name="text">
-                 <string>Datum in</string>
+                 <string>Datum bezwaar</string>
                 </property>
                </widget>
               </item>
@@ -676,6 +692,29 @@ font-weight: bold;
                 </property>
                 <property name="buddy">
                  <cstring>lb_opmerking</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lb_opmerkingen_vaststelling">
+                <property name="text">
+                 <string>Opmerkingen vaststelling</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="AutohideValueLabel" name="efw_opmerkingen_vaststelling">
+                <property name="styleSheet">
+                 <string notr="true">* { font-style: italic;}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="indent">
+                 <number>20</number>
+                </property>
+                <property name="buddy">
+                 <cstring>lb_opmerkingen_vaststelling</cstring>
                 </property>
                </widget>
               </item>
@@ -1271,6 +1310,11 @@ font-weight: bold;
   <customwidget>
    <class>VisibilityBooleanButton</class>
    <extends>QPushButton</extends>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>InvertedVisibilityBooleanLabel</class>
+   <extends>QLabel</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
  </customwidgets>

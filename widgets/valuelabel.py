@@ -104,9 +104,14 @@ class ColorLabel(QLabel):
     def setColorMap(self, colorMap):
         self.colorMap = colorMap
 
-    def setText(self, text):
+    def setText(self, text, forceText=False):
         if not self.fixedText:
             self.fixedText = text
+            QLabel.setText(self, self.fixedText)
+
+        if forceText:
+            QLabel.setText(self, text)
+        else:
             QLabel.setText(self, self.fixedText)
 
         bgcolor, textcolor = self.colorMap.get(text, ('#c6c6c6', '#000000'))

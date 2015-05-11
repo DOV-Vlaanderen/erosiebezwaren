@@ -31,7 +31,6 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.btn_gpsDms.setChecked(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false') == 'true')
         QObject.connect(self.btn_gpsDms, SIGNAL('clicked(bool)'), self.toggleGpsDms)
 
-        self.efw_advies_behandeld.defaultColors = ('#5d5d5d', '#ffffff')
         self.efw_advies_behandeld.setColorMap({
             'Te behandelen': ('#00ffee', '#000000'),
             'Veldcontrole gebeurd': ('#00aca1', '#000000')
@@ -66,9 +65,36 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         else:
             self.clear()
 
+        self.populateAdvies()
         self.populateGps()
         self.populatePhotos()
         self.populateObjectionForm()
+
+    def populateAdvies(self):
+        style = "* {"
+        style += "border-radius: 4px;"
+        style += "padding: 4px;"
+        style += "background-color: %s;"
+        style += "color: %s;"
+        style += "border: 2px solid %s;"
+        style += "}"
+
+        if self.feature:
+            if self.feature.attribute('advies_aanvaarding') == 0:
+                self.lbv_advies.setText("Niet aanvaard", forceText=True)
+                color = self.lbv_advies.colorMap.get(self.feature.attribute('advies_nieuwe_kleur'), ('#5d5d5d',))[0]
+                self.lbv_advies.setStyleSheet(style % ('#5d5d5d', '#ffffff', color))
+            elif self.feature.attribute('advies_aanvaarding') == 1:
+                color, textcolor = self.lbv_advies.colorMap.get(self.feature.attribute('advies_nieuwe_kleur'), ('#5d5d5d', '#ffffff'))
+                self.lbv_advies.setText("Advies", forceText=True)
+                self.lbv_advies.setStyleSheet(style % (color, textcolor, color))
+            else:
+                self.lbv_advies.setText("Advies")
+                color = self.lbv_advies.colorMap.get(self.feature.attribute('advies_nieuwe_kleur'), ('#c6c6c6',))[0]
+                self.lbv_advies.setStyleSheet(style % ('#c6c6c6', '#000000', color))
+        else:
+            self.lbv_advies.setText("Advies")
+            self.lbv_advies.setStyleSheet(style % ('#c6c6c6', '#000000', '#c6c6c6'))
 
     def populateGps(self):
         if self.feature:
