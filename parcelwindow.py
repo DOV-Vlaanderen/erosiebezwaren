@@ -25,7 +25,7 @@ class Header(ElevatedFeatureWidget, Ui_Header):
 
     def minimize(self):
         self.parent.parent.showMinimized()
-        #self.main.parcelInfoWidget.btn_edit.setIcon(QIcon(':/icons/icons/maximize.png'))
+        #self.main.parcelInfoWidget.populateEditButton()
 
 class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
     def __init__(self, parent, main, parcel=None):
@@ -150,6 +150,8 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
 
 class ParcelWindow(QMainWindow):
     saved = pyqtSignal('QgsVectorLayer', 'QgsFeature')
+    closed = pyqtSignal()
+    windowStateChanged = pyqtSignal()
 
     def __init__(self, main, layer, writeLayer, parcel):
         QMainWindow.__init__(self, main.iface.mainWindow())
@@ -161,3 +163,10 @@ class ParcelWindow(QMainWindow):
         self.parcelEditWidget = ParcelEditWidget(self, self.main, self.layer, self.writeLayer, self.parcel)
         self.setCentralWidget(self.parcelEditWidget)
         self.setWindowTitle("Behandel perceel")
+
+    def closeEvent(self, event):
+        self.closed.emit()
+
+    def changeEvent(self, event):
+        if type(event) is QWindowStateChangeEvent:
+            self.windowStateChanged.emit()

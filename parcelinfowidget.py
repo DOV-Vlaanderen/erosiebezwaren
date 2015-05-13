@@ -22,7 +22,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.layer = layer
         self.writeLayer = self.main.utils.getLayerByName('bezwarenkaart')
 
-        self.editWindow = None
+        self.editWindows = {}
         self.photoPath = None
         self.objectionPath = []
 
@@ -51,10 +51,8 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.populate()
 
     def populate(self):
-        self.editWindow = None
         ElevatedFeatureWidget.populate(self)
         if self.feature:
-            #self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
             self.showInfo()
             self.main.selectionManager.clear()
             if self.feature.attribute('advies_behandeld'):
@@ -69,6 +67,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.populateGps()
         self.populatePhotos()
         self.populateObjectionForm()
+        self.populateEditButton()
 
     def populateAdvies(self):
         style = "* {"
@@ -158,6 +157,27 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.btn_bezwaarformulier.setEnabled(False)
         self.btn_bezwaarformulier.setFlat(True)
 
+    def populateEditButton(self):
+        if not self.feature:
+            self.btn_edit.setEnabled(False)
+            self.btn_edit.setFlat(True)
+            return
+
+        fid = self.feature.attribute('uniek_id')
+        if not fid:
+            self.btn_edit.setEnabled(False)
+            self.btn_edit.setFlat(True)
+            return
+
+        self.btn_edit.setEnabled(True)
+        self.btn_edit.setFlat(False)
+
+        if fid in self.editWindows:
+            if self.editWindows[fid].isMinimized():
+                self.btn_edit.setIcon(QIcon(':/icons/icons/maximize.png'))
+                return
+        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
+
     def showObjection(self):
         for o in self.objectionPath:
             subprocess.Popen(o)
@@ -198,26 +218,37 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         sp = subprocess.Popen(cmd % path)
 
     def showEditWindow(self):
-        def clearEditWindow():
-            self.editWindow = None
-            QObject.disconnect(self.editWindow, SIGNAL('saved(QgsVectorLayer, QgsFeature)'))
-            QObject.disconnect(self.editWindow, SIGNAL('finished(int)'))
+        def clearEditWindow(fid):
+            QObject.disconnect(w, SIGNAL('saved(QgsVectorLayer, QgsFeature)'), reloadFeature)
+            QObject.disconnect(w, SIGNAL('closed()'), lambda: clearEditWindow(fid))
+            QObject.disconnect(w, SIGNAL('windowStateChanged()'), self.populateEditButton)
+            del(self.editWindows[fid])
+            self.populateEditButton()
 
         def reloadFeature(layer, feature):
-            print "RELOAD FEATURE THAT HAS BEEN SAVED!!!!"
             self.setLayer(layer)
             self.setFeature(feature)
 
+        if not self.feature:
+            return
+
+        fid = self.feature.attribute('uniek_id')
+        if not fid:
+            return
+
         if not self.writeLayer:
             self.writeLayer = self.main.utils.getLayerByName("bezwarenkaart")
-        if not self.editWindow:
-            self.editWindow = ParcelWindow(self.main, self.layer, self.writeLayer, self.feature)
-            QObject.connect(self.editWindow, SIGNAL('saved(QgsVectorLayer, QgsFeature)'), reloadFeature)
-            QObject.connect(self.editWindow, SIGNAL('finished(int)'), clearEditWindow)
+
+        if fid not in self.editWindows:
+            w = ParcelWindow(self.main, self.layer, self.writeLayer, self.feature)
+            QObject.connect(w, SIGNAL('saved(QgsVectorLayer, QgsFeature)'), reloadFeature)
+            QObject.connect(w, SIGNAL('closed()'), lambda: clearEditWindow(fid))
+            QObject.connect(w, SIGNAL('windowStateChanged()'), self.populateEditButton)
+            self.editWindows[fid] = w
 
         self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
-        self.editWindow.setWindowState(Qt.WindowActive)
-        self.editWindow.show()
+        self.editWindows[fid].setWindowState(Qt.WindowActive)
+        self.editWindows[fid].show()
 
     def zoomTo(self):
         self.layer.removeSelection()
