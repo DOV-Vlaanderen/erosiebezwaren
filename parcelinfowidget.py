@@ -164,6 +164,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.btn_bezwaarformulier.setFlat(True)
 
     def populateEditButton(self):
+        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
         if not self.feature:
             self.btn_edit.setEnabled(False)
             self.btn_edit.setFlat(True)
@@ -181,8 +182,6 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         if fid in self.editWindows:
             if self.editWindows[fid].isMinimized():
                 self.btn_edit.setIcon(QIcon(':/icons/icons/maximize.png'))
-                return
-        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
 
     def showObjection(self):
         for o in self.objectionPath:

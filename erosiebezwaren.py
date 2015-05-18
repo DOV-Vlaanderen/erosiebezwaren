@@ -40,8 +40,8 @@ class Erosiebezwaren(object):
     def unload(self):
         # Remove the plugin menu item and icon
         self.iface.removePluginMenu('DOV - Erosiebezwaren', self.action)
-        self.selectionManager.deactivate()
-        self.annotationManager.deactivate()
+        #self.selectionManager.deactivate()
+        #self.annotationManager.deactivate()
         #self.iface.removeToolBarIcon(self.action)
         #remove the dock
         #self.iface.removeDockWidget(self.dockWidget)

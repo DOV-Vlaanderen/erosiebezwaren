@@ -22,13 +22,6 @@ class Actions(object):
         cmd = os.path.join(os.environ['COMMONPROGRAMFILES'], 'microsoft shared', 'ink', 'TabTip.exe')
         sp = subprocess.Popen(cmd, env=os.environ, shell=True)
 
-    def exit(self, t):
-        self.main.selectionManager.deactivate()
-        self.main.annotationManager.deactivate()
-        while True:
-            QgsApplication.exitQgis()
-            time.sleep(0.05)
-
     def toggleFullscreen(self, t):
         self.main.iface.actionToggleFullScreen().trigger()
         mB = self.main.iface.mainWindow().menuBar()
@@ -39,9 +32,8 @@ class Actions(object):
         d.show()
 
     def addToToolbar(self, toolbar):
-        #toolbar.addAction(MapSwitchAction(self.main, self.parent))
         exitAction = QAction(QIcon(':/icons/icons/exit.png'), 'Applicatie afsluiten', self.parent)
-        QObject.connect(exitAction, SIGNAL('triggered(bool)'), self.exit)
+        QObject.connect(exitAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.actionExit().trigger())
         toolbar.addAction(exitAction)
         toolbar.addSeparator()
 
