@@ -36,7 +36,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
 
     def canvasReleaseEvent(self, mouseEvent):
         if len(self.identifyLayers) < 1:
-            for layer in ['bezwarenkaart', 'percelenkaart']:
+            for layer in [self.main.settings.getValue('layers/bezwaren'), self.main.settings.getValue('layers/percelen')]:
                 l = self.main.utils.getLayerByName(layer)
                 if l:
                     self.identifyLayers.append(l)

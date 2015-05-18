@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/zoom_32.png</file>
+    <file>icons/minimize_32.png</file>
     <file>icons/map.png</file>
     <file>icons/fullscreen.png</file>
     <file>icons/maximize.png</file>

@@ -61,7 +61,7 @@ class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
         self.efw_datum_veldbezoek.setDate(QDate.currentDate())
 
     def setLastEditor(self):
-        lastEditor = self.main.settings.value('/Qgis/plugins/Erosiebezwaren/editor')
+        lastEditor = self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/editor')
         if type(lastEditor) in [str, unicode]:
             self.efw_veldcontrole_door.setText(lastEditor)
 
@@ -140,7 +140,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
 
         for w in self.widgets:
             w.saveFeature()
-        self.main.settings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.quickedit.efw_veldcontrole_door.text())
+        self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.quickedit.efw_veldcontrole_door.text())
         self.main.iface.mapCanvas().refresh()
         self.parent.saved.emit(layer, self.feature)
         self.parent.close()

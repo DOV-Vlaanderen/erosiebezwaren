@@ -27,7 +27,7 @@
      </property>
      <property name="icon">
       <iconset resource="../resources.qrc">
-       <normaloff>:/icons/icons/minimize.png</normaloff>:/icons/icons/minimize.png</iconset>
+       <normaloff>:/icons/icons/minimize_32.png</normaloff>:/icons/icons/minimize_32.png</iconset>
      </property>
      <property name="iconSize">
       <size>

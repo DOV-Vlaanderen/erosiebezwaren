@@ -11,8 +11,8 @@ class AnnotationManager(object):
                     QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
                     self.main.utils.stopEditInLayer(self.currentlyEditing[0])
                     self.currentlyEditing[1].setChecked(False)
-                self.currentlyEditing = ('Pijlen', self.annotateArrow)
-                self.main.utils.editInLayer('Pijlen')
+                self.currentlyEditing = (self.main.settings.getValue('layers/pijlen'), self.annotateArrow)
+                self.main.utils.editInLayer(self.main.settings.getValue('layers/pijlen'))
                 QObject.connect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
             else:
                 QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
@@ -26,8 +26,8 @@ class AnnotationManager(object):
                     QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
                     self.main.utils.stopEditInLayer(self.currentlyEditing[0])
                     self.currentlyEditing[1].setChecked(False)
-                self.currentlyEditing = ('Polygonen', self.annotatePolygon)
-                self.main.utils.editInLayer('Polygonen')
+                self.currentlyEditing = (self.main.settings.getValue('layers/polygonen'), self.annotatePolygon)
+                self.main.utils.editInLayer(self.main.settings.getValue('layers/polygonen'))
                 QObject.connect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
             else:
                 QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)

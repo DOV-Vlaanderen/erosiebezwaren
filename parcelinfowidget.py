@@ -20,7 +20,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.main = main
         self.layer = layer
-        self.writeLayer = self.main.utils.getLayerByName('bezwarenkaart')
+        self.writeLayer = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
 
         self.editWindows = {}
         self.photoPath = None
@@ -28,7 +28,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
         self.setupUi(self)
 
-        self.btn_gpsDms.setChecked(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false') == 'true')
+        self.btn_gpsDms.setChecked(self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false') == 'true')
         QObject.connect(self.btn_gpsDms, SIGNAL('clicked(bool)'), self.toggleGpsDms)
 
         self.efw_advies_behandeld.setColorMap({
@@ -107,7 +107,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             gpsGeom.transform(QgsCoordinateTransform(
                 QgsCoordinateReferenceSystem(31370, QgsCoordinateReferenceSystem.EpsgCrsId),
                 QgsCoordinateReferenceSystem(4326, QgsCoordinateReferenceSystem.EpsgCrsId)))
-            dms = self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false')
+            dms = self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'false')
             if dms == 'true':
                 self.lbv_gps.setText(rewriteText(gpsGeom.asPoint().toDegreesMinutesSeconds(2)))
             else:
@@ -119,12 +119,18 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         if self.feature:
             # QgsProject.instance().fileName() returns path with forward slashes, even on Windows. Append subdirectories with forward slashed too
             # and replace all of them afterwards with backward slashes.
-            photoPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'fotos', str(self.feature.attribute('uniek_id'))])
-            photoPath = photoPath.replace('/', '\\')
-            if os.path.exists(photoPath) and len(os.listdir(photoPath)) > 0:
-                self.photoPath = photoPath
-                self.btn_showPhotos.show()
+            fid = self.feature.attribute('uniek_id')
+            if fid:
+                photoPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'fotos', str(fid)])
+                photoPath = photoPath.replace('/', '\\')
+                self.btn_photo.setEnabled(True)
+                self.btn_photo.setFlat(False)
+                if os.path.exists(photoPath) and len(os.listdir(photoPath)) > 0:
+                    self.photoPath = photoPath
+                    self.btn_showPhotos.show()
                 return
+        self.btn_photo.setEnabled(False)
+        self.btn_photo.setFlat(True)
         self.photoPath = None
         self.btn_showPhotos.hide()
 
@@ -138,7 +144,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                 self.btn_bezwaarformulier.setFlat(True)
                 return
 
-            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'bezwaren', str(self.feature.attribute('producentnr'))])
+            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), self.main.settings.getValue('paths/bezwaren'), str(self.feature.attribute('producentnr'))])
             objectionPath.replace('/', '\\')
             self.objectionPath = []
             if os.path.exists(objectionPath):
@@ -192,9 +198,9 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
     def toggleGpsDms(self, checked):
         switch = {'true': 'false', 'false': 'true'}
-        self.main.settings.setValue('/Qgis/plugins/Erosiebezwaren/gps_dms',
-            switch[self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'true')])
-        self.btn_gpsDms.setChecked(self.main.settings.value('/Qgis/plugins/Erosiebezwaren/gps_dms') == 'true')
+        self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/gps_dms',
+            switch[self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'true')])
+        self.btn_gpsDms.setChecked(self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/gps_dms') == 'true')
         self.populateGps()
 
     def clear(self):
@@ -206,16 +212,6 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
     def showInfo(self):
         self.infoWidget.show()
         self.lb_geenselectie.hide()
-
-    def showPdf(self):
-        if self.feature.attribute('bezwaarformulier'):
-            cmd = os.environ['COMSPEC'] + ' /c "start %s"'
-            sp = subprocess.Popen(cmd % self.feature.attribute('bezwaarformulier'))
-
-    def showPdf_mock(self):
-        cmd = os.environ['COMSPEC'] + ' /c "start %s"'
-        path = "C:\\Users\\Elke\\Documents\\qgis\\testpdf.pdf"
-        sp = subprocess.Popen(cmd % path)
 
     def showEditWindow(self):
         def clearEditWindow(fid):
@@ -237,7 +233,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             return
 
         if not self.writeLayer:
-            self.writeLayer = self.main.utils.getLayerByName("bezwarenkaart")
+            self.writeLayer = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
 
         if fid not in self.editWindows:
             w = ParcelWindow(self.main, self.layer, self.writeLayer, self.feature)

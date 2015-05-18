@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>839</height>
+    <height>736</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,11 +30,14 @@
    <item>
     <widget class="QWidget" name="infoWidget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="spacing">
-       <number>12</number>
-      </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
         <item>
          <widget class="QPushButton" name="btn_photo">
           <property name="sizePolicy">
@@ -260,28 +263,26 @@ font-weight: bold;
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="lb_perceelsnaam">
-        <property name="text">
-         <string>Perceelsnaam</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QLabel" name="lb_perceelsnr_va2015">
+          <property name="text">
+           <string>Perceelsnummer VA2015</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="AutohideValueLabel" name="efw_perceelsnaam">
+       <widget class="ValueLabel" name="efw2_perceelsnr_va_2015">
         <property name="styleSheet">
          <string notr="true">* { font-style: italic; }</string>
         </property>
         <property name="text">
          <string/>
         </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
         <property name="indent">
          <number>20</number>
-        </property>
-        <property name="buddy">
-         <cstring>lb_perceelsnaam</cstring>
         </property>
        </widget>
       </item>
@@ -371,9 +372,9 @@ font-weight: bold;
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>-294</y>
+               <y>0</y>
                <width>327</width>
-               <height>661</height>
+               <height>660</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -626,22 +627,28 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lb_perceelsnr_va2015">
+               <widget class="QLabel" name="lb_perceelsnaam">
                 <property name="text">
-                 <string>Perceelsnummer VA2015</string>
+                 <string>Perceelsnaam</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="ValueLabel" name="efw2_perceelsnr_va_2015">
+               <widget class="AutohideValueLabel" name="efw_perceelsnaam">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
                 <property name="text">
                  <string/>
                 </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
                 <property name="indent">
                  <number>20</number>
+                </property>
+                <property name="buddy">
+                 <cstring>lb_perceelsnaam</cstring>
                 </property>
                </widget>
               </item>

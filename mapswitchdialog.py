@@ -12,6 +12,10 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         QDialog.__init__(self)
         self.setupUi(self)
 
+        self.visibleBase = set(['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart'])
+        self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie',
+            'watererosie', 'bewerkingserosie', 'correcties_dem', 'Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart'])
+
         QObject.connect(self.btn_routekaart, SIGNAL('clicked(bool)'), self.toMapRoutekaart)
         QObject.connect(self.btn_orthofoto, SIGNAL('clicked(bool)'), self.toMapOrthofoto)
         QObject.connect(self.btn_erosie2013, SIGNAL('clicked(bool)'), self.toMapErosie2013)
@@ -39,70 +43,72 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
                 legendInterface.setLayerVisible(l, False)
 
     def toMapView(self, mapView):
+        if mapView['autoDisable'] == True:
+            mapView['disabledLayers'] = self.allLayers - mapView['enabledLayers']
         self.toggleLayersGroups(enable=mapView['enabledLayers'], disable=mapView['disabledLayers'])
         self.action.setText(mapView['label'])
         self.hide()
 
     def toMapRoutekaart(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart'],
-            'disabledLayers': ['Orthofoto', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie', 'correcties_dem'],
+            'enabledLayers': self.visibleBase,
+            'autoDisable': True,
             'label': 'Routekaart'
         })
 
     def toMapOrthofoto(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Orthofoto'],
-            'disabledLayers': ['Topokaart', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie', 'correcties_dem'],
+            'enabledLayers': (self.visibleBase - set(['Topokaart'])).union(['Orthofoto']),
+            'autoDisable': True,
             'label': 'Orthofoto'
         })
 
     def toMapErosie2013(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', '2013 potentiele bodemerosie'],
-            'disabledLayers': ['Orthofoto', '2014 potentiele bodemerosie', '2015 potentiele bodemerosie', 'Afstromingskaart', 'watererosie', 'bewerkingserosie', 'correcties_dem'],
+            'enabledLayers': self.visibleBase.union(['2013 potentiele bodemerosie']),
+            'autoDisable': True,
             'label': 'Erosiekaart 2013'
         })
 
     def toMapErosie2014(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', '2014 potentiele bodemerosie'],
-            'disabledLayers': ['Orthofoto', '2013 potentiele bodemerosie', '2015 potentiele bodemerosie', 'Afstromingskaart', 'watererosie', 'bewerkingserosie', 'correcties_dem'],
+            'enabledLayers': self.visibleBase.union(['2014 potentiele bodemerosie']),
+            'autoDisable': True,
             'label': 'Erosiekaart 2014'
         })
 
     def toMapErosie2015(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', '2015 potentiele bodemerosie'],
-            'disabledLayers': ['Orthofoto', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'Afstromingskaart', 'watererosie', 'bewerkingserosie', 'correcties_dem'],
+            'enabledLayers': self.visibleBase.union(['2015 potentiele bodemerosie']),
+            'autoDisable': True,
             'label': 'Erosiekaart 2015'
         })
 
     def toMapWatererosie(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'watererosie'],
-            'disabledLayers': ['Afstromingskaart', 'Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'bewerkingserosie', 'correcties_dem'],
+            'enabledLayers': self.visibleBase.union(['watererosie']),
+            'autoDisable': True,
             'label': 'Watererosie'
         })
 
     def toMapBewerkingserosie(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'bewerkingserosie'],
-            'disabledLayers': ['Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'Afstromingskaart', 'correcties_dem'],
+            'enabledLayers': self.visibleBase.union(['bewerkingserosie']),
+            'autoDisable': True,
             'label': 'Bewerkingserosie'
         })
 
     def toMapAfstromingskaart(self):
         self.toMapView({
-            'enabledLayers': ['Afstromingskaart', 'Topokaart'],
-            'disabledLayers': ['Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'watererosie', 'bewerkingserosie', 'bezwarenkaart', 'percelenkaart', 'Overzichtskaart', 'correcties_dem'],
+            'enabledLayers': (self.visibleBase - set(['bezwarenkaart', 'percelenkaart'])).union(['Afstromingskaart']),
+            'autoDisable': True,
             'label': 'Afstromingskaart'
         })
 
     def toMapCorrectiesDEM(self):
         self.toMapView({
-            'enabledLayers': ['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'correcties_dem'],
-            'disabledLayers': ['Orthofoto', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie', 'bewerkingserosie', 'watererosie', 'Afstromingskaart'],
+            'enabledLayers': self.visibleBase.union(['correcties_dem']),
+            'autoDisable': True,
             'label': 'Correcties DEM'
         })
 

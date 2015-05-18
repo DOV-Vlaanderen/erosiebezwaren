@@ -84,7 +84,7 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
     def __init__(self, main):
         self.main = main
         self.reNumber = re.compile(r'^[0-9]+$')
-        self.layer = self.main.utils.getLayerByName('bezwarenkaart')
+        self.layer = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
         QDialog.__init__(self, self.main.iface.mainWindow())
         self.setupUi(self)
 
@@ -98,7 +98,7 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
         self.farmerResultWidget.clear()
 
         if not self.layer:
-            self.layer = self.main.utils.getLayerByName('bezwarenkaart')
+            self.layer = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
             if not self.layer:
                 self.btn_search.setEnabled(True)
                 self.farmerResultWidget.setNoResult(clear=False)

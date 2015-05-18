@@ -54,7 +54,7 @@
      <item>
       <widget class="QPushButton" name="btn_zoomExtent">
        <property name="text">
-        <string>Zoom extent</string>
+        <string>Zoom</string>
        </property>
       </widget>
      </item>
