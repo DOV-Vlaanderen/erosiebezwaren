@@ -21,15 +21,13 @@ class ParcelListWidget(QWidget):
 
     def populate(self, layer, producentnr):
         self.layer = layer
-        for p in self.__getParcelIterator(producentnr):
-            self.addParcel(p)
-
-    def __getParcelIterator(self, producentnr):
+        parcelList = []
         expr = '"datum_bezwaar" is not null and "producentnr" = \'%s\'' % producentnr
-        return self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr)))
+        for p in self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr))):
+            parcelList.append(p)
 
-    def __getParcels(self):
-        return [f for f in self.__getParcelIterator()]
+        for p in sorted(parcelList, key = lambda x: int(x.attribute('perceelsnr_va_2015'))):
+            self.addParcel(p)
 
     def goToParcel(self, parcel):
         self.parcelListDialog.parcelInfoWidget.setLayer(self.parcelListDialog.layer)
