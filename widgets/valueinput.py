@@ -39,6 +39,15 @@ class ValueLineEdit(QLineEdit):
         else:
             self.clear()
 
+class ValueCheckBox(QCheckBox):
+    def setValue(self, value):
+        self.setChecked(value != None)
+
+    def getValue(self):
+        if self.isChecked():
+            return 1
+        return 0
+
 class ValueComboBox(QComboBox):
     def __init__(self, parent):
         QComboBox.__init__(self, parent)
