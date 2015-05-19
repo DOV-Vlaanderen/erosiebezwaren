@@ -20,7 +20,7 @@ class FarmerResultWidget(QWidget):
         self.horMaxSizePolicy.setHorizontalPolicy(QSizePolicy.Maximum)
         self.layout = QGridLayout(self)
         self.setLayout(self.layout)
-        
+
         self.layout.addWidget(QLabel('<i>Zoek landbouwer op basis van naam of, indien u<br>enkel cijfers invoert, op producentnummer.</i>'), 0, 0)
 
         self.resultSet = set()
@@ -28,6 +28,8 @@ class FarmerResultWidget(QWidget):
     def addFromFeatureIterator(self, iterator):
         for feature in iterator:
             self.addResult(feature)
+        if len(self.resultSet) < 1:
+            self.setNoResult()
 
     def clear(self):
         self.resultSet.clear()
@@ -126,5 +128,8 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
                         self.farmerResultWidget.addResult(f)
                 elif len(difflib.get_close_matches(searchText, nl, cutoff=0.75)) > 0:
                     self.farmerResultWidget.addResult(f)
+
+            if len(self.farmerResultWidget.resultSet) < 1:
+                self.farmerResultWidget.setNoResult()
 
         self.btn_search.setEnabled(True)
