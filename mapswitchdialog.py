@@ -14,7 +14,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
 
         self.visibleBase = set(['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart'])
         self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie',
-            'watererosie', 'bewerkingserosie', 'correcties_dem', 'Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart'])
+            'watererosie', 'bewerkingserosie', 'correcties_dem', 'Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'Bodemkaart'])
 
         QObject.connect(self.btn_routekaart, SIGNAL('clicked(bool)'), self.toMapRoutekaart)
         QObject.connect(self.btn_orthofoto, SIGNAL('clicked(bool)'), self.toMapOrthofoto)
@@ -24,7 +24,9 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         QObject.connect(self.btn_watererosie, SIGNAL('clicked(bool)'), self.toMapWatererosie)
         QObject.connect(self.btn_bewerkingserosie, SIGNAL('clicked(bool)'), self.toMapBewerkingserosie)
         QObject.connect(self.btn_afstromingskaart, SIGNAL('clicked(bool)'), self.toMapAfstromingskaart)
-        QObject.connect(self.btn_corr_dem, SIGNAL('clicked(bool)'), self.toMapCorrectiesDEM)
+        QObject.connect(self.btn_dem_origineel, SIGNAL('clicked(bool)'), self.toMapDEMOrigineel)
+        QObject.connect(self.btn_dem_agiv, SIGNAL('clicked(bool)'), self.toMapDEMAgiv)
+        QObject.connect(self.btn_bodemkaart, SIGNAL('clicked(bool)'), self.toMapBodemkaart)
 
     def toggleLayersGroups(self, enable, disable):
         legendInterface = self.main.iface.legendInterface()
@@ -105,11 +107,25 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
             'label': 'Afstromingskaart'
         })
 
-    def toMapCorrectiesDEM(self):
+    def toMapDEMOrigineel(self):
         self.toMapView({
-            'enabledLayers': self.visibleBase.union(['correcties_dem']),
+            'enabledLayers': self.visibleBase.union(['dem_origineel']),
             'autoDisable': True,
-            'label': 'Correcties DEM'
+            'label': 'Origineel DEM'
+        })
+
+    def toMapDEMAgiv(self):
+        self.toMapView({
+            'enabledLayers': self.visibleBase.union(['dem_agiv']),
+            'autoDisable': True,
+            'label': 'DEM AGIV'
+        })
+
+    def toMapBodemkaart(self):
+        self.toMapView({
+            'enabledLayers': self.visibleBase.union(['Bodemkaart']),
+            'autoDisable': True,
+            'label': 'Bodemkaart'
         })
 
 class MapSwitchButton(QToolButton):

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>853</width>
-    <height>381</height>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,71 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
+        <string>Overzichtskaart</string>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QToolButton" name="btn_routekaart">
+          <property name="text">
+           <string>Routekaart</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/icons/icons/map.png</normaloff>:/icons/icons/map.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextUnderIcon</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_orthofoto">
+          <property name="text">
+           <string>Orthofoto</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/icons/icons/map.png</normaloff>:/icons/icons/map.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextUnderIcon</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
@@ -104,19 +169,19 @@
        </layout>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QGroupBox" name="groupBox">
+     <item row="1" column="1">
+      <widget class="QGroupBox" name="groupBox_4">
        <property name="title">
-        <string>Overzichtskaart</string>
+        <string>Hoogtemodel</string>
        </property>
        <property name="flat">
         <bool>true</bool>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QToolButton" name="btn_routekaart">
+         <widget class="QToolButton" name="btn_dem_origineel">
           <property name="text">
-           <string>Routekaart</string>
+           <string>Origineel</string>
           </property>
           <property name="icon">
            <iconset resource="resources.qrc">
@@ -134,9 +199,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="btn_orthofoto">
+         <widget class="QToolButton" name="btn_dem_agiv">
           <property name="text">
-           <string>Orthofoto</string>
+           <string>AGIV</string>
           </property>
           <property name="icon">
            <iconset resource="resources.qrc">
@@ -154,13 +219,13 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer">
+         <spacer name="horizontalSpacer_4">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>230</width>
             <height>20</height>
            </size>
           </property>
@@ -172,7 +237,7 @@
      <item row="1" column="0">
       <widget class="QGroupBox" name="groupBox_3">
        <property name="title">
-        <string>Pixelkaart</string>
+        <string>Oppervlaktekaarten</string>
        </property>
        <property name="flat">
         <bool>true</bool>
@@ -254,19 +319,19 @@
        </layout>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QGroupBox" name="groupBox_4">
+     <item row="2" column="0">
+      <widget class="QGroupBox" name="groupBox_5">
        <property name="title">
-        <string>Hoogtemodel</string>
+        <string>Ondergrondkaarten</string>
        </property>
        <property name="flat">
         <bool>true</bool>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <widget class="QToolButton" name="btn_corr_dem">
+         <widget class="QToolButton" name="btn_bodemkaart">
           <property name="text">
-           <string>Correcties</string>
+           <string>Bodemkaart</string>
           </property>
           <property name="icon">
            <iconset resource="resources.qrc">
@@ -284,13 +349,13 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_4">
+         <spacer name="horizontalSpacer_5">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>297</width>
+            <width>288</width>
             <height>20</height>
            </size>
           </property>
