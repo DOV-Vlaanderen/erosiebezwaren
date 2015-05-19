@@ -116,23 +116,34 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             self.lbv_gps.clear()
 
     def populatePhotos(self):
+        def takePhotos(enabled):
+            self.btn_photo.setEnabled(enabled)
+            self.btn_photo.setFlat(not enabled)
+
+        def showPhotos(enabled):
+            self.btn_showPhotos.show() if enabled else self.btn_showPhotos.hide()
+
         if self.feature:
-            # QgsProject.instance().fileName() returns path with forward slashes, even on Windows. Append subdirectories with forward slashed too
+            # QgsProject.instance().fileName() returns path with forward slashes, even on Windows. Append subdirectories with forward slashes too
             # and replace all of them afterwards with backward slashes.
             fid = self.feature.attribute('uniek_id')
             if fid:
                 photoPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'fotos', str(fid)])
                 photoPath = photoPath.replace('/', '\\')
-                self.btn_photo.setEnabled(True)
-                self.btn_photo.setFlat(False)
+                takePhotos(True)
                 if os.path.exists(photoPath) and len(os.listdir(photoPath)) > 0:
                     self.photoPath = photoPath
-                    self.btn_showPhotos.show()
-                return
-        self.btn_photo.setEnabled(False)
-        self.btn_photo.setFlat(True)
-        self.photoPath = None
-        self.btn_showPhotos.hide()
+                    showPhotos(True)
+                else:
+                    showPhotos(False)
+            else:
+                takePhotos(False)
+                showPhotos(False)
+                self.photoPath = None
+        else:
+            takePhotos(False)
+            showPhotos(False)
+            self.photoPath = None
 
     def populateObjectionForm(self):
         if self.feature:
