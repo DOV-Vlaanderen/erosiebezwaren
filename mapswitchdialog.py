@@ -123,7 +123,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
 
     def toMapBodemkaart(self):
         self.toMapView({
-            'enabledLayers': self.visibleBase.union(['Bodemkaart']),
+            'enabledLayers': (self.visibleBase - set(['Topokaart'])).union(['Bodemkaart']),
             'autoDisable': True,
             'label': 'Bodemkaart'
         })
