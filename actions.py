@@ -68,5 +68,4 @@ class Actions(object):
         touchAction.setIcon(QIcon(':/icons/icons/movemap.png'))
         toolbar.addAction(touchAction)
 
-    def deactivate(self):
-        pass
+        toolbar.addAction(self.main.iface.actionMeasure())
