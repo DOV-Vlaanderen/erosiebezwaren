@@ -18,6 +18,7 @@ class SelectionManager(object):
             if self.layer:
                 self.layer.startEditing()
                 self.layer.addAttribute(QgsField('mode', QVariant.Int, 'int', 1, 0))
+                self.layer.addAttribute(QgsField('label', QVariant.String, 'string', 1, 0))
                 self.layer.commitChanges()
                 self.layer.endEditCommand()
         return self.layer
@@ -45,13 +46,14 @@ class SelectionManager(object):
         if toggleRendering:
             self.main.iface.mapCanvas().setRenderFlag(True)
 
-    def select(self, feature, mode=0, toggleRendering=True):
+    def select(self, feature, mode=0, label="", toggleRendering=True):
         if not self.__getLayer():
             return
         f = QgsFeature()
         f.fields().append(QgsField('mode', QVariant.Int, 'int', 1, 0))
+        f.fields().append(QgsField('label', QVariant.String, 'string', 1, 0))
         f.setGeometry(feature.geometry())
-        f.setAttributes([mode])
+        f.setAttributes([mode, label])
         self.main.iface.mapCanvas().setRenderFlag(False)
         self.layer.addFeature(f)
         if toggleRendering:
