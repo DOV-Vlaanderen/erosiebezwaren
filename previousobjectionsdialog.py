@@ -61,8 +61,8 @@ class PreviousObjectionsWidget(QWidget):
         self.layout.addWidget(lb3, row, 3)
 
     def highlightObjection(self, feature):
-        self.main.selectionManager.clearWithMode(mode=3, toggleRendering=False)
-        self.main.selectionManager.select(feature, mode=3)
+        self.main.selectionManager.clearWithMode(mode=2, toggleRendering=False)
+        self.main.selectionManager.select(feature, mode=2)
 
 class PreviousObjectionsDialog(QDialog, Ui_PreviousObjectionsDialog):
     def __init__(self, main, uniek_id):
