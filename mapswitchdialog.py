@@ -14,7 +14,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
 
         self.visibleBase = set(['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart'])
         self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie',
-            'watererosie', 'bewerkingserosie', 'correcties_dem', 'Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'Bodemkaart'])
+            'watererosie', 'bewerkingserosie', 'dem_origineel', 'dem_agiv', 'Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'Bodemkaart'])
 
         QObject.connect(self.btn_routekaart, SIGNAL('clicked(bool)'), self.toMapRoutekaart)
         QObject.connect(self.btn_orthofoto, SIGNAL('clicked(bool)'), self.toMapOrthofoto)
