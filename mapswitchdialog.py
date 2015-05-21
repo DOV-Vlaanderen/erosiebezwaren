@@ -14,7 +14,8 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
 
         self.visibleBase = set(['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart'])
         self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie',
-            'watererosie', 'bewerkingserosie', 'dem_origineel', 'dem_agiv', 'Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'Bodemkaart'])
+            'watererosie', 'bewerkingserosie', 'dem_kul', 'dem_agiv', 'Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'Bodemkaart'])
+        self.activeDem = None
 
         QObject.connect(self.btn_routekaart, SIGNAL('clicked(bool)'), self.toMapRoutekaart)
         QObject.connect(self.btn_orthofoto, SIGNAL('clicked(bool)'), self.toMapOrthofoto)
@@ -24,7 +25,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         QObject.connect(self.btn_watererosie, SIGNAL('clicked(bool)'), self.toMapWatererosie)
         QObject.connect(self.btn_bewerkingserosie, SIGNAL('clicked(bool)'), self.toMapBewerkingserosie)
         QObject.connect(self.btn_afstromingskaart, SIGNAL('clicked(bool)'), self.toMapAfstromingskaart)
-        QObject.connect(self.btn_dem_origineel, SIGNAL('clicked(bool)'), self.toMapDEMOrigineel)
+        QObject.connect(self.btn_dem_kul, SIGNAL('clicked(bool)'), self.toMapDEMKul)
         QObject.connect(self.btn_dem_agiv, SIGNAL('clicked(bool)'), self.toMapDEMAgiv)
         QObject.connect(self.btn_bodemkaart, SIGNAL('clicked(bool)'), self.toMapBodemkaart)
 
@@ -45,6 +46,8 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
                 legendInterface.setLayerVisible(l, False)
 
     def toMapView(self, mapView):
+        QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('extentsChanged()'), self.updateRasterColors)
+
         if mapView['autoDisable'] == True:
             mapView['disabledLayers'] = self.allLayers - mapView['enabledLayers']
         self.toggleLayersGroups(enable=mapView['enabledLayers'], disable=mapView['disabledLayers'])
@@ -102,24 +105,34 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
 
     def toMapAfstromingskaart(self):
         self.toMapView({
-            'enabledLayers': (self.visibleBase - set(['bezwarenkaart', 'percelenkaart'])).union(['Afstromingskaart']),
+            'enabledLayers': (self.visibleBase - set(['bezwarenkaart', 'percelenkaart', 'Overzichtskaart'])).union(['Afstromingskaart']),
             'autoDisable': True,
             'label': 'Afstromingskaart'
         })
 
-    def toMapDEMOrigineel(self):
+    def toMapDEMKul(self):
+        self.activeDem = self.main.utils.getLayerByName('dem_kul')
+        self.updateRasterColors()
+
         self.toMapView({
-            'enabledLayers': self.visibleBase.union(['dem_origineel']),
+            'enabledLayers': self.visibleBase.union(['dem_kul']),
             'autoDisable': True,
-            'label': 'Origineel DEM'
+            'label': 'DEM KULeuven'
         })
 
+        QObject.connect(self.main.iface.mapCanvas(), SIGNAL('extentsChanged()'), self.updateRasterColors)
+
     def toMapDEMAgiv(self):
+        self.activeDem = self.main.utils.getLayerByName('dem_agiv')
+        self.updateRasterColors()
+
         self.toMapView({
             'enabledLayers': self.visibleBase.union(['dem_agiv']),
             'autoDisable': True,
             'label': 'DEM AGIV'
         })
+
+        QObject.connect(self.main.iface.mapCanvas(), SIGNAL('extentsChanged()'), self.updateRasterColors)
 
     def toMapBodemkaart(self):
         self.toMapView({
@@ -127,6 +140,30 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
             'autoDisable': True,
             'label': 'Bodemkaart'
         })
+
+    def updateRasterColors(self):
+        if not self.activeDem:
+            return
+
+        currentExtent = self.main.iface.mapCanvas().extent()
+        bandStats = self.activeDem.dataProvider().bandStatistics(1, QgsRasterBandStats.Max | QgsRasterBandStats.Min, currentExtent, 1000)
+        vmax = bandStats.maximumValue
+        vmin = bandStats.minimumValue
+
+        colorList = [QgsColorRampShader.ColorRampItem(((vmax-vmin)/4.0)*0+vmin, QColor('#2b83ba')),
+                     QgsColorRampShader.ColorRampItem(((vmax-vmin)/4.0)*1+vmin, QColor('#abdda4')),
+                     QgsColorRampShader.ColorRampItem(((vmax-vmin)/4.0)*2+vmin, QColor('#ffffbf')),
+                     QgsColorRampShader.ColorRampItem(((vmax-vmin)/4.0)*3+vmin, QColor('#fdae61')),
+                     QgsColorRampShader.ColorRampItem(((vmax-vmin)/4.0)*4+vmin, QColor('#d7191c'))]
+
+        rasterShader = QgsRasterShader()
+        colorRampShader = QgsColorRampShader()
+        colorRampShader.setColorRampItemList(colorList)
+        colorRampShader.setColorRampType(QgsColorRampShader.INTERPOLATED)
+        rasterShader.setRasterShaderFunction(colorRampShader)
+        pseudoColorRenderer = QgsSingleBandPseudoColorRenderer(self.activeDem.dataProvider(), self.activeDem.type(), rasterShader)
+        self.activeDem.setRenderer(pseudoColorRenderer)
+        self.activeDem.triggerRepaint()
 
 class MapSwitchButton(QToolButton):
     def __init__(self, main, parent):

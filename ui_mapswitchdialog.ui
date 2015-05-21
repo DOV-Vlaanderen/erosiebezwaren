@@ -179,9 +179,9 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QToolButton" name="btn_dem_origineel">
+         <widget class="QToolButton" name="btn_dem_kul">
           <property name="text">
-           <string>Origineel</string>
+           <string>KULeuven</string>
           </property>
           <property name="icon">
            <iconset resource="resources.qrc">
