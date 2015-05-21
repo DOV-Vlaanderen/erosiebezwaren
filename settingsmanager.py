@@ -5,6 +5,7 @@ class SettingsManager(object):
         self.map = {
             'layers/tempSelection': 'bezwaren_selectie',
             'layers/bezwaren': 'bezwarenkaart',
+            'layers/oudebezwaren': 'oude_bezwaren',
             'layers/percelen': 'percelenkaart',
             'layers/pijlen': 'Pijlen',
             'layers/polygonen': 'Polygonen',

@@ -14,6 +14,8 @@ from widgets.elevatedfeaturewidget import ElevatedFeatureWidget
 from parcelwindow import ParcelWindow
 from photodialog import PhotoDialog
 from parcellistdialog import ParcelListDialog
+from previousobjectionsdialog import PreviousObjectionsDialog
+
 
 class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
     def __init__(self, parent, main, layer=None, parcel=None):
@@ -47,6 +49,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         QObject.connect(self.btn_photo, SIGNAL('clicked(bool)'), self.takePhotos)
         QObject.connect(self.btn_showPhotos, SIGNAL('clicked(bool)'), self.showPhotos)
         QObject.connect(self.efwBtnAndereBezwaren_datum_bezwaar, SIGNAL('clicked(bool)'), self.showParcelList)
+        QObject.connect(self.efwBtn_herindiening_bezwaar, SIGNAL('clicked(bool)'), self.showPreviousObjections)
 
         self.populate()
 
@@ -278,6 +281,18 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             d.lbv_bezwaren_van.clear()
         QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtnAndereBezwaren_datum_bezwaar.setEnabled(True))
         d.populate(self.layer, self.feature.attribute('producentnr'))
+        d.show()
+
+    def showPreviousObjections(self):
+        self.efwBtn_herindiening_bezwaar.setEnabled(False)
+        QCoreApplication.processEvents()
+        self.efwBtn_herindiening_bezwaar.repaint()
+        d = PreviousObjectionsDialog(self.main, self.feature.attribute('uniek_id'))
+        if self.feature.attribute('naam'):
+            d.lbv_naam.setText('van %s' % str(self.feature.attribute('naam')))
+        else:
+            d.lbv_naam.hide()
+        QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtn_herindiening_bezwaar.setEnabled(True))
         d.show()
 
 class ParcelInfoDock(QDockWidget):
