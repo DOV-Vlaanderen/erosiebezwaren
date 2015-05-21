@@ -54,7 +54,7 @@ class ElevatedFeatureWidget(QWidget):
             fnGetValue = widget.text
         elif _s(widget, SensitivityButtonBox) or \
              _s(widget, DefaultValueDateEdit) or \
-             _S(widget, ValueCheckBox) or \
+             _s(widget, ValueCheckBox) or \
              _s(widget, AttributeFilledCombobox) or \
              _s(widget, ValueComboBox) or \
              _s(widget, ValueMappedComboBox):
