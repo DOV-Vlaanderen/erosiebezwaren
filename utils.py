@@ -9,10 +9,9 @@ class Utils(object):
         self.main = main
 
     def getLayerByName(self, name):
-        mapCanvas = self.main.iface.mapCanvas()
-        for i in range(0, mapCanvas.layerCount()):
-            if mapCanvas.layer(i).name() == name:
-                return mapCanvas.layer(i)
+        for layer in self.main.iface.legendInterface().layers():
+            if layer.name() == name:
+                return layer
 
     def editInLayer(self, name):
         layer = self.getLayerByName(name)
