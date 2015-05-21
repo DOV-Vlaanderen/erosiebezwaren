@@ -23,7 +23,9 @@ class PreviousObjectionsWidget(QWidget):
         lb_jaar = QLabel('<b>Jaar</b>')
         lb_jaar.setSizePolicy(self.horMaxSizePolicy)
         self.layout.addWidget(lb_jaar, 0, 0)
-        self.layout.addWidget(QLabel('<b>Aanpassing</b>'), 0, 1)
+        self.layout.addWidget(QLabel('<b>Oorsprokelijk</b>'), 0, 1)
+        self.layout.addWidget(QLabel('<b>Advies</b>'), 0, 2)
+        self.layout.addWidget(QLabel('<b>Aanpassing</b>'), 0, 3)
         self.__populate()
 
     def __populate(self):
@@ -47,8 +49,16 @@ class PreviousObjectionsWidget(QWidget):
         self.layout.addWidget(btn, row, 0)
 
         lb1 = valuelabel.ValueLabel(self)
-        lb1.setText(feature.attribute('aanpassing'))
+        lb1.setText(feature.attribute('oorspronke'))
         self.layout.addWidget(lb1, row, 1)
+
+        lb2 = valuelabel.ValueLabel(self)
+        lb2.setText(feature.attribute('Advies'))
+        self.layout.addWidget(lb2, row, 2)
+
+        lb2 = valuelabel.ValueLabel(self)
+        lb2.setText(feature.attribute('nieuwe_kl'))
+        self.layout.addWidget(lb3, row, 3)
 
     def highlightObjection(self, feature):
         self.main.selectionManager.clearWithMode(mode=3, toggleRendering=False)
