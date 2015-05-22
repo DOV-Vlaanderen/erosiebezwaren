@@ -170,55 +170,41 @@
        </layout>
       </item>
       <item row="6" column="0">
-       <widget class="QLabel" name="lb_watererosie_0">
-        <property name="text">
-         <string>Watererosie 0 2015</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="ValueLabel" name="efw_watererosie_0_2015">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
        <widget class="QLabel" name="lb_watererosie_30">
         <property name="text">
          <string>Watererosie 30 2015</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="1">
+      <item row="6" column="1">
        <widget class="ValueLabel" name="efw_watererosie_30_2015">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="8" column="0">
+      <item row="7" column="0">
        <widget class="QLabel" name="lb_bewerkingserosie">
         <property name="text">
          <string>Bewerkingserosie 2015</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="1">
+      <item row="7" column="1">
        <widget class="ValueLabel" name="efw_bewerkingserosie_2015">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="9" column="0">
+      <item row="8" column="0">
        <widget class="QLabel" name="lb_totale_erosie">
         <property name="text">
          <string>Totale erosie 2015</string>
         </property>
        </widget>
       </item>
-      <item row="9" column="1">
+      <item row="8" column="1">
        <widget class="ValueLabel" name="efw_totale_erosie_2015">
         <property name="text">
          <string/>
