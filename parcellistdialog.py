@@ -53,7 +53,7 @@ class ParcelListWidget(QWidget):
         lb1.setText(parcel.attribute('advies_behandeld'))
         self.layout.addWidget(lb1, row, 1)
 
-        lb2 = valuelabel.DefaultColorValueLabel(self)
+        lb2 = valuelabel.SensitivityColorLabel(self)
         lb2.setSizePolicy(self.horMaxSizePolicy)
         lb2.setText('2015')
         lb2.setText(parcel.attribute('kleur_2015'))
