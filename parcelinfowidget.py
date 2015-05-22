@@ -159,7 +159,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                 return
 
             objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), self.main.settings.getValue('paths/bezwaren'), str(self.feature.attribute('producentnr'))])
-            objectionPath.replace('/', '\\')
+            objectionPath = objectionPath.replace('/', '\\')
             self.objectionPath = []
             if os.path.exists(objectionPath):
                 fileList = [i.lower() for i in os.listdir(objectionPath)]
