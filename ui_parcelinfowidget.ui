@@ -784,7 +784,7 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="ValueLabel" name="efw_producentnr">
+               <widget class="AutohideValueLabel" name="efw_producentnr">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -793,6 +793,9 @@ font-weight: bold;
                 </property>
                 <property name="indent">
                  <number>20</number>
+                </property>
+                <property name="buddy">
+                 <cstring>lb_producentnr</cstring>
                 </property>
                </widget>
               </item>
