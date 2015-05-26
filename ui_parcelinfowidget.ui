@@ -795,7 +795,7 @@ font-weight: bold;
                  <number>20</number>
                 </property>
                 <property name="buddy">
-                 <cstring>lb_producentnr</cstring>
+                 <cstring>lb_producentnummer</cstring>
                 </property>
                </widget>
               </item>
