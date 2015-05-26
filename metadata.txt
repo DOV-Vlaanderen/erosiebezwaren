@@ -11,12 +11,14 @@
 [general]
 name=Erosiebezwaren
 qgisMinimumVersion=2.0
-description=DOV - Erosiebezwaren
-version=0.1
+description=DOV - Bezwaren bodemerosie
+version=0.1.0
 
 # end of mandatory metadata
 
 # Optional items:
+
+about=Plugin ter ondersteuning van het behandelen van bodemerosiebezwaren op een tablet op het terrein.
 
 # Uncomment the following line and add your changelog entries:
 #changelog=
@@ -29,7 +31,7 @@ tags=DOV
 #repository=
 #icon=icon.png
 # experimental flag
-experimental=True
+experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
