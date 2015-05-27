@@ -32,7 +32,7 @@ class PreviousObjectionsWidget(QWidget):
         if not self.previousObjectionsLayer:
             return
 
-        expr = '"uniek_id_2015" = \'%s\'' % (self.uniek_id)
+        expr = '"perceel_2015" = \'%s\'' % (self.uniek_id)
         objectionList = []
         for i in self.previousObjectionsLayer.getFeatures(QgsFeatureRequest(QgsExpression(expr))):
             objectionList.append(i)
@@ -56,8 +56,8 @@ class PreviousObjectionsWidget(QWidget):
         lb2.setText(feature.attribute('Advies'))
         self.layout.addWidget(lb2, row, 2)
 
-        lb2 = valuelabel.ValueLabel(self)
-        lb2.setText(feature.attribute('nieuwe_kl'))
+        lb3 = valuelabel.ValueLabel(self)
+        lb3.setText(feature.attribute('nieuwe_kle'))
         self.layout.addWidget(lb3, row, 3)
 
     def highlightObjection(self, feature):
@@ -77,4 +77,4 @@ class PreviousObjectionsDialog(QDialog, Ui_PreviousObjectionsDialog):
         self.scrollAreaLayout.insertWidget(0, PreviousObjectionsWidget(self.uniek_id, self.scrollAreaWidgetContents, self))
 
     def exit(self):
-        self.main.selectionManager.clearWithMode(mode=3)
+        self.main.selectionManager.clearWithMode(mode=2)

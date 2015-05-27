@@ -177,7 +177,7 @@ class EnabledFlatBooleanButton(QPushButton):
 
 class VisibilityBooleanButton(QPushButton):
     def setValue(self, value):
-        if value:
+        if value and value.lower() != "false":
             self.show()
         else:
             self.hide()
