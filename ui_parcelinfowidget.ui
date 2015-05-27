@@ -667,6 +667,9 @@ font-weight: bold;
                 <property name="text">
                  <string/>
                 </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
                 <property name="indent">
                  <number>20</number>
                 </property>
@@ -690,6 +693,9 @@ font-weight: bold;
                 <property name="text">
                  <string/>
                 </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
                 <property name="indent">
                  <number>20</number>
                 </property>
@@ -712,6 +718,9 @@ font-weight: bold;
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                 <property name="indent">
                  <number>20</number>
