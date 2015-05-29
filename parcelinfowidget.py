@@ -237,6 +237,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         def reloadFeature(layer, feature):
             self.setLayer(layer)
             self.setFeature(feature)
+            layer.triggerRepaint()
 
         if not self.feature:
             return
