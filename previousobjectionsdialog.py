@@ -32,7 +32,7 @@ class PreviousObjectionsWidget(QWidget):
         if not self.previousObjectionsLayer:
             return
 
-        expr = '"bezwaar_2015" = \'%s\'' % (self.uniek_id)
+        expr = '"bezwaar_2015" like \'%%%s%%\'' % (self.uniek_id)
         objectionList = []
         for i in self.previousObjectionsLayer.getFeatures(QgsFeatureRequest(QgsExpression(expr))):
             objectionList.append(i)
