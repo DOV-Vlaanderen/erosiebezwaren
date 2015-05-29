@@ -41,7 +41,7 @@ class ValueLineEdit(QLineEdit):
 
 class ValueCheckBox(QCheckBox):
     def setValue(self, value):
-        self.setChecked(value != None)
+        self.setChecked(value == 1)
 
     def getValue(self):
         if self.isChecked():
