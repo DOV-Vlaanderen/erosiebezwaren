@@ -33,25 +33,34 @@ class FarmerResultWidget(QWidget):
 
     def clear(self):
         self.resultSet.clear()
-        while self.layout.count():
-            self.layout.takeAt(0).widget().deleteLater()
+        for i in reversed(range(self.layout.count())):
+            self.layout.itemAt(i).widget().setParent(None)
+        QCoreApplication.processEvents()
 
     def setNoResult(self, clear=True):
         if clear:
             self.clear()
         self.layout.addWidget(QLabel('Geen resultaat'), 0, 0)
 
-    def showParcelList(self, naam, producentnr):
+    def showParcelList(self, naam, producentnr, producentnr_zo):
+        def enableWidgets():
+            for i in reversed(range(self.layout.count())):
+                self.layout.itemAt(i).widget().setEnabled(True)
+
         if not self.main.parcelInfoWidget:
             return
 
+        for i in reversed(range(self.layout.count())):
+            self.layout.itemAt(i).widget().setEnabled(False)
+
+        QCoreApplication.processEvents()
         d = ParcelListDialog(self.main.parcelInfoWidget)
-        d.lbv_bezwaren_van.setText('Bezwaren van %s' % naam)
-        d.populate(self.farmerSearchDialog.layer, producentnr)
+        QObject.connect(d, SIGNAL('finished(int)'), enableWidgets)
+        d.populate(self.farmerSearchDialog.layer, naam, producentnr, producentnr_zo)
         d.show()
 
     def addResult(self, feature):
-        farmer = (feature.attribute('producentnr'),
+        farmer = (feature.attribute('producentnr_zo'),
                   feature.attribute('naam'),
                   feature.attribute('straat_met_nr'),
                   feature.attribute('postcode'),
@@ -62,7 +71,7 @@ class FarmerResultWidget(QWidget):
             row = self.layout.rowCount()
 
             btn = QPushButton(str(farmer[0]), self)
-            QObject.connect(btn, SIGNAL('clicked(bool)'), lambda: self.showParcelList(farmer[1], farmer[0]))
+            QObject.connect(btn, SIGNAL('clicked(bool)'), lambda: self.showParcelList(farmer[1], feature.attribute('producentnr'), farmer[0]))
             self.layout.addWidget(btn, row, 0)
 
             lb0 = valuelabel.ValueLabel(self)
@@ -86,9 +95,11 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
     def __init__(self, main):
         self.main = main
         self.reNumber = re.compile(r'^[0-9]+$')
-        self.layer = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
         QDialog.__init__(self, self.main.iface.mainWindow())
         self.setupUi(self)
+
+        self.layerMap = {'Met bezwaren': 'layers/bezwaren',
+                         'Alle landbouwers': 'layers/percelen'}
 
         self.farmerResultWidget = FarmerResultWidget(self.scrollAreaContents, self)
         self.scrollAreaLayout.insertWidget(0, self.farmerResultWidget)
@@ -98,22 +109,23 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
     def search(self):
         self.btn_search.setEnabled(False)
         self.farmerResultWidget.clear()
-
-        if not self.layer:
-            self.layer = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
-            if not self.layer:
-                self.btn_search.setEnabled(True)
-                self.farmerResultWidget.setNoResult(clear=False)
-                return
+        QCoreApplication.processEvents()
+        self.btn_search.repaint()
 
         searchText = self.ldt_searchfield.text()
         if not searchText:
             self.btn_search.setEnabled(True)
-            self.farmerResultWidget.setNoResult(clear=False)
+            self.farmerResultWidget.setNoResult()
+            return
+
+        self.layer = self.main.utils.getLayerByName(self.main.settings.getValue(self.layerMap[self.cmb_searchType.currentText()]))
+        if not self.layer:
+            self.btn_search.setEnabled(True)
+            self.farmerResultWidget.setNoResult()
             return
 
         if self.reNumber.match(searchText):
-            expr = '"producentnr_zo" like \'%%%s%%\' and "naam" is not null' % searchText
+            expr = '"producentnr_zo" like \'%%%s%%\'' % searchText
             self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr))))
         else:
             for f in self.layer.getFeatures(QgsFeatureRequest(QgsExpression('"naam" is not null'))):

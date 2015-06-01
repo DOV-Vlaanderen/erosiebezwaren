@@ -277,12 +277,8 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         QCoreApplication.processEvents()
         self.efwBtnAndereBezwaren_datum_bezwaar.repaint()
         d = ParcelListDialog(self)
-        if self.feature.attribute('naam'):
-            d.lbv_bezwaren_van.setText('Bezwaren van %s' % str(self.feature.attribute('naam')))
-        else:
-            d.lbv_bezwaren_van.clear()
         QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtnAndereBezwaren_datum_bezwaar.setEnabled(True))
-        d.populate(self.layer, self.feature.attribute('producentnr'))
+        d.populate(self.layer, self.feature.attribute('naam'), self.feature.attribute('producentnr'), self.feature.attribute('producentnr_zo'))
         d.show()
 
     def showPreviousObjections(self):
