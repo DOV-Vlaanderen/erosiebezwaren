@@ -237,16 +237,36 @@
      <item row="1" column="0">
       <widget class="QGroupBox" name="groupBox_3">
        <property name="title">
-        <string>Oppervlaktekaarten</string>
+        <string>Pixelkaarten erosie</string>
        </property>
        <property name="flat">
         <bool>true</bool>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QToolButton" name="btn_watererosie">
+         <widget class="QToolButton" name="btn_watererosie_0">
           <property name="text">
-           <string>Watererosie</string>
+           <string>Watererosie 0</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/icons/icons/map.png</normaloff>:/icons/icons/map.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextUnderIcon</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_watererosie_30">
+          <property name="text">
+           <string>Watererosie 30</string>
           </property>
           <property name="icon">
            <iconset resource="resources.qrc">
@@ -284,26 +304,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="btn_afstromingskaart">
-          <property name="text">
-           <string>Afstromingskaart</string>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/icons/icons/map.png</normaloff>:/icons/icons/map.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextUnderIcon</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
          <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -322,7 +322,7 @@
      <item row="2" column="0">
       <widget class="QGroupBox" name="groupBox_5">
        <property name="title">
-        <string>Ondergrondkaarten</string>
+        <string>Achtergrondkaarten</string>
        </property>
        <property name="flat">
         <bool>true</bool>
@@ -332,6 +332,26 @@
          <widget class="QToolButton" name="btn_bodemkaart">
           <property name="text">
            <string>Bodemkaart</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/icons/icons/map.png</normaloff>:/icons/icons/map.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextUnderIcon</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_afstromingskaart">
+          <property name="text">
+           <string>Afstromingskaart</string>
           </property>
           <property name="icon">
            <iconset resource="resources.qrc">
