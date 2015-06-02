@@ -33,7 +33,9 @@ class AttributeModel(QAbstractItemModel):
         return QModelIndex()
 
     def data(self, index, role):
-        return self.values[index.row()]
+        if index.row() < len(self.values):
+            return self.values[index.row()]
+        return None
 
 class AttributeFilledCombobox(QComboBox):
     def __init__(self, parent, layer=None, attributename=None):
