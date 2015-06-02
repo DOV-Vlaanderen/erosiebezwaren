@@ -1,3 +1,15 @@
+erosiebezwaren (1.1.0)
+
+  * Veld 'jaarlijks herberekenen' correct opslaan.
+  * Kaart hertekenen na het opslaan van een advies.
+  * Inkleuring van statusveld 'Afgehandeld ALBON'.
+  * Toon alle oude bezwaren die minstens 10% overlappen.
+  * Mogelijkheid om te zoeken op alle landbouwers.
+  * Pixelkaart watererosie 0 toegevoegd aan loketten.
+  * Vermijden van foutmelding omtrent 'gewas veldbezoek' bij editeren.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Tue, 02 Jun 2015 10:45:35 +0200
+
 erosiebezwaren (1.0.0)
 
   * Vermijd horizontaal scrollen in informatiepaneel.
