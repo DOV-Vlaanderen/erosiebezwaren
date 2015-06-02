@@ -567,6 +567,26 @@ font-weight: bold;
                </layout>
               </item>
               <item>
+               <widget class="QLabel" name="lb_watererosie_0_2015">
+                <property name="text">
+                 <string>Watererosie 0</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="ValueLabel" name="efw_watererosie_0_2015">
+                <property name="styleSheet">
+                 <string notr="true">* { font-style: italic;}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="indent">
+                 <number>20</number>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLabel" name="lb_watererosie_30_2015">
                 <property name="text">
                  <string>Watererosie 30</string>
