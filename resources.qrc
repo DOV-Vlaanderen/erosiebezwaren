@@ -28,5 +28,6 @@
     <file>icons/photo.png</file>
     <file>icons/pijlen.png</file>
     <file>icons/routekaart.png</file>
+    <file>icons/measure.png</file>
   </qresource>
 </RCC>

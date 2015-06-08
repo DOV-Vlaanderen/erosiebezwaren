@@ -68,4 +68,6 @@ class Actions(object):
         touchAction.setIcon(QIcon(':/icons/icons/movemap.png'))
         toolbar.addAction(touchAction)
 
-        toolbar.addAction(self.main.iface.actionMeasure())
+        measureAction = self.main.iface.actionMeasure()
+        measureAction.setIcon(QIcon(':/icons/icons/measure.png'))
+        toolbar.addAction(measureAction)
