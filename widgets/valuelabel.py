@@ -135,7 +135,8 @@ class SensitivityColorLabel(ColorLabel):
                          'laag': ('#ffff00', '#000000'),
                          'medium': ('#ffaa00', '#000000'),
                          'hoog': ('#ff0000', '#ffffff'),
-                         'zeer hoog': ('#a800e6', '#ffffff')}
+                         'zeer hoog': ('#a800e6', '#ffffff'),
+                         'niet van toepassing': ('#5D5D5D', '#ffffff')}
 
 class AutohideColorValueLabel(AutohideValueLabel, ColorLabel):
     def __init__(self, parent):
