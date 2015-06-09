@@ -15,7 +15,7 @@ class GpsZoomDialog(QDialog, Ui_GpsZoomDialog):
         QObject.connect(self.btn_zoom, SIGNAL('clicked(bool)'), self.zoomTo)
         QObject.connect(self.btn_zoom, SIGNAL('clicked(bool)'), self.hide)
 
-        # self.populate()
+        self.populate()
 
     def populate(self):
         center = self.main.iface.mapCanvas().extent().center()
@@ -24,22 +24,22 @@ class GpsZoomDialog(QDialog, Ui_GpsZoomDialog):
         center = t.transform(center)
 
         latDeg = int(center.y())
-        latMin = (abs(center.y())-abs(latDeg))/100.0*60.0*100.0
-        latSec = (abs(latMin)-abs(int(latMin)))/100.0*60.0*100.0
+        latMin = abs(center.y()-latDeg)*60.0
+        latSec = abs(latMin-int(latMin))*60.0
         self.sb_latDeg.setValue(latDeg)
         self.sb_latMin.setValue(int(latMin))
         self.sb_latSec.setValue(latSec)
 
         lonDeg = int(center.x())
-        lonMin = (abs(center.x())-abs(lonDeg))/100.0*60.0*100.0
-        lonSec = (abs(lonMin)-abs(int(lonMin)))/100.0*60.0*100.0
+        lonMin = abs(center.x()-lonDeg)*60.0
+        lonSec = abs(lonMin-int(lonMin))*60.0
         self.sb_lonDeg.setValue(lonDeg)
         self.sb_lonMin.setValue(int(lonMin))
         self.sb_lonSec.setValue(lonSec)
 
     def zoomTo(self):
-        lat = self.sb_latDeg.value() + (self.sb_latMin.value()/60.0*100.0/100.0) + (self.sb_latSec.value()/60.0*100.0/10000.0)
-        lon = self.sb_lonDeg.value() + (self.sb_lonMin.value()/60.0*100.0/100.0) + (self.sb_lonSec.value()/60.0*100.0/10000.0)
+        lat = self.sb_latDeg.value() + (self.sb_latMin.value()/60.0) + (self.sb_latSec.value()/6000.0)
+        lon = self.sb_lonDeg.value() + (self.sb_lonMin.value()/60.0) + (self.sb_lonSec.value()/6000.0)
         t = QgsCoordinateTransform(QgsCoordinateReferenceSystem(4326, QgsCoordinateReferenceSystem.EpsgCrsId),
             QgsCoordinateReferenceSystem(31370, QgsCoordinateReferenceSystem.EpsgCrsId))
         p = t.transform(lon, lat)
