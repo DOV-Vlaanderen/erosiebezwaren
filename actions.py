@@ -52,10 +52,6 @@ class Actions(object):
         toolbar.addAction(farmerSearchAction)
         toolbar.addSeparator()
 
-        gpsAction = QAction(QIcon(':/icons/icons/zoomgps.png'), u"Zoom naar GPS coördinaten", self.parent)
-        QObject.connect(gpsAction, SIGNAL('triggered(bool)'), self.zoomToGps)
-        toolbar.addAction(gpsAction)
-
         zoomInAction = QAction(QIcon(':/icons/icons/zoomin.png'), "Zoom in", self.parent)
         QObject.connect(zoomInAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomIn())
         toolbar.addAction(zoomInAction)
@@ -63,6 +59,10 @@ class Actions(object):
         zoomOutAction = QAction(QIcon(':/icons/icons/zoomout.png'), "Zoom uit", self.parent)
         QObject.connect(zoomOutAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomOut())
         toolbar.addAction(zoomOutAction)
+
+        gpsAction = QAction(QIcon(':/icons/icons/zoomgps.png'), u"Zoom naar GPS coördinaten", self.parent)
+        QObject.connect(gpsAction, SIGNAL('triggered(bool)'), self.zoomToGps)
+        toolbar.addAction(gpsAction)
 
         toggleFullscreenAction = QAction(QIcon(':/icons/icons/fullscreen.png'), "Volledig scherm aan/uit", self.parent)
         QObject.connect(toggleFullscreenAction, SIGNAL('triggered(bool)'), self.toggleFullscreen)
