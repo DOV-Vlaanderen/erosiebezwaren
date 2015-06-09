@@ -29,5 +29,6 @@
     <file>icons/pijlen.png</file>
     <file>icons/routekaart.png</file>
     <file>icons/measure.png</file>
+    <file>icons/zoomgps.png</file>
   </qresource>
 </RCC>

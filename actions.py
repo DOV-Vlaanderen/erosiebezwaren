@@ -12,6 +12,7 @@ import time
 from parcelidentifier import ParcelIdentifyAction
 from mapswitchdialog import MapSwitchButton
 from farmersearchdialog import FarmerSearchDialog
+from gpszoomdialog import GpsZoomDialog
 
 class Actions(object):
     def __init__(self, main, parent):
@@ -31,6 +32,10 @@ class Actions(object):
         d = FarmerSearchDialog(self.main)
         d.show()
 
+    def zoomToGps(self):
+        d = GpsZoomDialog(self.main)
+        d.show()
+
     def addToToolbar(self, toolbar):
         exitAction = QAction(QIcon(':/icons/icons/exit.png'), 'Applicatie afsluiten', self.parent)
         QObject.connect(exitAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.actionExit().trigger())
@@ -46,6 +51,10 @@ class Actions(object):
         QObject.connect(farmerSearchAction, SIGNAL('triggered(bool)'), self.searchFarmer)
         toolbar.addAction(farmerSearchAction)
         toolbar.addSeparator()
+
+        gpsAction = QAction(QIcon(':/icons/icons/zoomgps.png'), u"Zoom naar GPS coördinaten", self.parent)
+        QObject.connect(gpsAction, SIGNAL('triggered(bool)'), self.zoomToGps)
+        toolbar.addAction(gpsAction)
 
         zoomInAction = QAction(QIcon(':/icons/icons/zoomin.png'), "Zoom in", self.parent)
         QObject.connect(zoomInAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomIn())
