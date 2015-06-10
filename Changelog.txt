@@ -1,3 +1,12 @@
+erosiebezwaren (1.2.0)
+
+  * Pixelkaart watererosie 0 verwijderd.
+  * Knop 'niet van toepassing' toegevoegd bij advies erosiegevoeligheid.
+  * Icoontje toegevoegd voor 'lijn meten'.
+  * Knop toegevoegd om te zoomen naar GPS coördinaten.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Tue, 09 Jun 2015 13:27:16 +0200
+
 erosiebezwaren (1.1.0)
 
   * Veld 'jaarlijks herberekenen' correct opslaan.
