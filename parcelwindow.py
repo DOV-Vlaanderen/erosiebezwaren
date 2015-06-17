@@ -144,7 +144,10 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
 
         for w in self.widgets:
             w.saveFeature()
-        self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/editor', self.quickedit.efw_veldcontrole_door.text())
+
+        editor = self.quickedit.efw_veldcontrole_door.text()
+        if editor:
+            self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/editor', editor)
         self.main.iface.mapCanvas().refresh()
         self.parent.saved.emit(layer, self.feature)
         self.parent.close()
