@@ -137,6 +137,10 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
                     w.feature = addedFeatures[0]
                     w.layer = self.writeLayer
                     w._mapWidgets(w.feature.fields())
+            else:
+                # this shouldn't happen: failed to copy feature
+                # return here so we don't save it in the wrong layer
+                return
 
         for w in self.widgets:
             w.saveFeature()
