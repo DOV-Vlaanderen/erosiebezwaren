@@ -1,3 +1,10 @@
+erosiebezwaren (1.2.1)
+
+  * Editeervenster niet sluiten indien het opslaan niet lukt.
+  * Laatste editor enkel overschrijven met nieuwe waarde, niet met lege tekst.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Wed, 17 Jun 2015 09:02:58 +0200
+
 erosiebezwaren (1.2.0)
 
   * Pixelkaart watererosie 0 verwijderd.
