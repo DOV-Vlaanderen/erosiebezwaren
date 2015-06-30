@@ -1,3 +1,9 @@
+erosiebezwaren (1.3.0)
+
+  * Toon de oppervlakte van het perceel in het infovenster.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Tue, 30 Jun 2015 15:22:49 +0200
+
 erosiebezwaren (1.2.1)
 
   * Editeervenster niet sluiten indien het opslaan niet lukt.
