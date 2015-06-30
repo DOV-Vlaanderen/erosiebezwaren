@@ -72,6 +72,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.populatePhotos()
         self.populateObjectionForm()
         self.populateEditButton()
+        self.populateArea()
 
     def populateAdvies(self):
         style = "* {"
@@ -118,6 +119,12 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
                 self.lbv_gps.setText(rewriteText(gpsGeom.asPoint().toDegreesMinutes(3)))
         else:
             self.lbv_gps.clear()
+
+    def populateArea(self):
+        if self.feature:
+            self.lbv_oppervlakte.setText('%0.3f ha' % (self.feature.geometry().area()/10000.0))
+        else:
+            self.lbv_oppervlakte.clear()
 
     def populatePhotos(self):
         def takePhotos(enabled):

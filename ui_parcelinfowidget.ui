@@ -647,6 +647,26 @@ font-weight: bold;
                </widget>
               </item>
               <item>
+               <widget class="QLabel" name="lb_oppervlakte">
+                <property name="text">
+                 <string>Oppervlakte</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lbv_oppervlakte">
+                <property name="styleSheet">
+                 <string notr="true">* { font-style: italic;}</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="indent">
+                 <number>20</number>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLabel" name="lb_perceelsnaam">
                 <property name="text">
                  <string>Perceelsnaam</string>
