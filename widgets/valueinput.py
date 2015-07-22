@@ -48,6 +48,55 @@ class ValueCheckBox(QCheckBox):
             return 1
         return 0
 
+class ValueBooleanButton(QPushButton):
+    def __init__(self, parent):
+        QPushButton.__init__(self, parent)
+        self.setContentsMargins(4, 4, 4, 4)
+        self.setMinimumHeight(32)
+        self.setCheckable(True)
+        self.text = None
+        self.__setStyleSheet()
+        QObject.connect(self, SIGNAL('clicked()'), self.__updateValue)
+
+    def setText(self, text):
+        if not self.text:
+            self.text = text
+        QPushButton.setText(self, self.text)
+
+    def setValue(self, value):
+        if value == 1:
+            QPushButton.setText(self, self.text + ': Ja')
+            self.setChecked(True)
+        else:
+            QPushButton.setText(self, self.text + ': Nee')
+            self.setChecked(False)
+
+    def getValue(self):
+        if self.isChecked():
+            return 1
+        return 0
+
+    def __updateValue(self):
+        if self.isChecked():
+            self.setValue(1)
+        else:
+            self.setValue(0)
+
+    def __setStyleSheet(self):
+        style = "QPushButton {"
+        style += "border: 2px solid white;"
+        style += "border-radius: 4px;"
+        style += "padding: 2px;"
+        style += "background-color: #C6C6C6;"
+        style += "color: #000000;"
+        style += "}"
+
+        style += "QPushButton:checked {"
+        style += "background-color: #CBE195;"
+        style += "color: #000000;"
+        style += "}"
+        self.setStyleSheet(style)
+
 class ValueComboBox(QComboBox):
     def __init__(self, parent):
         QComboBox.__init__(self, parent)
