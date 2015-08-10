@@ -131,8 +131,8 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         layer = self.layer
         if self.writeLayer and self.writeLayer != self.layer:
             layer = self.writeLayer
-            result, addedFeatures = self.writeLayer.dataProvider().addFeatures([self.feature])
-            if result:
+            success, addedFeatures = self.writeLayer.dataProvider().addFeatures([self.feature])
+            if success:
                 for w in self.widgets:
                     w.feature = addedFeatures[0]
                     w.layer = self.writeLayer
@@ -142,8 +142,13 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
                 # return here so we don't save it in the wrong layer
                 return
 
+        attrMap = {}
         for w in self.widgets:
-            w.saveFeature()
+            attrMap.update(w._getAttrMap())
+        success = self.saveFeature(attrMap)
+
+        if not success:
+            return
 
         editor = self.quickedit.efw_veldcontrole_door.text()
         if editor:

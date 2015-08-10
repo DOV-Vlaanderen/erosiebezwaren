@@ -101,10 +101,7 @@ class ElevatedFeatureWidget(QWidget):
         self.feature = feature
         self.populate()
 
-    def _saveFeature(self):
-        if not self.feature:
-            return
-
+    def _getAttrMap(self):
         attrMap = {}
         for field in self.fieldMap:
             for widget in self.fieldMap[field]:
@@ -112,14 +109,14 @@ class ElevatedFeatureWidget(QWidget):
                 if value != ElevatedFeatureWidget.UNDEFINED:
                     self.feature.setAttribute(field.name(), value)
                     attrMap[field.index] = value
+        return attrMap
 
-        self.layer.dataProvider().changeAttributeValues({self.feature.id(): attrMap})
-
-    def saveFeature(self):
+    def saveFeature(self, attrMap=None):
         if not self.feature:
             return
 
-        self.layer.beginEditCommand("Update perceel %s" % self.feature.attribute('uniek_id'))
-        self._saveFeature()
-        self.layer.commitChanges()
-        self.layer.endEditCommand()
+        if not attrMap:
+            attrMap = self._getAttrMap()
+
+        r = self.layer.dataProvider().changeAttributeValues({self.feature.id(): attrMap})
+        return r
