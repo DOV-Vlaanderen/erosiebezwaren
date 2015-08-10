@@ -44,6 +44,10 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             ('Niet aanvaard', 0)
         ])
 
+        jaNee = {0: 'Nee', 1: 'Ja'}
+        self.efw_jaarlijks_herberekenen.setValueMap(jaNee)
+        self.efw_landbouwer_aanwezig.setValueMap(jaNee)
+
         QObject.connect(self.btn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showObjection)
         QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
         QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)

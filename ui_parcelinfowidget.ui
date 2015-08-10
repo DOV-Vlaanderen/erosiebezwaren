@@ -374,7 +374,7 @@ font-weight: bold;
                <x>0</x>
                <y>0</y>
                <width>327</width>
-               <height>660</height>
+               <height>766</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -1127,7 +1127,7 @@ font-weight: bold;
                <x>0</x>
                <y>0</y>
                <width>329</width>
-               <height>426</height>
+               <height>534</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1299,6 +1299,46 @@ font-weight: bold;
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
+                </property>
+                <property name="indent">
+                 <number>20</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lb_landbouwer_aanwezig">
+                <property name="text">
+                 <string>Landbouwer aanwezig</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="ValueMappedLabel" name="efw_landbouwer_aanwezig">
+                <property name="styleSheet">
+                 <string notr="true">* { font-style: italic; }</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="indent">
+                 <number>20</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lb_jaarlijks_herberekenen">
+                <property name="text">
+                 <string>Jaarlijks herberekenen</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="ValueMappedLabel" name="efw_jaarlijks_herberekenen">
+                <property name="styleSheet">
+                 <string notr="true">* { font-style: italic; }</string>
+                </property>
+                <property name="text">
+                 <string/>
                 </property>
                 <property name="indent">
                  <number>20</number>
