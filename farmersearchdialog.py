@@ -2,6 +2,7 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
+from pyspatialite import dbapi2 as sl
 
 import difflib
 import re
@@ -98,8 +99,8 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
         QDialog.__init__(self, self.main.iface.mainWindow())
         self.setupUi(self)
 
-        self.layerMap = {'Met bezwaren': 'layers/bezwaren',
-                         'Alle landbouwers': 'layers/percelen'}
+        self.withObjection = {'Met bezwaren': 1,
+                              'Alle landbouwers': 0}
 
         self.farmerResultWidget = FarmerResultWidget(self.scrollAreaContents, self)
         self.scrollAreaLayout.insertWidget(0, self.farmerResultWidget)
@@ -118,30 +119,35 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
             self.farmerResultWidget.setNoResult()
             return
 
-        self.layer = self.main.utils.getLayerByName(self.main.settings.getValue(self.layerMap[self.cmb_searchType.currentText()]))
+        self.layer = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
         if not self.layer:
             self.btn_search.setEnabled(True)
             self.farmerResultWidget.setNoResult()
             return
 
         if self.reNumber.match(searchText):
-            expr = '"producentnr_zo" like \'%%%s%%\'' % searchText
-            self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(QgsFeatureRequest(QgsExpression(expr))))
+            stmt = "SELECT fid FROM fts_landbouwers WHERE bezwaren = %i AND producentnr_zo like '%%%s%%' LIMIT 500" % (
+                self.withObjection[self.cmb_searchType.currentText()], searchText)
         else:
-            for f in self.layer.getFeatures(QgsFeatureRequest(QgsExpression('"naam" is not null'))):
-                if ' ' in searchText:
-                    nl = set([f.attribute('naam').lower().strip()])
-                else:
-                    nl = set(f.attribute('naam').lower().strip().split(' '))
-                    nl = nl - set(['van', 'de', 'der', 'en', 'vande'])
+            stmt = "SELECT fid FROM fts_landbouwers WHERE bezwaren = %i AND naam MATCH '%s' LIMIT 500" % (
+                self.withObjection[self.cmb_searchType.currentText()], searchText)
 
-                if searchText.startswith('"') and searchText.endswith('"'):
-                    if searchText.strip('"') in nl:
-                        self.farmerResultWidget.addResult(f)
-                elif len(difflib.get_close_matches(searchText, nl, cutoff=0.75)) > 0:
-                    self.farmerResultWidget.addResult(f)
+        ds = QgsDataSourceURI(self.layer.source())
+        c = sl.connect(ds.database())
+        cursor = c.execute(stmt)
+        fids = [i[0] for i in cursor]
+        cursor.close()
+        c.close()
 
-            if len(self.farmerResultWidget.resultSet) < 1:
-                self.farmerResultWidget.setNoResult()
+        if len(fids) < 1:
+            self.btn_search.setEnabled(True)
+            self.farmerResultWidget.setNoResult()
+            return
+
+        fr = QgsFeatureRequest().setFilterFids(fids)
+        self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(fr))
+
+        if len(self.farmerResultWidget.resultSet) < 1:
+            self.farmerResultWidget.setNoResult()
 
         self.btn_search.setEnabled(True)
