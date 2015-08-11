@@ -23,7 +23,6 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.main = main
         self.layer = layer
-        self.writeLayer = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
 
         self.editWindows = {}
         self.photoPath = None
@@ -266,11 +265,8 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         if not fid:
             return
 
-        if not self.writeLayer:
-            self.writeLayer = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
-
         if fid not in self.editWindows:
-            w = ParcelWindow(self.main, self.layer, self.writeLayer, self.feature)
+            w = ParcelWindow(self.main, self.layer, self.feature)
             QObject.connect(w, SIGNAL('saved(QgsVectorLayer, QgsFeature)'), reloadFeature)
             QObject.connect(w, SIGNAL('closed()'), lambda: clearEditWindow(fid))
             QObject.connect(w, SIGNAL('windowStateChanged()'), self.populateEditButton)

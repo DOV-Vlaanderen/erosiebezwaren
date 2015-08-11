@@ -90,11 +90,10 @@ class DetailsFarmer(ElevatedFeatureWidget, Ui_DetailsFarmer):
             self.populate()
 
 class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
-    def __init__(self, parent, main, layer, writeLayer, parcel):
+    def __init__(self, parent, main, layer, parcel):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.main = main
         self.layer = layer
-        self.writeLayer = writeLayer
         self.setupUi(self)
         self.widgets = [self]
 
@@ -128,20 +127,6 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.populate()
 
     def save(self):
-        layer = self.layer
-        if self.writeLayer and self.writeLayer != self.layer:
-            layer = self.writeLayer
-            success, addedFeatures = self.writeLayer.dataProvider().addFeatures([self.feature])
-            if success:
-                for w in self.widgets:
-                    w.feature = addedFeatures[0]
-                    w.layer = self.writeLayer
-                    w._mapWidgets(w.feature.fields())
-            else:
-                # this shouldn't happen: failed to copy feature
-                # return here so we don't save it in the wrong layer
-                return
-
         attrMap = {}
         for w in self.widgets:
             attrMap.update(w._getAttrMap())
@@ -154,7 +139,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         if editor:
             self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/editor', editor)
         self.main.iface.mapCanvas().refresh()
-        self.parent.saved.emit(layer, self.feature)
+        self.parent.saved.emit(self.layer, self.feature)
         self.parent.close()
 
     def cancel(self):
@@ -165,14 +150,13 @@ class ParcelWindow(QMainWindow):
     closed = pyqtSignal()
     windowStateChanged = pyqtSignal()
 
-    def __init__(self, main, layer, writeLayer, parcel):
+    def __init__(self, main, layer, parcel):
         QMainWindow.__init__(self, main.iface.mainWindow())
         self.main = main
         self.layer = layer
-        self.writeLayer = writeLayer
         self.parcel = parcel
 
-        self.parcelEditWidget = ParcelEditWidget(self, self.main, self.layer, self.writeLayer, self.parcel)
+        self.parcelEditWidget = ParcelEditWidget(self, self.main, self.layer, self.parcel)
         self.setCentralWidget(self.parcelEditWidget)
         self.setWindowTitle("Behandel perceel")
 
