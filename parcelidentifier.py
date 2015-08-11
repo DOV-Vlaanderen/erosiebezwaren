@@ -35,20 +35,14 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         QgsMapToolIdentify.activate(self)
 
     def canvasReleaseEvent(self, mouseEvent):
-        if len(self.identifyLayers) < 1:
-            for layer in [self.main.settings.getValue('layers/bezwaren'), self.main.settings.getValue('layers/percelen')]:
-                l = self.main.utils.getLayerByName(layer)
-                if l:
-                    self.identifyLayers.append(l)
-
-        for l in self.identifyLayers:
+        l = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
+        if l:
             self.main.iface.setActiveLayer(l)
             results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
             if results:
                 self.parcelInfoWidget.setLayer(l)
                 self.parcelInfoWidget.setFeature(results[0].mFeature)
                 self.parcelInfoDock.show()
-                break
             else:
                 self.parcelInfoWidget.clear()
 
