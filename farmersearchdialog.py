@@ -57,7 +57,7 @@ class FarmerResultWidget(QWidget):
         QCoreApplication.processEvents()
         d = ParcelListDialog(self.main.parcelInfoWidget)
         QObject.connect(d, SIGNAL('finished(int)'), enableWidgets)
-        d.populate(self.farmerSearchDialog.layer, naam, producentnr, producentnr_zo)
+        d.populate(self.farmerSearchDialog.onlyObjections, naam, producentnr_zo)
         d.show()
 
     def addResult(self, feature):
@@ -101,6 +101,7 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
 
         self.withObjection = {'Met bezwaren': 1,
                               'Alle landbouwers': 0}
+        self.onlyObjections = None
 
         self.farmerResultWidget = FarmerResultWidget(self.scrollAreaContents, self)
         self.scrollAreaLayout.insertWidget(0, self.farmerResultWidget)
@@ -125,12 +126,13 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
             self.farmerResultWidget.setNoResult()
             return
 
+        self.onlyObjections = self.withObjection[self.cmb_searchType.currentText()]
         if self.reNumber.match(searchText):
             stmt = "SELECT fid FROM fts_landbouwers WHERE bezwaren = %i AND producentnr_zo like '%%%s%%' LIMIT 500" % (
-                self.withObjection[self.cmb_searchType.currentText()], searchText)
+                self.onlyObjections, searchText)
         else:
             stmt = "SELECT fid FROM fts_landbouwers WHERE bezwaren = %i AND naam MATCH '%s' LIMIT 500" % (
-                self.withObjection[self.cmb_searchType.currentText()], searchText)
+                self.onlyObjections, searchText)
 
         ds = QgsDataSourceURI(self.layer.source())
         c = sl.connect(ds.database())

@@ -2,6 +2,7 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
+from pyspatialite import dbapi2 as sl
 
 import os
 import re
@@ -64,8 +65,15 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             self.showInfo()
             self.main.selectionManager.clear()
             if self.feature.attribute('advies_behandeld'):
-                for f in self.layer.getFeatures(QgsFeatureRequest(QgsExpression(
-                    '"producentnr" = \'%s\'' % str(self.feature.attribute('producentnr'))))):
+                ds = QgsDataSourceURI(self.layer.source())
+                c = sl.connect(ds.database())
+                cursor = c.execute("SELECT ogc_fid FROM %s WHERE producentnr_zo = '%s' and datum_bezwaar is not null" % (
+                    ds.table(), self.feature.attribute('producentnr_zo')))
+                fids = [i[0] for i in cursor]
+                cursor.close()
+                c.close()
+                fr = QgsFeatureRequest().setSubsetOfAttributes([]).setFilterFids(fids)
+                for f in self.layer.getFeatures(fr):
                     self.main.selectionManager.select(f, mode=1, toggleRendering=False)
             self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
         else:
@@ -289,7 +297,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.efwBtnAndereBezwaren_datum_bezwaar.repaint()
         d = ParcelListDialog(self)
         QObject.connect(d, SIGNAL('finished(int)'), lambda x: self.efwBtnAndereBezwaren_datum_bezwaar.setEnabled(True))
-        d.populate(self.layer, self.feature.attribute('naam'), self.feature.attribute('producentnr'), self.feature.attribute('producentnr_zo'))
+        d.populate(True, self.feature.attribute('naam'), self.feature.attribute('producentnr_zo'))
         d.show()
 
     def showPreviousObjections(self):
