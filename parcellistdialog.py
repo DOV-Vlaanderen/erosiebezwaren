@@ -2,10 +2,10 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
-from pyspatialite import dbapi2 as sl
 
 from ui_parcellistdialog import Ui_ParcelListDialog
 from widgets import valuelabel
+from qgsutils import SpatialiteIterator
 
 class ParcelListWidget(QWidget):
     def __init__(self, parent, parcelListDialog):
@@ -23,19 +23,12 @@ class ParcelListWidget(QWidget):
 
     def populate(self, producentnr_zo, onlyObjections=False):
         parcelList = []
-
-        ds = QgsDataSourceURI(self.layer.source())
-        c = sl.connect(ds.database())
-        stmt = "SELECT ogc_fid FROM %s WHERE producentnr_zo = '%s'" % (ds.table(), producentnr_zo)
+        stmt = "producentnr_zo = '%s'" % producentnr_zo
         if onlyObjections:
             stmt +=  " AND datum_bezwaar IS NOT NULL"
-        cursor = c.execute(stmt)
-        fids = [i[0] for i in cursor]
-        cursor.close()
-        c.close()
-        fr = QgsFeatureRequest().setFilterFids(fids)
+        s = SpatialiteIterator(self.layer)
 
-        for p in self.layer.getFeatures(fr):
+        for p in s.queryExpression(stmt):
             parcelList.append(p)
 
         for p in sorted(parcelList, key = lambda x: int(x.attribute('perceelsnr_va_2015'))):

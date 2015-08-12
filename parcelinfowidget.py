@@ -2,7 +2,6 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
-from pyspatialite import dbapi2 as sl
 
 import os
 import re
@@ -16,6 +15,7 @@ from parcelwindow import ParcelWindow
 from photodialog import PhotoDialog
 from parcellistdialog import ParcelListDialog
 from previousobjectionsdialog import PreviousObjectionsDialog
+from qgsutils import SpatialiteIterator
 
 
 class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
@@ -64,15 +64,9 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             self.showInfo()
             self.main.selectionManager.clear()
             if self.feature.attribute('advies_behandeld'):
-                ds = QgsDataSourceURI(self.layer.source())
-                c = sl.connect(ds.database())
-                cursor = c.execute("SELECT ogc_fid FROM %s WHERE producentnr_zo = '%s' and datum_bezwaar is not null" % (
-                    ds.table(), self.feature.attribute('producentnr_zo')))
-                fids = [i[0] for i in cursor]
-                cursor.close()
-                c.close()
-                fr = QgsFeatureRequest().setSubsetOfAttributes([]).setFilterFids(fids)
-                for f in self.layer.getFeatures(fr):
+                s = SpatialiteIterator(self.layer)
+                itr = s.queryExpression("producentnr_zo = '%s' and datum_bezwaar is not null" % self.feature.attribute('producentnr_zo'), attributes=[])
+                for f in itr:
                     self.main.selectionManager.select(f, mode=1, toggleRendering=False)
             self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
         else:

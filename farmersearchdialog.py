@@ -2,7 +2,6 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
-from pyspatialite import dbapi2 as sl
 
 import difflib
 import re
@@ -10,6 +9,7 @@ import re
 from ui_farmersearchdialog import Ui_FarmerSearchDialog
 from parcellistdialog import ParcelListDialog
 from widgets import valuelabel
+from qgsutils import SpatialiteIterator
 
 class FarmerResultWidget(QWidget):
     def __init__(self, parent, farmerSearchDialog):
@@ -134,20 +134,8 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
             stmt = "SELECT fid FROM fts_landbouwers WHERE bezwaren = %i AND naam MATCH '%s' LIMIT 500" % (
                 self.onlyObjections, searchText)
 
-        ds = QgsDataSourceURI(self.layer.source())
-        c = sl.connect(ds.database())
-        cursor = c.execute(stmt)
-        fids = [i[0] for i in cursor]
-        cursor.close()
-        c.close()
-
-        if len(fids) < 1:
-            self.btn_search.setEnabled(True)
-            self.farmerResultWidget.setNoResult()
-            return
-
-        fr = QgsFeatureRequest().setFilterFids(fids)
-        self.farmerResultWidget.addFromFeatureIterator(self.layer.getFeatures(fr))
+        s = SpatialiteIterator(self.layer)
+        self.farmerResultWidget.addFromFeatureIterator(s.query(stmt))
 
         if len(self.farmerResultWidget.resultSet) < 1:
             self.farmerResultWidget.setNoResult()
