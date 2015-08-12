@@ -126,6 +126,11 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
  
         self.populate()
 
+    def stop(self):
+        g = self.quickedit.efwCmb_gewas_veldbezoek
+        if g.t:
+            g.t.join()
+
     def save(self):
         attrMap = {}
         for w in self.widgets:
@@ -140,9 +145,11 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/editor', editor)
         self.main.iface.mapCanvas().refresh()
         self.parent.saved.emit(self.layer, self.feature)
+        self.stop()
         self.parent.close()
 
     def cancel(self):
+        self.stop()
         self.parent.close()
 
 class ParcelWindow(QMainWindow):
@@ -161,6 +168,7 @@ class ParcelWindow(QMainWindow):
         self.setWindowTitle("Behandel perceel")
 
     def closeEvent(self, event):
+        self.parcelEditWidget.stop()
         self.closed.emit()
 
     def changeEvent(self, event):

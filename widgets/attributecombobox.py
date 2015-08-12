@@ -4,14 +4,15 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from Erosiebezwaren.qgsutils import SpatialiteIterator
 
+import threading
+
 class AttributeModel(QAbstractItemModel):
     def __init__(self, parent, layer, attributeName):
         self.layer = layer
         self.attributeName = attributeName
         QAbstractItemModel.__init__(self, parent)
 
-        self.values = []
-        self.updateValues()
+        self.values = ['']
 
     def updateValues(self):
         values = [''] #FIXME
@@ -55,7 +56,7 @@ class AttributeFilledCombobox(QComboBox):
         self.parent = parent
         self.layer = layer
         self.attributename = attributename
-
+        self.t = None
         self.setSource(self.layer, self.attributename)
 
     def setSource(self, layer, attributename):
@@ -65,10 +66,18 @@ class AttributeFilledCombobox(QComboBox):
             return
 
         if self.layer.dataProvider().name() == 'spatialite':
-            self.model = SpatialiteAttributeModel(self.parent, self.layer, self.attributename)
+            model = SpatialiteAttributeModel(self.parent, self.layer, self.attributename)
         else:
-            self.model = AttributeModel(self.parent, self.layer, self.attributename)
-        self.setModel(self.model)
+            model = AttributeModel(self.parent, self.layer, self.attributename)
+        self.setModel(model)
+        self.updateValues()
+
+    def updateValues(self):
+        def prcs(cmb):
+            cmb.model().updateValues()
+
+        self.t = threading.Thread(target=prcs, args=(self,))
+        self.t.start()
 
     def setValue(self, value):
         if value:
