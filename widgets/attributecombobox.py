@@ -2,7 +2,7 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
-from qgsutils import SpatialiteIterator
+from Erosiebezwaren.qgsutils import SpatialiteIterator
 
 class AttributeModel(QAbstractItemModel):
     def __init__(self, parent, layer, attributeName):
@@ -44,7 +44,8 @@ class SpatialiteAttributeModel(AttributeModel):
 
     def updateValues(self):
         s = SpatialiteIterator(self.layer)
-        self.values = s.rawQuery("SELECT DISTINCT %s FROM %s" % (self.attributeName, s.ds.table()))
+        sql ="SELECT DISTINCT %s FROM %s ORDER BY %s" % (self.attributeName, s.ds.table(), self.attributeName)
+        self.values = s.rawQuery(sql)
 
 class AttributeFilledCombobox(QComboBox):
     def __init__(self, parent, layer=None, attributename=None):
@@ -54,6 +55,11 @@ class AttributeFilledCombobox(QComboBox):
         self.layer = layer
         self.attributename = attributename
 
+        self.setSource(self.layer, self.attributename)
+
+    def setSource(self, layer, attributename):
+        self.layer = layer
+        self.attributename = attributename
         if not (self.layer and self.attributename):
             return
 
@@ -62,14 +68,6 @@ class AttributeFilledCombobox(QComboBox):
         else:
             self.model = AttributeModel(self.parent, self.layer, self.attributename)
         self.setModel(self.model)
-
-    def setSource(self, layer, attributename):
-        self.layer = layer
-        self.attributename = attributename
-
-        if layer and attributename:
-            self.model = AttributeModel(self.parent, self.layer, self.attributename)
-            self.setModel(self.model)
 
     def setValue(self, value):
         if value:
