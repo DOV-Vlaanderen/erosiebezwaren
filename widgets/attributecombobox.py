@@ -45,7 +45,7 @@ class SpatialiteAttributeModel(AttributeModel):
     def updateValues(self):
         s = SpatialiteIterator(self.layer)
         sql ="SELECT DISTINCT %s FROM %s ORDER BY %s" % (self.attributeName, s.ds.table(), self.attributeName)
-        self.values = s.rawQuery(sql)
+        self.values = [i for i in s.rawQuery(sql) if i != None]
 
 class AttributeFilledCombobox(QComboBox):
     def __init__(self, parent, layer=None, attributename=None):
