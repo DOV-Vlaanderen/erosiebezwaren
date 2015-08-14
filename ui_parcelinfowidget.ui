@@ -1127,7 +1127,7 @@ font-weight: bold;
                <x>0</x>
                <y>0</y>
                <width>329</width>
-               <height>534</height>
+               <height>585</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1139,14 +1139,14 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lb_advies_aanvaarding">
+               <widget class="QLabel" name="lb_datum_veldbezoek">
                 <property name="text">
-                 <string>Advies aanvaarding</string>
+                 <string>Datum veldcontrole</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="ValueMappedLabel" name="efw_advies_aanvaarding">
+               <widget class="ValueLabel" name="efw_datum_veldbezoek">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
@@ -1159,14 +1159,37 @@ font-weight: bold;
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lb_datum_veldbezoek">
+               <widget class="QLabel" name="lb_veldcontrole_door">
                 <property name="text">
-                 <string>Datum veldbezoek</string>
+                 <string>Veldcontrole door</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="ValueLabel" name="efw_datum_veldbezoek">
+               <widget class="ValueLabel" name="efw_veldcontrole_door">
+                <property name="styleSheet">
+                 <string notr="true">* { font-style: italic; }</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+                <property name="indent">
+                 <number>20</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lb_advies_aanvaarding">
+                <property name="text">
+                 <string>Advies aanvaarding</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="ValueMappedLabel" name="efw_advies_aanvaarding">
                 <property name="styleSheet">
                  <string notr="true">* { font-style: italic; }</string>
                 </property>
