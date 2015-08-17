@@ -127,6 +127,12 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.populate()
 
     def stop(self):
+        self.btn_save.setEnabled(False)
+        self.btn_cancel.setEnabled(False)
+        QCoreApplication.processEvents()
+        self.btn_save.repaint()
+        self.btn_cancel.repaint()
+
         g = self.quickedit.efwCmb_gewas_veldbezoek
         if g.t:
             g.t.join()
@@ -144,8 +150,8 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         if editor:
             self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/editor', editor)
         self.main.iface.mapCanvas().refresh()
-        self.parent.saved.emit(self.layer, self.feature)
         self.stop()
+        self.parent.saved.emit(self.layer, self.feature)
         self.parent.close()
 
     def cancel(self):
