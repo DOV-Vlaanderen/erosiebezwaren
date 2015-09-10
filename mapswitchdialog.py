@@ -174,7 +174,7 @@ class MapSwitchButton(QToolButton):
         self.setText('Kies kaartbeeld')
         self.setToolButtonStyle(Qt.ToolButtonTextOnly)
         self.setSizePolicy(self.sizePolicy().horizontalPolicy(), QSizePolicy.Fixed)
-        self.setMinimumHeight(64)
+        self.setMinimumHeight(self.main.iface.mainWindow().iconSize().height())
 
         QObject.connect(self, SIGNAL('clicked(bool)'), self.showDialog)
 
