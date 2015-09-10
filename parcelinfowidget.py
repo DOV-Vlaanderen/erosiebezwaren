@@ -5,6 +5,7 @@ from qgis.core import *
 
 import os
 import re
+import socket
 import subprocess
 import time
 
@@ -146,7 +147,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             if fid:
                 photoPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'fotos', str(fid)])
                 photoPath = photoPath.replace('/', '\\')
-                takePhotos(True)
+                takePhotos(socket.gethostname().startswith('toughpad')) # only enable taking photo's on tablets
                 if os.path.exists(photoPath) and len(os.listdir(photoPath)) > 0:
                     self.photoPath = photoPath
                     showPhotos(True)
