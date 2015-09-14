@@ -1,3 +1,21 @@
+erosiebezwaren (1.5.0)
+
+  * Velden veldcontrole_door, landbouwer_aanwezig, jaarlijks_herberekenen toegevoegd
+      aan perceelsinfovenster.
+  * Bezwaren niet langer opslaan in aparte datalaag, alle bewerkingen gebeuren nu
+      rechtstreeks in de perceelskaart. Ingrepen om de performatie hoog te houden:
+        - Indexen toegevoegd aan Spatialite databank.
+        - Rechtstreeks aanspreken van Spatialite databank zodat indexen gebruikt worden.
+        - Gebruik van FTS zoektabel voor zoekfunctie landbouwers.
+        - Gebruik van subthread voor het inladen van gewassen in editeervenster.
+  * Bovenstaande laat toe om de datalagen te vervangen door een versie de gesynchroniseerd
+      kan worden met de 'versioning' plugin.
+  * Status 'Beslist zonder veldcontrole' toegevoegd.
+  * Hoogte van de toolbar aangepast aan icoongrootte van QGis.
+  * Nemen van foto's enkel activeren op de tablets (afhankelijk van hostname).
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Mon, 14 Sep 2015 10:25:18 +0200
+
 erosiebezwaren (1.4.0)
 
   * Knop toegevoegd om aan te geven of landbouwer al dan niet aanwezig is.
