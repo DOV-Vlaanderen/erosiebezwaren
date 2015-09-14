@@ -37,6 +37,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.efw_advies_behandeld.setColorMap({
             'Te behandelen': ('#00ffee', '#000000'),
             'Veldcontrole gebeurd': ('#00aca1', '#000000'),
+            'Beslist zonder veldcontrole': ('#8D8900', '#ffffff'),
             'Afgehandeld ALBON': ('#00857c', '#ffffff')
         })
 

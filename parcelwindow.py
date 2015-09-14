@@ -37,6 +37,7 @@ class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
         self.efwCmb_advies_behandeld.setValues([
             'Te behandelen',
             'Veldcontrole gebeurd',
+            'Beslist zonder veldcontrole',
             'Afgehandeld ALBON'
         ])
 
