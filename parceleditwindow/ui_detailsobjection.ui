@@ -68,6 +68,34 @@
         </property>
        </widget>
       </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lb_status">
+        <property name="text">
+         <string>Status</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="ValueLabel" name="efw_status">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lb_datum_uit">
+        <property name="text">
+         <string>Datum uit</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="ValueLabel" name="efw_datum_uit">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
