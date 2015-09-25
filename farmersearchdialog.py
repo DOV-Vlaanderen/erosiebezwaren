@@ -26,9 +26,9 @@ class FarmerResultWidget(QWidget):
 
         self.resultSet = set()
 
-    def addFromFeatureIterator(self, iterator):
-        for feature in iterator:
-            self.addResult(feature)
+    def addFromQuery(self, result):
+        for farmer in result:
+            self.addResult(farmer)
         if len(self.resultSet) < 1:
             self.setNoResult()
 
@@ -43,7 +43,7 @@ class FarmerResultWidget(QWidget):
             self.clear()
         self.layout.addWidget(QLabel('Geen resultaat'), 0, 0)
 
-    def showParcelList(self, naam, producentnr, producentnr_zo):
+    def showParcelList(self, naam, producentnr_zo):
         def enableWidgets():
             for i in reversed(range(self.layout.count())):
                 self.layout.itemAt(i).widget().setEnabled(True)
@@ -60,19 +60,13 @@ class FarmerResultWidget(QWidget):
         d.populate(self.farmerSearchDialog.onlyObjections, naam, producentnr_zo)
         d.show()
 
-    def addResult(self, feature):
-        farmer = (feature.attribute('producentnr_zo'),
-                  feature.attribute('naam'),
-                  feature.attribute('straat_met_nr'),
-                  feature.attribute('postcode'),
-                  feature.attribute('gemeente'))
-
+    def addResult(self, farmer):
         if farmer not in self.resultSet:
             self.resultSet.add(farmer)
             row = self.layout.rowCount()
 
             btn = QPushButton(str(farmer[0]), self)
-            QObject.connect(btn, SIGNAL('clicked(bool)'), lambda: self.showParcelList(farmer[1], feature.attribute('producentnr'), farmer[0]))
+            QObject.connect(btn, SIGNAL('clicked(bool)'), lambda: self.showParcelList(farmer[1], farmer[0]))
             self.layout.addWidget(btn, row, 0)
 
             lb0 = valuelabel.ValueLabel(self)
@@ -128,14 +122,14 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
 
         self.onlyObjections = self.withObjection[self.cmb_searchType.currentText()]
         if self.reNumber.match(searchText):
-            stmt = "SELECT fid FROM fts_landbouwers WHERE bezwaren = %i AND producentnr_zo like '%%%s%%' LIMIT 500" % (
+            stmt = "SELECT producentnr_zo, naam, straat_met_nr, postcode, gemeente FROM fts_landbouwers WHERE bezwaren = %i AND producentnr_zo like '%%%s%%' LIMIT 500" % (
                 self.onlyObjections, searchText)
         else:
-            stmt = "SELECT fid FROM fts_landbouwers WHERE bezwaren = %i AND naam MATCH '%s' LIMIT 500" % (
+            stmt = "SELECT producentnr_zo, naam, straat_met_nr, postcode, gemeente FROM fts_landbouwers WHERE bezwaren = %i AND naam MATCH '%s' LIMIT 500" % (
                 self.onlyObjections, searchText)
 
         s = SpatialiteIterator(self.layer)
-        self.farmerResultWidget.addFromFeatureIterator(s.query(stmt))
+        self.farmerResultWidget.addFromQuery(s.rawQuery(stmt))
 
         if len(self.farmerResultWidget.resultSet) < 1:
             self.farmerResultWidget.setNoResult()

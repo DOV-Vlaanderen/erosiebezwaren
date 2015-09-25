@@ -12,13 +12,13 @@ class SpatialiteIterator(object):
     def rawQuery(self, sql):
         conn = sl.connect(self.ds.database())
         cursor = conn.execute(sql)
-        r = [i[0] for i in cursor]
+        r = cursor.fetchall()
         cursor.close()
         conn.close()
         return r
 
     def query(self, sql, attributes=None):
-        fids = self.rawQuery(sql)
+        fids = [i[0] for i in self.rawQuery(sql)]
         if len(fids) < 1:
             return []
 
