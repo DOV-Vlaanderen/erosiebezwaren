@@ -1,3 +1,10 @@
+erosiebezwaren (1.5.1)
+
+  * Gebruik resultaten van aangepaste zoektabel bij 'Zoek landbouwer' zodat resultaten
+      weer betrouwbaar worden (DOVBODEM-825).
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Fri, 25 Sep 2015 14:36:45 +0200
+
 erosiebezwaren (1.5.0)
 
   * Velden veldcontrole_door, landbouwer_aanwezig, jaarlijks_herberekenen toegevoegd
@@ -8,7 +15,7 @@ erosiebezwaren (1.5.0)
         - Rechtstreeks aanspreken van Spatialite databank zodat indexen gebruikt worden.
         - Gebruik van FTS zoektabel voor zoekfunctie landbouwers.
         - Gebruik van subthread voor het inladen van gewassen in editeervenster.
-  * Bovenstaande laat toe om de datalagen te vervangen door een versie de gesynchroniseerd
+  * Bovenstaande laat toe om de datalagen te vervangen door een versie die gesynchroniseerd
       kan worden met de 'versioning' plugin.
   * Status 'Beslist zonder veldcontrole' toegevoegd.
   * Hoogte van de toolbar aangepast aan icoongrootte van QGis.
