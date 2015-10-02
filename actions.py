@@ -71,7 +71,7 @@ class Actions(object):
 
         toolbar.addSeparator()
 
-        toolbar.addAction(ParcelIdentifyAction(self.main, self.parent, self.main.settings.getValue('layers/bezwaren')))
+        toolbar.addAction(ParcelIdentifyAction(self.main, self.parent))
 
         touchAction = self.main.iface.actionTouch()
         touchAction.setIcon(QIcon(':/icons/icons/movemap.png'))

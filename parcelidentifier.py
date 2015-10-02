@@ -4,11 +4,11 @@ from qgis.core import *
 from qgis.gui import *
 
 from parcelinfowidget import ParcelInfoDock, ParcelInfoWidget
+from qgsutils import SpatialiteIterator
 
 class MapToolParcelIdentifier(QgsMapToolIdentify):
-    def __init__(self, main, layer=None):
+    def __init__(self, main):
         self.main = main
-        self.layer = layer
         QgsMapToolIdentify.__init__(self, self.main.iface.mapCanvas())
         self.previousActiveLayer = None
 
@@ -17,31 +17,22 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         self.main.parcelInfoWidget = self.parcelInfoWidget
         self.parcelInfoDock.setWidget(self.parcelInfoWidget)
 
-        self.identifyLayers = []
-
-    def setLayerByName(self, layerName):
-        layer = self.main.utils.getLayerByName(layerName)
-        if not layer:
-            raise AttributeError("Layer %s not found." % layerName)
-        self.layer = layer
-
-    def setLayer(self, layer):
-        if layer:
-            self.layer = layer
-
     def activate(self):
-        self.previousActiveLayer = self.main.iface.activeLayer()
         self.main.selectionManager.activate()
         QgsMapToolIdentify.activate(self)
 
     def canvasReleaseEvent(self, mouseEvent):
-        l = self.main.utils.getLayerByName(self.main.settings.getValue('layers/bezwaren'))
-        if l:
-            self.main.iface.setActiveLayer(l)
+        table = self.main.utils.getLayerByName('percelenkaart_table')
+        view = self.main.utils.getLayerByName('percelenkaart_view')
+        if table and view:
+            self.main.iface.setActiveLayer(table)
             results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
             if results:
-                self.parcelInfoWidget.setLayer(l)
-                self.parcelInfoWidget.setFeature(results[0].mFeature)
+                fr = QgsFeatureRequest()
+                fr.setFilterFids([results[0].mFeature.id()])
+                viewFeats = [i for i in view.getFeatures(fr)]
+                self.parcelInfoWidget.setLayer(view)
+                self.parcelInfoWidget.setFeature(viewFeats[0])
                 self.parcelInfoDock.show()
             else:
                 self.parcelInfoWidget.clear()
@@ -50,9 +41,8 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
             self.main.iface.setActiveLayer(self.previousActiveLayer)
 
 class ParcelIdentifyAction(QAction):
-    def __init__(self, main, parent, layerName):
+    def __init__(self, main, parent):
         self.main = main
-        self.layerName = layerName
         QAction.__init__(self, QIcon(':/icons/icons/identify.png'), 'Identificeer perceel', parent)
 
         self.mapCanvas = self.main.iface.mapCanvas()
@@ -68,11 +58,6 @@ class ParcelIdentifyAction(QAction):
 
     def identifyParcel(self, start):
         if start:
-            try:
-                self.parcelMapTool.setLayerByName(self.layerName)
-            except AttributeError:
-                self.setChecked(False)
-                return
             self.previousMapTool = self.mapCanvas.mapTool()
             self.mapCanvas.setMapTool(self.parcelMapTool)
             QObject.connect(self.mapCanvas, SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)

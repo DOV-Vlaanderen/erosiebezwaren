@@ -12,9 +12,9 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         QDialog.__init__(self)
         self.setupUi(self)
 
-        self.visibleBase = set(['Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart'])
+        self.visibleBase = set(['Overzichtskaart', 'percelenkaart_table', 'Topokaart'])
         self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie',
-            'watererosie30', 'bewerkingserosie', 'dem_kul', 'dem_agiv', 'Overzichtskaart', 'bezwarenkaart', 'percelenkaart', 'Topokaart', 'Bodemkaart'])
+            'watererosie30', 'bewerkingserosie', 'dem_kul', 'dem_agiv', 'Overzichtskaart', 'percelenkaart_table', 'Topokaart', 'Bodemkaart'])
         self.activeDem = None
 
         QObject.connect(self.btn_routekaart, SIGNAL('clicked(bool)'), self.toMapRoutekaart)
@@ -105,7 +105,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
 
     def toMapAfstromingskaart(self):
         self.toMapView({
-            'enabledLayers': (self.visibleBase - set(['bezwarenkaart', 'percelenkaart', 'Overzichtskaart'])).union(['Afstromingskaart']),
+            'enabledLayers': (self.visibleBase - set(['percelenkaart_table', 'Overzichtskaart'])).union(['Afstromingskaart']),
             'autoDisable': True,
             'label': 'Afstromingskaart'
         })

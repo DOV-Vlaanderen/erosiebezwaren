@@ -252,7 +252,8 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         def reloadFeature(layer, feature):
             self.setLayer(layer)
             self.setFeature(feature)
-            layer.triggerRepaint()
+            tableLayer = self.main.utils.getLayerByName('percelenkaart_table')
+            tableLayer.triggerRepaint()
 
         if not self.feature:
             return

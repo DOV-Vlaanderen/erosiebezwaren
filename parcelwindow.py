@@ -47,7 +47,7 @@ class QuickEdit(ElevatedFeatureWidget, Ui_QuickEdit):
         ])
 
         self.efwCmb_gewas_veldbezoek.setSource(
-            self.main.utils.getLayerByName('bezwarenkaart'),
+            self.main.utils.getLayerByName('percelenkaart_table'),
             'gewas_veldbezoek')
 
         self.efwCmb_advies_aanvaarding.setEnabled(self.feature.attribute('datum_bezwaar') != None)
