@@ -152,7 +152,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/editor', editor)
         self.main.iface.mapCanvas().refresh()
         self.stop()
-        self.parent.saved.emit(self.layer, self.feature)
+        self.parent.saved.emit(self.layer, self.feature.attribute('uniek_id'))
         self.parent.close()
 
     def cancel(self):
@@ -160,7 +160,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.parent.close()
 
 class ParcelWindow(QMainWindow):
-    saved = pyqtSignal('QgsVectorLayer', 'QgsFeature')
+    saved = pyqtSignal('QgsVectorLayer', 'QString')
     closed = pyqtSignal()
     windowStateChanged = pyqtSignal()
 

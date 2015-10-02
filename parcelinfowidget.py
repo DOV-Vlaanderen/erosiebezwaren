@@ -249,9 +249,13 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             del(self.editWindows[fid])
             self.populateEditButton()
 
-        def reloadFeature(layer, feature):
+        def reloadFeature(layer, uniek_id):
             self.setLayer(layer)
-            self.setFeature(feature)
+            s = SpatialiteIterator(layer)
+            itr = s.queryExpression("uniek_id = '%s'" % uniek_id)
+            fts = [i for i in itr]
+            if len(fts) > 0:
+                self.setFeature(fts[0])
             tableLayer = self.main.utils.getLayerByName('percelenkaart_table')
             tableLayer.triggerRepaint()
 
@@ -264,7 +268,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
         if fid not in self.editWindows:
             w = ParcelWindow(self.main, self.layer, self.feature)
-            QObject.connect(w, SIGNAL('saved(QgsVectorLayer, QgsFeature)'), reloadFeature)
+            QObject.connect(w, SIGNAL('saved(QgsVectorLayer, QString)'), reloadFeature)
             QObject.connect(w, SIGNAL('closed()'), lambda: clearEditWindow(fid))
             QObject.connect(w, SIGNAL('windowStateChanged()'), self.populateEditButton)
             self.editWindows[fid] = w
