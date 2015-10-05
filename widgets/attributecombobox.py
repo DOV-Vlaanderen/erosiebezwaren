@@ -6,13 +6,12 @@ from Erosiebezwaren.qgsutils import SpatialiteIterator
 
 import threading
 
-class AttributeModel(QAbstractItemModel):
+class AttributeModel(QAbstractListModel):
     def __init__(self, parent, layer, attributeName):
         self.layer = layer
         self.attributeName = attributeName
-        QAbstractItemModel.__init__(self, parent)
-
-        self.values = ['']
+        QAbstractListModel.__init__(self, parent)
+        self.updateValues()
 
     def updateValues(self):
         values = [''] #FIXME
@@ -22,22 +21,13 @@ class AttributeModel(QAbstractItemModel):
                 values.append(v)
         self.values = values
 
-    def columnCount(self, parent):
-        return 1
-
     def rowCount(self, parent):
         return len(self.values)
-
-    def index(self, row, col, parent):
-        return self.createIndex(row, col, None)
-
-    def parent(self, index):
-        return QModelIndex()
 
     def data(self, index, role):
         if index.row() < len(self.values):
             return self.values[index.row()]
-        return None
+        return QVariant()
 
 class SpatialiteAttributeModel(AttributeModel):
     def __init__(self, parent, layer, attributeName):
@@ -47,7 +37,7 @@ class SpatialiteAttributeModel(AttributeModel):
         s = SpatialiteIterator(self.layer)
         sql ="SELECT DISTINCT %s FROM %s ORDER BY %s" % (self.attributeName, s.ds.table(), self.attributeName)
         self.values = [''] #FIXME
-        self.values.extend([i for i in s.rawQuery(sql) if i != None])
+        self.values.extend([i[0] for i in s.rawQuery(sql) if i[0]])
 
 class AttributeFilledCombobox(QComboBox):
     def __init__(self, parent, layer=None, attributename=None):
@@ -70,7 +60,6 @@ class AttributeFilledCombobox(QComboBox):
         else:
             model = AttributeModel(self.parent, self.layer, self.attributename)
         self.setModel(model)
-        self.updateValues()
 
     def updateValues(self):
         def prcs(cmb):
