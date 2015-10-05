@@ -1,3 +1,15 @@
+erosiebezwaren (1.5.2)
+
+  * Performantieverbeteringen door middel van aanpassingen aan de visualisatie
+      op de kaart en aanpassingen aan de indexen op de percelentabel. Tot nu werden
+      aanwezige (spatial) indexen vaak niet gebruikt, dit zou nu beter moeten zijn.
+  * Herladen van feature uit laag na opslaan. Door het uitvoeren van triggers na het
+      opslaan van de view is het nodig om het opgeslagen perceel opnieuw uit te laden
+      uit de view om bv. nieuw feature id te kennen. Dit is bijvoorbeeld nodig om te
+      kunnen zoomen naar het opgeslagen perceel.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Fri, 02 Oct 2015 15:58:21 +0200
+
 erosiebezwaren (1.5.1)
 
   * Gebruik resultaten van aangepaste zoektabel bij 'Zoek landbouwer' zodat resultaten
