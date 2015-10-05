@@ -29,7 +29,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
             results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
             if results:
                 fr = QgsFeatureRequest()
-                fr.setFilterFids([results[0].mFeature.id()])
+                fr.setFilterFid(results[0].mFeature.id())
                 viewFeats = [i for i in view.getFeatures(fr)]
                 self.parcelInfoWidget.setLayer(view)
                 self.parcelInfoWidget.setFeature(viewFeats[0])
