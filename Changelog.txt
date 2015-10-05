@@ -1,3 +1,12 @@
+erosiebezwaren (1.5.3)
+
+  * Zoom extent sneller gemaakt door vermijden selectie, gebruik nu rechtstreeks de
+      geometrie die al beschikbaar is.
+  * Bug opgelost in SpatialiteAttributeModel waardoor combobox voor gewas veldbezoek
+      weer zou moeten werken.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Mon, 05 Oct 2015 14:56:06 +0200
+
 erosiebezwaren (1.5.2)
 
   * Performantieverbeteringen door middel van aanpassingen aan de visualisatie
