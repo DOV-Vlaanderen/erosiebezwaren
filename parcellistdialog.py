@@ -40,10 +40,13 @@ class ParcelListWidget(QWidget):
         self.parcelListDialog.parcelInfoWidget.setFeature(parcel)
 
     def zoomExtent(self):
-        self.layer.removeSelection()
-        self.layer.select([p.id() for p in self.parcelList])
-        self.main.iface.mapCanvas().zoomToSelected(self.layer)
-        self.layer.removeSelection()
+        if len(self.parcelList) < 1:
+            return
+        extent = QgsRectangle(self.parcelList[0].geometry().boundingBox())
+        for p in self.parcelList[1:]:
+            extent.combineExtentWith(p.geometry().boundingBox())
+        self.main.iface.mapCanvas().setExtent(extent.buffer(10))
+        self.main.iface.mapCanvas().refresh()
 
     def addParcel(self, parcel):
         row = self.layout.rowCount()

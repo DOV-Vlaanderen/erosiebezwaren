@@ -278,10 +278,8 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.editWindows[fid].show()
 
     def zoomTo(self):
-        self.layer.removeSelection()
-        self.layer.select(self.feature.id())
-        self.main.iface.mapCanvas().zoomToSelected(self.layer)
-        self.layer.removeSelection()
+        self.main.iface.mapCanvas().setExtent(self.feature.geometry().boundingBox().buffer(10))
+        self.main.iface.mapCanvas().refresh()
 
     def takePhotos(self):
         d = PhotoDialog(self.main.iface, str(self.feature.attribute('uniek_id')))
