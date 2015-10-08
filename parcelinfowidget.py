@@ -67,8 +67,8 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             self.main.selectionManager.clear()
             if self.feature.attribute('advies_behandeld'):
                 s = SpatialiteIterator(self.layer)
-                itr = s.queryExpression("producentnr_zo = '%s' and datum_bezwaar is not null" % self.feature.attribute('producentnr_zo'), attributes=[])
-                for f in itr:
+                fts = s.queryExpression("producentnr_zo = '%s' and datum_bezwaar is not null" % self.feature.attribute('producentnr_zo'), attributes=[])
+                for f in fts:
                     self.main.selectionManager.select(f, mode=1, toggleRendering=False)
             self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
         else:
@@ -252,8 +252,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         def reloadFeature(layer, uniek_id):
             self.setLayer(layer)
             s = SpatialiteIterator(layer)
-            itr = s.queryExpression("uniek_id = '%s'" % uniek_id)
-            fts = [i for i in itr]
+            fts = s.queryExpression("uniek_id = '%s'" % uniek_id)
             if len(fts) > 0:
                 self.setFeature(fts[0])
             tableLayer = self.main.utils.getLayerByName('percelenkaart_table')

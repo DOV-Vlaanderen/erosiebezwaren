@@ -28,9 +28,7 @@ class ParcelListWidget(QWidget):
             stmt +=  " AND datum_bezwaar IS NOT NULL"
         s = SpatialiteIterator(self.layer)
 
-        for p in s.queryExpression(stmt):
-            parcelList.append(p)
-
+        parcelList = s.queryExpression(stmt)
         for p in sorted(parcelList, key = lambda x: int(x.attribute('perceelsnr_va_2015'))):
             p.layer = self.layer
             self.addParcel(p)

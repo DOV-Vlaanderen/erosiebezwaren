@@ -23,10 +23,15 @@ class SpatialiteIterator(object):
             return []
 
         fr = QgsFeatureRequest()
+        fts = []
         if attributes is not None:
             fr.setSubsetOfAttributes(attributes)
-        fr.setFilterFids(fids)
-        return self.layer.getFeatures(fr)
+
+        for fid in fids:
+            fr.setFilterFid(fid)
+            fts.append([i for i in self.layer.getFeatures(fr)][0])
+
+        return fts
 
     def queryExpression(self, expression, attributes=None):
         stmt = "SELECT ogc_fid FROM %s WHERE " % self.ds.table()
