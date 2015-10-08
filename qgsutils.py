@@ -29,7 +29,7 @@ class SpatialiteIterator(object):
 
         for fid in fids:
             fr.setFilterFid(fid)
-            fts.append([i for i in self.layer.getFeatures(fr)][0])
+            fts.append(self.layer.getFeatures(fr).next())
 
         return fts
 

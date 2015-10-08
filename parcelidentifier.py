@@ -30,9 +30,9 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
             if results:
                 fr = QgsFeatureRequest()
                 fr.setFilterFid(results[0].mFeature.id())
-                viewFeats = [i for i in view.getFeatures(fr)]
+                feature = view.getFeatures(fr).next()
                 self.parcelInfoWidget.setLayer(view)
-                self.parcelInfoWidget.setFeature(viewFeats[0])
+                self.parcelInfoWidget.setFeature(feature)
                 self.parcelInfoDock.show()
             else:
                 self.parcelInfoWidget.clear()
