@@ -1,3 +1,9 @@
+erosiebezwaren (1.5.4)
+
+  * Fix percelenlijst in QGis 2.10+
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Mon, 02 Nov 2015 10:03:36 +0100
+
 erosiebezwaren (1.5.3)
 
   * Zoom extent sneller gemaakt door vermijden selectie, gebruik nu rechtstreeks de
