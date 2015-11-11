@@ -22,6 +22,10 @@ else:
             break
 
 from lib import flickcharm
+
+# Import local version of the 'platform' library included in Python. This version fixes issues with platform detection
+# on Windows 8+. The issue is described and fixed in ticket https://bugs.python.org/issue19143. Once this fix is released
+# in Python 2.7.11 and this version in included in QGis, the local version can be dropped in favor of the default library.
 from lib import platform
 
 from ui_photodialog import Ui_PhotoDialog
