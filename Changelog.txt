@@ -1,3 +1,9 @@
+erosiebezwaren (1.5.5)
+
+  * Ondersteuning toegevoegd voor Camera app van Windows 10.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Wed, 11 Nov 2015 16:20:14 +0100
+
 erosiebezwaren (1.5.4)
 
   * Fix percelenlijst in QGis 2.10+
