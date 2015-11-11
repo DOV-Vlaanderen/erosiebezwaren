@@ -22,8 +22,37 @@ else:
             break
 
 from lib import flickcharm
+from lib import platform
 
 from ui_photodialog import Ui_PhotoDialog
+
+class PhotoApp(object):
+    def __init__(self):
+        try:
+            self.version = platform.win32_ver()[0]
+        except:
+            self.version = '8'
+
+        if self.version not in ('8', '10'):
+            self.version = '8'
+
+    def appPath(self):
+        if self.version == '8':
+            return " shell:AppsFolder\\Microsoft.MoCamera_cw5n1h2txyewy!Microsoft.Camera"
+        elif self.version == '10':
+            return " shell:AppsFolder\\Microsoft.WindowsCamera_8wekyb3d8bbwe!App"
+
+    def fileFilter(self):
+        if self.version == '8':
+            return re.compile(r'^WIN_([0-9]{8}_[0-9]{6}).*\.JPG$')
+        elif self.version == '10':
+            return re.compile(r'^WIN_([0-9]{8}_[0-9]{2}_[0-9]{2}_[0-9]{2}).*\.jpg$')
+
+    def timeFormat(self):
+        if self.version == '8':
+            return "%Y%m%d_%H%M%S"
+        elif self.version == '10':
+            return "%Y%m%d_%H_%M_%S"
 
 class Photo(QLabel):
     def __init__(self, path):
@@ -58,17 +87,18 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
     def __init__(self, iface, parcelId):
         QDialog.__init__(self, iface.mainWindow())
         self.flick = flickcharm.FlickCharm(self)
+        self.app = PhotoApp()
         self.iface = iface
 
-        #cmd = "C:\\Windows\\explorer.exe shell:AppsFolder\\Panasonic.CameraPlus_ehmb8xpdwb7p4!App"
         self.cmd = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe')
-        self.cmd += " shell:AppsFolder\\Microsoft.MoCamera_cw5n1h2txyewy!Microsoft.Camera"
+        self.cmd += self.app.appPath()
+
         self.photoPath = os.path.join(os.environ['USERPROFILE'], 'Pictures', 'Camera Roll')
         self.savePath = os.path.join(os.path.dirname(QgsProject.instance().fileName()), 'fotos', parcelId)
 
         self.initTime = time.localtime()
         self.loadedPhotos = set()
-        self.filterRegex = re.compile(r'^WIN_([0-9]{8}_[0-9]{6}).*\.JPG$')
+        self.filterRegex = self.app.fileFilter()
 
         self.setupUi(self)
         self.buttonBox.button(QDialogButtonBox.Save).setEnabled(False)
@@ -99,7 +129,7 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
             return False
 
         try:
-            photoTime = time.strptime(r.group(1), "%Y%m%d_%H%M%S")
+            photoTime = time.strptime(r.group(1), self.app.timeFormat())
             return photoTime >= self.initTime
         except IndexError:
             return False
