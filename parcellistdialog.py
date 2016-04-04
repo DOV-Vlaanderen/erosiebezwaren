@@ -36,6 +36,7 @@ class ParcelListWidget(QWidget):
     def goToParcel(self, parcel):
         self.parcelListDialog.parcelInfoWidget.setLayer(parcel.layer)
         self.parcelListDialog.parcelInfoWidget.setFeature(parcel)
+        self.parcelListDialog.parcelInfoWidget.parent.show()
 
     def zoomExtent(self):
         if len(self.parcelList) < 1:

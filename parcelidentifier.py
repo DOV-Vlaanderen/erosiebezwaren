@@ -33,7 +33,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
                 feature = view.getFeatures(fr).next()
                 self.parcelInfoWidget.setLayer(view)
                 self.parcelInfoWidget.setFeature(feature)
-                self.parcelInfoDock.show()
+                self.parcelInfoWidget.parent.show()
             else:
                 self.parcelInfoWidget.clear()
 
