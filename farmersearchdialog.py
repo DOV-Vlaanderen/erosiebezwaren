@@ -89,7 +89,8 @@ class FarmerResultWidget(QWidget):
 class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
     def __init__(self, main):
         self.main = main
-        self.reNumber = re.compile(r'^[0-9]+$')
+        self.reNumber = re.compile(r'^[0-9\.-]+$')
+        self.reProducentnr = re.compile(r'^[^1-9]*([1-9]+.*)$')
         QDialog.__init__(self, self.main.iface.mainWindow())
         self.setupUi(self)
 
@@ -101,6 +102,9 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
         self.scrollAreaLayout.insertWidget(0, self.farmerResultWidget)
 
         QObject.connect(self.btn_search, SIGNAL('clicked(bool)'), self.search)
+
+    def _getRawProducentnr(self, string):
+        return str(self.reProducentnr.match(string).group(1)).translate(None, '.-')
 
     def search(self):
         self.btn_search.setEnabled(False)
@@ -123,7 +127,7 @@ class FarmerSearchDialog(QDialog, Ui_FarmerSearchDialog):
         self.onlyObjections = self.withObjection[self.cmb_searchType.currentText()]
         if self.reNumber.match(searchText):
             stmt = "SELECT producentnr_zo, naam, straat_met_nr, postcode, gemeente FROM fts_landbouwers WHERE bezwaren = %i AND producentnr_zo like '%%%s%%' LIMIT 500" % (
-                self.onlyObjections, searchText)
+                self.onlyObjections, self._getRawProducentnr(searchText))
         else:
             stmt = "SELECT producentnr_zo, naam, straat_met_nr, postcode, gemeente FROM fts_landbouwers WHERE bezwaren = %i AND naam MATCH '%s' LIMIT 500" % (
                 self.onlyObjections, searchText)
