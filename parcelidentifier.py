@@ -3,7 +3,6 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-from parcelinfowidget import ParcelInfoDock, ParcelInfoWidget
 from qgsutils import SpatialiteIterator
 
 class MapToolParcelIdentifier(QgsMapToolIdentify):
@@ -11,11 +10,6 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         self.main = main
         QgsMapToolIdentify.__init__(self, self.main.iface.mapCanvas())
         self.previousActiveLayer = None
-
-        self.parcelInfoDock = ParcelInfoDock(self.main.iface.mainWindow())
-        self.parcelInfoWidget = ParcelInfoWidget(self.parcelInfoDock, self.main)
-        self.main.parcelInfoWidget = self.parcelInfoWidget
-        self.parcelInfoDock.setWidget(self.parcelInfoWidget)
 
     def activate(self):
         self.main.selectionManager.activate()
@@ -31,11 +25,11 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
                 fr = QgsFeatureRequest()
                 fr.setFilterFid(results[0].mFeature.id())
                 feature = view.getFeatures(fr).next()
-                self.parcelInfoWidget.setLayer(view)
-                self.parcelInfoWidget.setFeature(feature)
-                self.parcelInfoWidget.parent.show()
+                self.main.parcelInfoWidget.setLayer(view)
+                self.main.parcelInfoWidget.setFeature(feature)
+                self.main.parcelInfoWidget.parent.show()
             else:
-                self.parcelInfoWidget.clear()
+                self.main.parcelInfoWidget.clear()
 
         if self.previousActiveLayer:
             self.main.iface.setActiveLayer(self.previousActiveLayer)

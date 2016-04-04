@@ -7,25 +7,23 @@ import resources_rc
 
 import actions
 import utils
-import parcelinfowidget
 
-from settingsmanager import SettingsManager
-from selectionmanager import SelectionManager
 from annotate import AnnotationManager
+from parcelinfowidget import ParcelInfoDock, ParcelInfoWidget
+from selectionmanager import SelectionManager
+from settingsmanager import SettingsManager
 
 class Erosiebezwaren(object):
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
-        self.parcelInfoWidget = None
-        self.dockWidget = None
+
         self.qsettings = QSettings()
         self.settings = SettingsManager(self)
 
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction('DOV - Erosiebezwaren', self.iface.mainWindow())
-        # connect the action
 
         # Add toolbar and menu item
         self.toolbar = self.iface.addToolBar('DOV')
@@ -36,6 +34,10 @@ class Erosiebezwaren(object):
         self.annotationManager = AnnotationManager(self)
         self.actions = actions.Actions(self, self.iface.mainWindow())
         self.actions.addToToolbar(self.toolbar)
+
+        self.parcelInfoDock = ParcelInfoDock(self.iface.mainWindow())
+        self.parcelInfoWidget = ParcelInfoWidget(self.parcelInfoDock, self)
+        self.parcelInfoDock.setWidget(self.parcelInfoWidget)
 
     def unload(self):
         # Remove the plugin menu item and icon
