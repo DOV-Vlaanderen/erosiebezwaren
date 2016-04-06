@@ -20,9 +20,9 @@ class ValueLabel(QLabel):
             self.buddy().show()
         QLabel.show(self)
 
-class ValueMappedLabel(QLabel):
+class ValueMappedLabel(ValueLabel):
     def __init__(self, parent):
-        QLabel.__init__(self, parent)
+        ValueLabel.__init__(self, parent)
         self.valueTextMap = {}
 
     def setValues(self, values):
