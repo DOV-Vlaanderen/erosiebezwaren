@@ -10,6 +10,16 @@ class ValueLabel(QLabel):
         else:
             self.clear()
 
+    def hide(self):
+        if self.buddy():
+            self.buddy().hide()
+        QLabel.hide(self)
+
+    def show(self):
+        if self.buddy():
+            self.buddy().show()
+        QLabel.show(self)
+
 class ValueMappedLabel(QLabel):
     def __init__(self, parent):
         QLabel.__init__(self, parent)
@@ -50,20 +60,12 @@ class AutohideValueLabel(ValueLabel):
         ValueLabel.setText(self, text)
         if text:
             self.show()
+        else:
+            self.hide()
 
     def clear(self):
         self.hide()
         ValueLabel.clear(self)
-
-    def hide(self):
-        if self.buddy():
-            self.buddy().hide()
-        ValueLabel.hide(self)
-
-    def show(self):
-        if self.buddy():
-            self.buddy().show()
-        ValueLabel.show(self)
 
 class VisibilityBooleanLabel(QLabel):
     def __init__(self, parent):
