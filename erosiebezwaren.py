@@ -26,7 +26,8 @@ class Erosiebezwaren(object):
         self.action = QAction('DOV - Erosiebezwaren', self.iface.mainWindow())
 
         # Add toolbar and menu item
-        self.toolbar = self.iface.addToolBar('DOV')
+        self.toolbar = self.iface.addToolBar('Erosiebezwaren toolbar')
+        self.toolbar.setObjectName('ErosiebezwarenToolbar')
         self.iface.addPluginToMenu('DOV - Erosiebezwaren', self.action)
 
         self.utils = utils.Utils(self)
@@ -40,11 +41,13 @@ class Erosiebezwaren(object):
         self.parcelInfoDock.setWidget(self.parcelInfoWidget)
 
     def unload(self):
-        # Remove the plugin menu item and icon
         self.iface.removePluginMenu('DOV - Erosiebezwaren', self.action)
-        #self.selectionManager.deactivate()
-        #self.annotationManager.deactivate()
-        #self.iface.removeToolBarIcon(self.action)
-        #remove the dock
-        #self.iface.removeDockWidget(self.dockWidget)
-        #self.dockWidget.close()
+        self.selectionManager.deactivate()
+        self.annotationManager.deactivate()
+        self.iface.removeDockWidget(self.parcelInfoDock)
+
+        del(self.toolbar)
+        del(self.parcelInfoWidget)
+        del(self.parcelInfoDock)
+        del(self.selectionManager)
+        del(self.annotationManager)
