@@ -68,6 +68,11 @@ class ElevatedFeatureWidget(QWidget):
 
     def _mapWidgets(self, fields):
         self.fieldMap = {}
+
+        for dictfield in self.__dict__:
+            if re.match(r'^efw[^_]*_.*$', dictfield):
+                self.__dict__[dictfield].mapped = False
+
         for i in range(fields.size()):
             field = fields.at(i)
             field.index = i
@@ -77,6 +82,15 @@ class ElevatedFeatureWidget(QWidget):
                     if field not in self.fieldMap:
                         self.fieldMap[field] = set()
                     self.fieldMap[field].add(self.__dict__[dictfield])
+                    self.__dict__[dictfield].mapped = True
+
+        for dictfield in self.__dict__:
+            if re.match(r'^efw[^_]*_.*$', dictfield):
+                if not self.__dict__[dictfield].mapped:
+                    try:
+                        self.__dict__[dictfield].hide()
+                    except AttributeError:
+                        continue
 
     def _getField(self, name):
         for field in self.fieldMap:
