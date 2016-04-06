@@ -59,6 +59,4 @@ class AnnotationManager(object):
 
     def deactivate(self):
         if self.currentlyEditing:
-            self.main.utils.stopEditInLayer(self.currentlyEditing[0])
-            self.currentlyEditing[1].setChecked(False)
-            self.currentlyEditing = None
+            self.main.utils.stopEditInLayer(self.currentlyEditing[0]) # triggers mapToolChanged
