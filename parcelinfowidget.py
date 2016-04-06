@@ -122,16 +122,24 @@ class ParcelButtonBar(QWidget):
         self.btn_bezwaarformulier.setFlat(True)
 
     def populateEditButton(self):
-        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
-        if not self.feature:
+        def disableEdit():
             self.btn_edit.setEnabled(False)
             self.btn_edit.setFlat(True)
+
+        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
+
+        if not self.feature:
+            disableEdit()
             return
 
         fid = self.feature.attribute('uniek_id')
         if not fid:
-            self.btn_edit.setEnabled(False)
-            self.btn_edit.setFlat(True)
+            disableEdit()
+            return
+
+        datum_uit = self.feature.attribute('datum_uit')
+        if datum_uit:
+            disableEdit()
             return
 
         self.btn_edit.setEnabled(True)
