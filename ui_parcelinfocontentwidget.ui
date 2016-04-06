@@ -142,6 +142,32 @@ font-weight: bold;
      <property name="indent">
       <number>20</number>
      </property>
+     <property name="buddy">
+      <cstring>lb_perceelsnr_va2015</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lb_perceelsnr_va2016">
+     <property name="text">
+      <string>Perceelsnummer VA2016</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="ValueLabel" name="efw2_perceelsnr_va_2016">
+     <property name="styleSheet">
+      <string notr="true">* { font-style: italic; }</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="indent">
+      <number>20</number>
+     </property>
+     <property name="buddy">
+      <cstring>lb_perceelsnr_va2016</cstring>
+     </property>
     </widget>
    </item>
    <item>
@@ -230,9 +256,9 @@ font-weight: bold;
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-30</y>
+            <y>0</y>
             <width>383</width>
-            <height>728</height>
+            <height>806</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -469,7 +495,7 @@ font-weight: bold;
             </layout>
            </item>
            <item>
-            <widget class="QLabel" name="lb_watererosie_0_2015">
+            <widget class="QLabel" name="lb_watererosie_0">
              <property name="text">
               <string>Watererosie 0</string>
              </property>
@@ -489,7 +515,20 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="lb_watererosie_30_2015">
+            <widget class="QLabel" name="efw_watererosie_0_2016">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic;}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lb_watererosie_30">
              <property name="text">
               <string>Watererosie 30</string>
              </property>
@@ -509,7 +548,20 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="lb_bewerkingserosie_2015">
+            <widget class="QLabel" name="efw_watererosie_30_2016">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic;}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lb_bewerkingserosie">
              <property name="text">
               <string>Bewerkingserosie</string>
              </property>
@@ -526,10 +578,13 @@ font-weight: bold;
              <property name="indent">
               <number>20</number>
              </property>
+             <property name="buddy">
+              <cstring>lb_bewerkingserosie</cstring>
+             </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="lb_totale_erosie_2015">
+            <widget class="QLabel" name="lb_totale_erosie">
              <property name="text">
               <string>Totale erosie</string>
              </property>
@@ -537,6 +592,19 @@ font-weight: bold;
            </item>
            <item>
             <widget class="ValueLabel" name="efw_totale_erosie_2015">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic;}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="efw_totale_erosie_2016">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
