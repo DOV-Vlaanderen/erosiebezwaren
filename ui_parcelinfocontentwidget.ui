@@ -230,7 +230,7 @@ font-weight: bold;
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-30</y>
             <width>383</width>
             <height>728</height>
            </rect>
@@ -379,6 +379,25 @@ font-weight: bold;
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="SensitivityColorLabel" name="efw_kleur_2013">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+               </property>
+               <property name="text">
+                <string>2013</string>
+               </property>
+               <property name="margin">
+                <number>4</number>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -398,6 +417,9 @@ font-weight: bold;
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="styleSheet">
+                <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+               </property>
                <property name="text">
                 <string>2016</string>
                </property>
@@ -414,8 +436,30 @@ font-weight: bold;
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="styleSheet">
+                <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+               </property>
                <property name="text">
                 <string>2015</string>
+               </property>
+               <property name="margin">
+                <number>4</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2014">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+               </property>
+               <property name="text">
+                <string>2014</string>
                </property>
                <property name="margin">
                 <number>4</number>
