@@ -33,8 +33,7 @@ class Erosiebezwaren(object):
         self.utils = utils.Utils(self)
         self.selectionManager = SelectionManager(self, self.settings.getValue('layers/tempSelection'))
         self.annotationManager = AnnotationManager(self)
-        self.actions = actions.Actions(self, self.iface.mainWindow())
-        self.actions.addToToolbar(self.toolbar)
+        self.actions = actions.Actions(self, self.iface.mainWindow(), self.toolbar)
 
         self.parcelInfoDock = ParcelInfoDock(self.iface.mainWindow())
         self.parcelInfoWidget = ParcelInfoWidget(self.parcelInfoDock, self)
@@ -44,8 +43,10 @@ class Erosiebezwaren(object):
         self.iface.removePluginMenu('DOV - Erosiebezwaren', self.action)
         self.selectionManager.deactivate()
         self.annotationManager.deactivate()
+        self.actions.deactivate()
         self.iface.removeDockWidget(self.parcelInfoDock)
 
+        del(self.actions)
         del(self.toolbar)
         del(self.parcelInfoWidget)
         del(self.parcelInfoDock)

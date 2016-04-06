@@ -59,3 +59,6 @@ class ParcelIdentifyAction(QAction):
             QObject.disconnect(self.mapCanvas, SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
             if self.previousMapTool:
                 self.mapCanvas.setMapTool(self.previousMapTool)
+
+    def deactivate(self):
+        QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)

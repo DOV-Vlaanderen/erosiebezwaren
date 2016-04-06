@@ -46,9 +46,8 @@ class AnnotationManager(object):
         self.annotatePolygon.setCheckable(True)
         QObject.connect(self.annotatePolygon, SIGNAL('triggered(bool)'), drawPolygon)
 
-    def addActionsToToolbar(self, toolbar):
-        toolbar.addAction(self.annotateArrow)
-        toolbar.addAction(self.annotatePolygon)
+    def getActions(self):
+        return (self.annotateArrow, self.annotatePolygon)
 
     def mapToolChanged(self, mt):
         QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
