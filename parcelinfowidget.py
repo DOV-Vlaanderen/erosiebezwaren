@@ -10,6 +10,8 @@ import subprocess
 import time
 
 from ui_parcelinfowidget import Ui_ParcelInfoWidget
+from ui_parcelinfocontentwidget import Ui_ParcelInfoContentWidget
+
 from widgets import valuelabel
 from widgets.elevatedfeaturewidget import ElevatedFeatureWidget
 from parcelwindow import ParcelWindow
@@ -18,16 +20,236 @@ from parcellistdialog import ParcelListDialog
 from previousobjectionsdialog import PreviousObjectionsDialog
 from qgsutils import SpatialiteIterator
 
+class ParcelButtonBar(QWidget):
+    def __init__(self, parent, main, layer=None, parcel=None):
+        QWidget.__init__(self)
+        self.parent = parent
+        self.main = main
+        self.layer = layer
+        self.feature = parcel
+
+        self.editWindows = {}
+
+        self.layout = QHBoxLayout(self)
+        self.layout.setContentsMargins(-1, 6, -1, 6)
+        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+
+        self.btn_photo = QPushButton()
+        self.btn_photo.setIcon(QIcon(":/icons/icons/photo.png"))
+        self.btn_photo.setIconSize(QSize(64, 64))
+        self.btn_photo.setSizePolicy(sizePolicy)
+
+        self.btn_zoomto = QPushButton()
+        self.btn_zoomto.setIcon(QIcon(":/icons/icons/zoomto.png"))
+        self.btn_zoomto.setIconSize(QSize(64, 64))
+        self.btn_zoomto.setSizePolicy(sizePolicy)
+
+        self.btn_bezwaarformulier = QPushButton()
+        self.btn_bezwaarformulier.setIcon(QIcon(":/icons/icons/pdf.png"))
+        self.btn_bezwaarformulier.setIconSize(QSize(64, 64))
+        self.btn_bezwaarformulier.setSizePolicy(sizePolicy)
+
+        self.btn_edit = QPushButton()
+        self.btn_edit.setIcon(QIcon(":/icons/icons/edit.png"))
+        self.btn_edit.setIconSize(QSize(64, 64))
+        self.btn_edit.setSizePolicy(sizePolicy)
+
+        self.layout.addWidget(self.btn_photo)
+        self.layout.addWidget(self.btn_zoomto)
+        self.layout.addWidget(self.btn_bezwaarformulier)
+        self.layout.addWidget(self.btn_edit)
+
+        QObject.connect(self.btn_photo, SIGNAL('clicked(bool)'), self.takePhotos)
+        QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
+
+        self.populate()
+
+    def setLayer(self, layer):
+        self.layer = layer
+
+    def setFeature(self, feature):
+        self.feature = feature
+        self.populate()
+
+    def populate(self):
+        self.populateTakePhotos()
+        self.populateObjectionForm()
+        self.populateEditButton()
+
+    def populateTakePhotos(self):
+        def takePhotos(enabled):
+            self.btn_photo.setEnabled(enabled)
+            self.btn_photo.setFlat(not enabled)
+
+        if self.feature:
+            # QgsProject.instance().fileName() returns path with forward slashes, even on Windows. Append subdirectories with forward slashes too
+            # and replace all of them afterwards with backward slashes.
+            fid = self.feature.attribute('uniek_id')
+            if fid:
+                takePhotos(socket.gethostname().startswith('toughpad')) # only enable taking photo's on tablets
+            else:
+                takePhotos(False)
+        else:
+            takePhotos(False)
+
+    def populateObjectionForm(self):
+        if self.feature:
+            try:
+                cmdShow = os.environ['COMSPEC'] + ' /c start "" "%s"'
+                cmdExplore = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe') + ' "%s"'
+            except KeyError:
+                self.btn_bezwaarformulier.setEnabled(False)
+                self.btn_bezwaarformulier.setFlat(True)
+                return
+
+            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), self.main.settings.getValue('paths/bezwaren'), str(self.feature.attribute('producentnr'))])
+            objectionPath = objectionPath.replace('/', '\\')
+            self.parent.objectionPath = []
+            if os.path.exists(objectionPath):
+                fileList = [i.lower() for i in os.listdir(objectionPath)]
+                exts = set([f[f.rfind('.')+1:] for f in fileList])
+                if len(exts) == 1 and 'pdf' in exts:
+                    # only pdfs
+                    for f in fileList:
+                        self.parent.objectionPath.append(cmdShow % (objectionPath + '/' + f))
+                elif len(exts) > 0:
+                    # other thing(s)
+                    self.parent.objectionPath.append(cmdExplore % objectionPath)
+                self.btn_bezwaarformulier.setEnabled(True)
+                self.btn_bezwaarformulier.setFlat(False)
+                return
+        self.btn_bezwaarformulier.setEnabled(False)
+        self.btn_bezwaarformulier.setFlat(True)
+
+    def populateEditButton(self):
+        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
+        if not self.feature:
+            self.btn_edit.setEnabled(False)
+            self.btn_edit.setFlat(True)
+            return
+
+        fid = self.feature.attribute('uniek_id')
+        if not fid:
+            self.btn_edit.setEnabled(False)
+            self.btn_edit.setFlat(True)
+            return
+
+        self.btn_edit.setEnabled(True)
+        self.btn_edit.setFlat(False)
+
+        if fid in self.editWindows:
+            if self.editWindows[fid].isMinimized():
+                self.btn_edit.setIcon(QIcon(':/icons/icons/maximize.png'))
+
+    def takePhotos(self):
+        d = PhotoDialog(self.main.iface, str(self.feature.attribute('uniek_id')))
+        QObject.connect(d, SIGNAL('saved()'), self.parent.contentWidget.populateShowPhotos)
+        d.show()
+
+    def showEditWindow(self):
+        def clearEditWindow(fid):
+            QObject.disconnect(w, SIGNAL('saved(QgsVectorLayer, QgsFeature)'), reloadFeature)
+            QObject.disconnect(w, SIGNAL('closed()'), lambda: clearEditWindow(fid))
+            QObject.disconnect(w, SIGNAL('windowStateChanged()'), self.populateEditButton)
+            del(self.editWindows[fid])
+            self.populateEditButton()
+
+        def reloadFeature(layer, uniek_id):
+            self.parent.setLayer(layer)
+            s = SpatialiteIterator(layer)
+            fts = s.queryExpression("uniek_id = '%s'" % uniek_id)
+            if len(fts) > 0:
+                self.parent.setFeature(fts[0])
+            tableLayer = self.main.utils.getLayerByName('percelenkaart_table')
+            tableLayer.triggerRepaint()
+
+        if not self.feature:
+            return
+
+        fid = self.feature.attribute('uniek_id')
+        if not fid:
+            return
+
+        if fid not in self.editWindows:
+            w = ParcelWindow(self.main, self.layer, self.feature)
+            QObject.connect(w, SIGNAL('saved(QgsVectorLayer, QString)'), reloadFeature)
+            QObject.connect(w, SIGNAL('closed()'), lambda: clearEditWindow(fid))
+            QObject.connect(w, SIGNAL('windowStateChanged()'), self.populateEditButton)
+            self.editWindows[fid] = w
+
+        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
+        self.editWindows[fid].setWindowState(Qt.WindowActive)
+        self.editWindows[fid].show()
 
 class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
     def __init__(self, parent, main, layer=None, parcel=None):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.main = main
         self.layer = layer
+        self.setupUi(self)
 
-        self.editWindows = {}
-        self.photoPath = None
         self.objectionPath = []
+
+        self.buttonBar = ParcelButtonBar(self, self.main, self.layer, parcel)
+        self.contentWidget = ParcelInfoContentWidget(self, self.main, self.layer, parcel)
+        self.layout().addWidget(self.buttonBar)
+        self.layout().addWidget(self.contentWidget)
+
+        self.populate()
+
+        QObject.connect(self.buttonBar.btn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showObjection)
+        QObject.connect(self.buttonBar.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
+
+    def setLayer(self, layer):
+        self.layer = layer
+
+    def populate(self):
+        ElevatedFeatureWidget.populate(self)
+        if self.feature:
+            self.showInfo()
+            self.main.selectionManager.clear()
+            if self.feature.attribute('advies_behandeld'):
+                s = SpatialiteIterator(self.layer)
+                fts = s.queryExpression("producentnr_zo = '%s' and datum_bezwaar is not null" % self.feature.attribute('producentnr_zo'), attributes=[])
+                for f in fts:
+                    self.main.selectionManager.select(f, mode=1, toggleRendering=False)
+            self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
+        else:
+            self.clear()
+
+        self.buttonBar.setLayer(self.layer)
+        self.buttonBar.setFeature(self.feature)
+
+        self.contentWidget.setLayer(self.layer)
+        self.contentWidget.setFeature(self.feature)
+
+    def clear(self):
+        self.feature = None
+        self.lb_geenselectie.show()
+        self.buttonBar.hide()
+        self.contentWidget.hide()
+        self.main.selectionManager.clear()
+
+    def showInfo(self):
+        self.buttonBar.show()
+        self.contentWidget.show()
+        self.lb_geenselectie.hide()
+
+    def showObjection(self):
+        for o in self.objectionPath:
+            subprocess.Popen(o)
+
+    def zoomTo(self):
+        self.main.iface.mapCanvas().setExtent(self.feature.geometry().boundingBox().buffer(10))
+        self.main.iface.mapCanvas().refresh()
+
+class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget):
+    def __init__(self, parent, main, layer=None, parcel=None):
+        ElevatedFeatureWidget.__init__(self, parent, parcel)
+        self.main = main
+        self.layer = layer
+
+        self.photoPath = None
 
         self.setupUi(self)
 
@@ -50,20 +272,18 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.efw_jaarlijks_herberekenen.setValueMap(jaNee)
         self.efw_landbouwer_aanwezig.setValueMap(jaNee)
 
-        QObject.connect(self.btn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showObjection)
-        QObject.connect(self.btn_edit, SIGNAL('clicked(bool)'), self.showEditWindow)
-        QObject.connect(self.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
-        QObject.connect(self.btn_photo, SIGNAL('clicked(bool)'), self.takePhotos)
         QObject.connect(self.btn_showPhotos, SIGNAL('clicked(bool)'), self.showPhotos)
         QObject.connect(self.efwBtnAndereBezwaren_datum_bezwaar, SIGNAL('clicked(bool)'), self.showParcelList)
         QObject.connect(self.efwBtn_herindiening_bezwaar, SIGNAL('clicked(bool)'), self.showPreviousObjections)
 
         self.populate()
 
+    def setLayer(self, layer):
+        self.layer = layer
+
     def populate(self):
         ElevatedFeatureWidget.populate(self)
         if self.feature:
-            self.showInfo()
             self.main.selectionManager.clear()
             if self.feature.attribute('advies_behandeld'):
                 s = SpatialiteIterator(self.layer)
@@ -76,9 +296,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
         self.populateAdvies()
         self.populateGps()
-        self.populatePhotos()
-        self.populateObjectionForm()
-        self.populateEditButton()
+        self.populateShowPhotos()
         self.populateArea()
 
     def populateAdvies(self):
@@ -133,11 +351,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         else:
             self.lbv_oppervlakte.clear()
 
-    def populatePhotos(self):
-        def takePhotos(enabled):
-            self.btn_photo.setEnabled(enabled)
-            self.btn_photo.setFlat(not enabled)
-
+    def populateShowPhotos(self):
         def showPhotos(enabled):
             self.btn_showPhotos.show() if enabled else self.btn_showPhotos.hide()
 
@@ -148,73 +362,20 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             if fid:
                 photoPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'fotos', str(fid)])
                 photoPath = photoPath.replace('/', '\\')
-                takePhotos(socket.gethostname().startswith('toughpad')) # only enable taking photo's on tablets
                 if os.path.exists(photoPath) and len(os.listdir(photoPath)) > 0:
                     self.photoPath = photoPath
                     showPhotos(True)
                 else:
                     showPhotos(False)
             else:
-                takePhotos(False)
                 showPhotos(False)
                 self.photoPath = None
         else:
-            takePhotos(False)
             showPhotos(False)
             self.photoPath = None
 
-    def populateObjectionForm(self):
-        if self.feature:
-            try:
-                cmdShow = os.environ['COMSPEC'] + ' /c start "" "%s"'
-                cmdExplore = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe') + ' "%s"'
-            except KeyError:
-                self.btn_bezwaarformulier.setEnabled(False)
-                self.btn_bezwaarformulier.setFlat(True)
-                return
-
-            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), self.main.settings.getValue('paths/bezwaren'), str(self.feature.attribute('producentnr'))])
-            objectionPath = objectionPath.replace('/', '\\')
-            self.objectionPath = []
-            if os.path.exists(objectionPath):
-                fileList = [i.lower() for i in os.listdir(objectionPath)]
-                exts = set([f[f.rfind('.')+1:] for f in fileList])
-                if len(exts) == 1 and 'pdf' in exts:
-                    # only pdfs
-                    for f in fileList:
-                        self.objectionPath.append(cmdShow % (objectionPath + '/' + f))
-                elif len(exts) > 0:
-                    # other thing(s)
-                    self.objectionPath.append(cmdExplore % objectionPath)
-                self.btn_bezwaarformulier.setEnabled(True)
-                self.btn_bezwaarformulier.setFlat(False)
-                return
-        self.btn_bezwaarformulier.setEnabled(False)
-        self.btn_bezwaarformulier.setFlat(True)
-
-    def populateEditButton(self):
-        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
-        if not self.feature:
-            self.btn_edit.setEnabled(False)
-            self.btn_edit.setFlat(True)
-            return
-
-        fid = self.feature.attribute('uniek_id')
-        if not fid:
-            self.btn_edit.setEnabled(False)
-            self.btn_edit.setFlat(True)
-            return
-
-        self.btn_edit.setEnabled(True)
-        self.btn_edit.setFlat(False)
-
-        if fid in self.editWindows:
-            if self.editWindows[fid].isMinimized():
-                self.btn_edit.setIcon(QIcon(':/icons/icons/maximize.png'))
-
-    def showObjection(self):
-        for o in self.objectionPath:
-            subprocess.Popen(o)
+    def clear(self):
+        self.feature = None
 
     def showPhotos(self):
         if not self.photoPath:
@@ -230,60 +391,6 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
             switch[self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/gps_dms', 'true')])
         self.btn_gpsDms.setChecked(self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/gps_dms') == 'true')
         self.populateGps()
-
-    def clear(self):
-        self.feature = None
-        self.lb_geenselectie.show()
-        self.infoWidget.hide()
-        self.main.selectionManager.clear()
-
-    def showInfo(self):
-        self.infoWidget.show()
-        self.lb_geenselectie.hide()
-
-    def showEditWindow(self):
-        def clearEditWindow(fid):
-            QObject.disconnect(w, SIGNAL('saved(QgsVectorLayer, QgsFeature)'), reloadFeature)
-            QObject.disconnect(w, SIGNAL('closed()'), lambda: clearEditWindow(fid))
-            QObject.disconnect(w, SIGNAL('windowStateChanged()'), self.populateEditButton)
-            del(self.editWindows[fid])
-            self.populateEditButton()
-
-        def reloadFeature(layer, uniek_id):
-            self.setLayer(layer)
-            s = SpatialiteIterator(layer)
-            fts = s.queryExpression("uniek_id = '%s'" % uniek_id)
-            if len(fts) > 0:
-                self.setFeature(fts[0])
-            tableLayer = self.main.utils.getLayerByName('percelenkaart_table')
-            tableLayer.triggerRepaint()
-
-        if not self.feature:
-            return
-
-        fid = self.feature.attribute('uniek_id')
-        if not fid:
-            return
-
-        if fid not in self.editWindows:
-            w = ParcelWindow(self.main, self.layer, self.feature)
-            QObject.connect(w, SIGNAL('saved(QgsVectorLayer, QString)'), reloadFeature)
-            QObject.connect(w, SIGNAL('closed()'), lambda: clearEditWindow(fid))
-            QObject.connect(w, SIGNAL('windowStateChanged()'), self.populateEditButton)
-            self.editWindows[fid] = w
-
-        self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
-        self.editWindows[fid].setWindowState(Qt.WindowActive)
-        self.editWindows[fid].show()
-
-    def zoomTo(self):
-        self.main.iface.mapCanvas().setExtent(self.feature.geometry().boundingBox().buffer(10))
-        self.main.iface.mapCanvas().refresh()
-
-    def takePhotos(self):
-        d = PhotoDialog(self.main.iface, str(self.feature.attribute('uniek_id')))
-        QObject.connect(d, SIGNAL('saved()'), self.populatePhotos)
-        d.show()
 
     def showParcelList(self):
         self.efwBtnAndereBezwaren_datum_bezwaar.setEnabled(False)
