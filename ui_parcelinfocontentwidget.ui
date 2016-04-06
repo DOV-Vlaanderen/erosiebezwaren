@@ -1207,6 +1207,9 @@ font-weight: bold;
              <property name="indent">
               <number>20</number>
              </property>
+             <property name="buddy">
+              <cstring>lb_landbouwer_aanwezig</cstring>
+             </property>
             </widget>
            </item>
            <item>
@@ -1226,6 +1229,9 @@ font-weight: bold;
              </property>
              <property name="indent">
               <number>20</number>
+             </property>
+             <property name="buddy">
+              <cstring>lb_jaarlijks_herberekenen</cstring>
              </property>
             </widget>
            </item>
@@ -1271,9 +1277,9 @@ font-weight: bold;
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>398</width>
-            <height>345</height>
+            <y>-75</y>
+            <width>385</width>
+            <height>420</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1398,6 +1404,52 @@ font-weight: bold;
              </property>
              <property name="indent">
               <number>20</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lb_gesplitst_perceel">
+             <property name="text">
+              <string>Gesplitst perceel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ValueMappedLabel" name="efw_gesplitst_perceel">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic;}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+             <property name="buddy">
+              <cstring>lb_gesplitst_perceel</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lb_samengevoegd_perceel">
+             <property name="text">
+              <string>Samengevoegd perceel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ValueMappedLabel" name="efw_samengevoegd_perceel">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic;}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+             <property name="buddy">
+              <cstring>lb_samengevoegd_perceel</cstring>
              </property>
             </widget>
            </item>
