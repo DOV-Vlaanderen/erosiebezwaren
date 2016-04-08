@@ -308,6 +308,7 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
         self.populateGps()
         self.populateShowPhotos()
         self.populateArea()
+        self.populateTabAdvies()
 
     def populateAdvies(self):
         style = "* {"
@@ -383,6 +384,32 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
         else:
             showPhotos(False)
             self.photoPath = None
+
+    def populateTabAdvies(self):
+        def enableTabAdvies(enabled):
+            if enabled and self.tabWidget.count() == 3:
+                self.tabWidget.insertTab(2, self.tabAdvies, 'Advies')
+
+            if not enabled and self.tabWidget.count() == 4:
+                if self.tabWidget.currentIndex() == 2:
+                    self.tabWidget.setCurrentIndex(0)
+                self.tabWidget.removeTab(2)
+
+        if self.feature:
+            if self.photoPath:
+                enableTabAdvies(True)
+                return
+
+            for i in range(self.scrollContentsAdvies.layout().count()):
+                w = self.scrollContentsAdvies.layout().itemAt(i).widget()
+                if w:
+                    m = re.match(r'^efw[^_]*_(.*)$', w.objectName())
+                    if m:
+                        if self.feature.attribute(m.group(1)):
+                            enableTabAdvies(True)
+                            return
+
+        enableTabAdvies(False)
 
     def clear(self):
         self.feature = None

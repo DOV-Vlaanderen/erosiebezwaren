@@ -233,6 +233,12 @@ font-weight: bold;
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::North</enum>
      </property>
@@ -242,21 +248,21 @@ font-weight: bold;
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tabDetails">
       <attribute name="title">
        <string>Details</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QScrollArea" name="scrollArea_3">
+        <widget class="QScrollArea" name="scrollDetails">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_3">
+         <widget class="QWidget" name="scrollContentsDetails">
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-64</y>
+            <y>0</y>
             <width>383</width>
             <height>700</height>
            </rect>
@@ -713,13 +719,13 @@ font-weight: bold;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tabLandbouwer">
       <attribute name="title">
        <string>Landbouwer</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QScrollArea" name="scrollArea_2">
+        <widget class="QScrollArea" name="scrollLandbouwer">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -732,7 +738,7 @@ font-weight: bold;
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+         <widget class="QWidget" name="scrollContentsLandbouwer">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -942,13 +948,16 @@ font-weight: bold;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_3">
+     <widget class="QWidget" name="tabAdvies">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <attribute name="title">
        <string>Advies</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QScrollArea" name="scrollArea">
+        <widget class="QScrollArea" name="scrollAdvies">
          <property name="autoFillBackground">
           <bool>false</bool>
          </property>
@@ -967,11 +976,11 @@ font-weight: bold;
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
+         <widget class="QWidget" name="scrollContentsAdvies">
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-209</y>
+            <y>0</y>
             <width>385</width>
             <height>554</height>
            </rect>
@@ -1254,13 +1263,13 @@ font-weight: bold;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_4">
+     <widget class="QWidget" name="tabPerceel">
       <attribute name="title">
        <string>Perceel</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QScrollArea" name="scrollArea_4">
+        <widget class="QScrollArea" name="scrollPerceel">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -1273,13 +1282,13 @@ font-weight: bold;
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_4">
+         <widget class="QWidget" name="scrollContentsPerceel">
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-75</y>
+            <y>0</y>
             <width>385</width>
-            <height>420</height>
+            <height>368</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_15">
