@@ -253,7 +253,7 @@ font-weight: bold;
      </property>
      <widget class="QWidget" name="tabDetails">
       <attribute name="title">
-       <string>Erosie</string>
+       <string>Details</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
@@ -267,7 +267,7 @@ font-weight: bold;
             <x>0</x>
             <y>0</y>
             <width>350</width>
-            <height>698</height>
+            <height>702</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -278,70 +278,6 @@ font-weight: bold;
              </property>
              <property name="text">
               <string>Toon eerdere bezwaren</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lb_beheersovereenkomst">
-             <property name="styleSheet">
-              <string notr="true">* { color: #C8282F; }</string>
-             </property>
-             <property name="text">
-              <string>Beheersovereenkomst</string>
-             </property>
-             <property name="indent">
-              <number>0</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="AutohideValueLabel" name="efw_bo">
-             <property name="styleSheet">
-              <string notr="true">* { font-style: italic; color: #C8282F; }</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-             <property name="indent">
-              <number>20</number>
-             </property>
-             <property name="buddy">
-              <cstring>lb_beheersovereenkomst</cstring>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lb_gespec_pm">
-             <property name="styleSheet">
-              <string notr="true">* { color: #C8282F; }</string>
-             </property>
-             <property name="text">
-              <string>Gespecialiseerde productiemethode</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="AutohideValueLabel" name="efw_gespec_pm">
-             <property name="styleSheet">
-              <string notr="true">* { color: #C8282F; font-style: italic; }</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-             <property name="indent">
-              <number>20</number>
-             </property>
-             <property name="buddy">
-              <cstring>lb_gespec_pm</cstring>
              </property>
             </widget>
            </item>
@@ -648,6 +584,55 @@ font-weight: bold;
              </property>
              <property name="buddy">
               <cstring>lb_datum_bezwaar</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lb_datum_uit">
+             <property name="text">
+              <string>Datum uit</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="AutohideValueLabel" name="efw_datum_uit">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic; }</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+             <property name="buddy">
+              <cstring>lb_datum_uit</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lb_status">
+             <property name="text">
+              <string>Status</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="AutohideValueLabel" name="efw_status">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic; }</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+             <property name="buddy">
+              <cstring>lb_status</cstring>
              </property>
             </widget>
            </item>
@@ -1291,10 +1276,74 @@ font-weight: bold;
             <x>0</x>
             <y>0</y>
             <width>352</width>
-            <height>368</height>
+            <height>508</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_15">
+           <item>
+            <widget class="QLabel" name="lb_bo">
+             <property name="styleSheet">
+              <string notr="true">* { color: #C8282F; }</string>
+             </property>
+             <property name="text">
+              <string>Beheersovereenkomst</string>
+             </property>
+             <property name="indent">
+              <number>0</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="AutohideValueLabel" name="efw_bo">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic; color: #C8282F; }</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+             <property name="buddy">
+              <cstring>lb_bo</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lb_gespec_pm">
+             <property name="styleSheet">
+              <string notr="true">* { color: #C8282F; }</string>
+             </property>
+             <property name="text">
+              <string>Gespecialiseerde productiemethode</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="AutohideValueLabel" name="efw_gespec_pm">
+             <property name="styleSheet">
+              <string notr="true">* { color: #C8282F; font-style: italic; }</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+             <property name="buddy">
+              <cstring>lb_gespec_pm</cstring>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QLabel" name="lb_perceelsnaam">
              <property name="text">
