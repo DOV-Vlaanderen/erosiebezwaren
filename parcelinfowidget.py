@@ -64,6 +64,13 @@ class ParcelButtonBar(QWidget):
 
         self.populate()
 
+    def isEditable(self):
+        if self.feature:
+            if self.feature.attribute('uniek_id') and \
+               self.feature.attribute('datum_uit') == None:
+               return True
+        return False
+
     def setLayer(self, layer):
         self.layer = layer
 
@@ -81,14 +88,8 @@ class ParcelButtonBar(QWidget):
             self.btn_photo.setEnabled(enabled)
             self.btn_photo.setFlat(not enabled)
 
-        if self.feature:
-            # QgsProject.instance().fileName() returns path with forward slashes, even on Windows. Append subdirectories with forward slashes too
-            # and replace all of them afterwards with backward slashes.
-            fid = self.feature.attribute('uniek_id')
-            if fid:
-                takePhotos(socket.gethostname().startswith('toughpad')) # only enable taking photo's on tablets
-            else:
-                takePhotos(False)
+        if self.isEditable():
+            takePhotos(socket.gethostname().startswith('toughpad')) # only enable taking photo's on tablets
         else:
             takePhotos(False)
 
@@ -122,29 +123,19 @@ class ParcelButtonBar(QWidget):
         self.btn_bezwaarformulier.setFlat(True)
 
     def populateEditButton(self):
-        def disableEdit():
-            self.btn_edit.setEnabled(False)
-            self.btn_edit.setFlat(True)
+        def editing(enabled):
+            self.btn_edit.setEnabled(enabled)
+            self.btn_edit.setFlat(not enabled)
 
         self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
 
-        if not self.feature:
-            disableEdit()
+        if not self.isEditable():
+            editing(False)
             return
+
+        editing(True)
 
         fid = self.feature.attribute('uniek_id')
-        if not fid:
-            disableEdit()
-            return
-
-        datum_uit = self.feature.attribute('datum_uit')
-        if datum_uit:
-            disableEdit()
-            return
-
-        self.btn_edit.setEnabled(True)
-        self.btn_edit.setFlat(False)
-
         if fid in self.editWindows:
             if self.editWindows[fid].isMinimized():
                 self.btn_edit.setIcon(QIcon(':/icons/icons/maximize.png'))
