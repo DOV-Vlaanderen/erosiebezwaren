@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>438</width>
+    <width>405</width>
     <height>761</height>
    </rect>
   </property>
@@ -248,9 +248,12 @@ font-weight: bold;
      <property name="currentIndex">
       <number>0</number>
      </property>
+     <property name="usesScrollButtons">
+      <bool>false</bool>
+     </property>
      <widget class="QWidget" name="tabDetails">
       <attribute name="title">
-       <string>Details</string>
+       <string>Erosie</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
@@ -263,8 +266,8 @@ font-weight: bold;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>383</width>
-            <height>700</height>
+            <width>350</width>
+            <height>698</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -721,7 +724,7 @@ font-weight: bold;
      </widget>
      <widget class="QWidget" name="tabLandbouwer">
       <attribute name="title">
-       <string>Landbouwer</string>
+       <string>LB</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -743,8 +746,8 @@ font-weight: bold;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>385</width>
-            <height>354</height>
+            <width>352</width>
+            <height>352</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -981,8 +984,8 @@ font-weight: bold;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>385</width>
-            <height>554</height>
+            <width>352</width>
+            <height>552</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1287,7 +1290,7 @@ font-weight: bold;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>385</width>
+            <width>352</width>
             <height>368</height>
            </rect>
           </property>
