@@ -29,7 +29,17 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         QObject.connect(self.btn_dem_agiv, SIGNAL('clicked(bool)'), self.toMapDEMAgiv)
         QObject.connect(self.btn_bodemkaart, SIGNAL('clicked(bool)'), self.toMapBodemkaart)
 
-    def toggleLayersGroups(self, enable, disable):
+        self.populate()
+
+    def show(self):
+        self.populate()
+        QDialog.show(self)
+
+    def populate(self):
+        showOldAnnotations = self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/map/oldAnnotations', '1')
+        self.lbv_showOldAnnotations.setValue(int(showOldAnnotations))
+
+    def toggleLayersGroups(self, enable=[], disable=[]):
         legendInterface = self.main.iface.legendInterface()
 
         groups = legendInterface.groups()
@@ -52,7 +62,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
             mapView['disabledLayers'] = self.allLayers - mapView['enabledLayers']
         self.toggleLayersGroups(enable=mapView['enabledLayers'], disable=mapView['disabledLayers'])
         self.action.setText(mapView['label'])
-        self.hide()
+        self.accept()
 
     def toMapRoutekaart(self):
         self.toMapView({
@@ -177,7 +187,20 @@ class MapSwitchButton(QToolButton):
         self.setMinimumHeight(self.main.iface.mainWindow().iconSize().height())
 
         QObject.connect(self, SIGNAL('clicked(bool)'), self.showDialog)
+        QObject.connect(self.dialog, SIGNAL('finished(int)'), self.dialogClosed)
 
     def showDialog(self):
         self.dialog.move(0, 0)
         self.dialog.show()
+
+    def dialogClosed(self, result):
+        if result == 1:
+            self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/map/oldAnnotations', str(self.dialog.lbv_showOldAnnotations.getValue()))
+            oldAnnotations = ['Pijlen 2015', 'Polygonen 2015']
+            if self.dialog.lbv_showOldAnnotations.getValue() == 1:
+                self.dialog.toggleLayersGroups(enable=oldAnnotations)
+            else:
+                self.dialog.toggleLayersGroups(disable=oldAnnotations)
+
+    def deactivate(self):
+        self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/map/oldAnnotations', '1')

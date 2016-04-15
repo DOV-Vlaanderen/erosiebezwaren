@@ -45,7 +45,8 @@ class Actions(object):
         self.toolbar.addAction(exitAction)
         self.toolbar.addSeparator()
 
-        self.toolbar.addWidget(MapSwitchButton(self.main, self.parent))
+        self.mapSwitchButton = MapSwitchButton(self.main, self.parent)
+        self.toolbar.addWidget(self.mapSwitchButton)
         self.toolbar.addSeparator()
         for action in self.main.annotationManager.getActions():
             self.toolbar.addAction(action)
@@ -88,4 +89,5 @@ class Actions(object):
 
     def deactivate(self):
         self.parcelIdentifyAction.deactivate()
+        self.mapSwitchButton.deactivate()
         del(self.toolbar)
