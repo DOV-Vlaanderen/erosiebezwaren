@@ -190,7 +190,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.objectionPath = []
 
         self.buttonBar = ParcelButtonBar(self, self.main, self.layer, parcel)
-        self.contentWidget = ParcelInfoContentWidget(self, self.main, self.layer, parcel)
+        self.contentWidget = ParcelInfoContentWidget(self, self.main, parcel)
         self.layout().addWidget(self.buttonBar)
         self.layout().addWidget(self.contentWidget)
 
@@ -219,7 +219,6 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.buttonBar.setLayer(self.layer)
         self.buttonBar.setFeature(self.feature)
 
-        self.contentWidget.setLayer(self.layer)
         self.contentWidget.setFeature(self.feature)
 
     def clear(self):
@@ -243,10 +242,9 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.main.iface.mapCanvas().refresh()
 
 class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget):
-    def __init__(self, parent, main, layer=None, parcel=None):
+    def __init__(self, parent, main, parcel=None):
         ElevatedFeatureWidget.__init__(self, parent, parcel)
         self.main = main
-        self.layer = layer
 
         self.photoPath = None
 
@@ -279,20 +277,9 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
 
         self.populate()
 
-    def setLayer(self, layer):
-        self.layer = layer
-
     def populate(self):
         ElevatedFeatureWidget.populate(self)
-        if self.feature:
-            self.main.selectionManager.clear()
-            if self.feature.attribute('advies_behandeld'):
-                s = SpatialiteIterator(self.layer)
-                fts = s.queryExpression("producentnr_zo = '%s' and datum_bezwaar is not null" % self.feature.attribute('producentnr_zo'), attributes=[])
-                for f in fts:
-                    self.main.selectionManager.select(f, mode=1, toggleRendering=False)
-            self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
-        else:
+        if not self.feature:
             self.clear()
 
         self.populateAdvies()
