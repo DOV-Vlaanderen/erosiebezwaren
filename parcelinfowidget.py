@@ -284,6 +284,10 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
             self.efwBtnAndereBezwaren_datum_bezwaar.hide()
             self.efwBtn_herindiening_bezwaar.hide()
 
+            self.lb_gps.hide()
+            self.lbv_gps.hide()
+            self.btn_gpsDms.hide()
+
     def populate(self):
         ElevatedFeatureWidget.populate(self)
         if not self.feature:
