@@ -6,82 +6,396 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>1000</height>
+    <width>1000</width>
+    <height>800</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1200</width>
-    <height>1000</height>
+    <width>1000</width>
+    <height>800</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="tab">
-      <attribute name="title">
-       <string>Veldcontrole</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="TitledTextEdit" name="efwEdt_observaties_watererosie" native="true"/>
-         </item>
-         <item>
-          <widget class="TitledTextEdit" name="efwEdt_observaties_bewerkingserosie" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="TitledTextEdit" name="efwEdt_andere_observaties" native="true"/>
-         </item>
-         <item>
-          <widget class="TitledTextEdit" name="efwEdt_opmerkingen_veldbezoek" native="true"/>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2">
-      <attribute name="title">
-       <string>Details</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4"/>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5"/>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="btn_minimize">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/minimize_32.png</normaloff>:/icons/icons/minimize_32.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbv_header">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Bewerk advies</string>
+       </property>
+       <property name="margin">
+        <number>4</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
+        <string>Bewerk advies</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>596</width>
+             <height>658</height>
+            </rect>
+           </property>
+           <layout class="QFormLayout" name="formLayout">
+            <item row="0" column="0" colspan="2">
+             <widget class="QLabel" name="lb_datum_veldbezoek">
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Datum veldbezoek</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="DefaultValueDateEdit" name="efw_datum_veldbezoek">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_setToday">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Vandaag</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="0" colspan="2">
+             <widget class="QLabel" name="lb_editor">
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Veldcontrole door</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="ValueComboBox" name="efwCmb_veldcontrole_door"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="lb_advies_behandeld">
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Advies</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <widget class="ValueComboBox" name="efwCmb_advies_behandeld">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>250</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="ValueMappedComboBox" name="efwCmb_advies_aanvaarding">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="6" column="0" colspan="2">
+             <widget class="QLabel" name="lb_advies_nieuwe_kleur">
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Advies erosiegevoeligheid</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="SensitivityButtonBox" name="efw_advies_nieuwe_kleur" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="lb_varia">
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Varia</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="ValueBooleanButton" name="efw_jaarlijks_herberekenen">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Jaarl. herber.</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="ValueBooleanButton" name="efw_landbouwer_aanwezig">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Landb. aanw.</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="10" column="0" colspan="2">
+             <widget class="QLabel" name="lb_observaties_watererosie">
+              <property name="text">
+               <string>Observaties watererosie</string>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="1">
+             <widget class="ValueTextEdit" name="efw_observaties_watererosie"/>
+            </item>
+            <item row="12" column="0" colspan="2">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Opmerkingen veldbezoek</string>
+              </property>
+             </widget>
+            </item>
+            <item row="13" column="1">
+             <widget class="ValueTextEdit" name="efw_opmerkingen_veldbezoek"/>
+            </item>
+           </layout>
+           <zorder>lb_datum_veldbezoek</zorder>
+           <zorder>efwCmb_veldcontrole_door</zorder>
+           <zorder>lb_editor</zorder>
+           <zorder>lb_advies_behandeld</zorder>
+           <zorder>lb_advies_nieuwe_kleur</zorder>
+           <zorder>efw_advies_nieuwe_kleur</zorder>
+           <zorder>lb_varia</zorder>
+           <zorder>lb_observaties_watererosie</zorder>
+           <zorder>efw_observaties_watererosie</zorder>
+           <zorder>label</zorder>
+           <zorder>efw_opmerkingen_veldbezoek</zorder>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>350</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Actuele toestand</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QScrollArea" name="scrollArea_2">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>322</width>
+             <height>658</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
@@ -98,14 +412,14 @@
      <item>
       <widget class="QPushButton" name="btn_save">
        <property name="text">
-        <string>Save</string>
+        <string>Opslaan</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="btn_cancel">
        <property name="text">
-        <string>Cancel</string>
+        <string>Annuleren</string>
        </property>
       </widget>
      </item>
@@ -128,10 +442,35 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TitledTextEdit</class>
+   <class>SensitivityButtonBox</class>
    <extends>QWidget</extends>
-   <header>Erosiebezwaren/widgets/titledtextedit.h</header>
+   <header>Erosiebezwaren/widgets/sensitivitybuttonbox.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DefaultValueDateEdit</class>
+   <extends>QDateEdit</extends>
+   <header>Erosiebezwaren/widgets/valueinput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ValueComboBox</class>
+   <extends>QComboBox</extends>
+   <header>Erosiebezwaren/widgets/valueinput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ValueMappedComboBox</class>
+   <extends>QComboBox</extends>
+   <header>Erosiebezwaren/widgets/valueinput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ValueBooleanButton</class>
+   <extends>QPushButton</extends>
+   <header>Erosiebezwaren/widgets/valueinput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ValueTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>Erosiebezwaren/widgets/valueinput.h</header>
   </customwidget>
  </customwidgets>
  <resources>

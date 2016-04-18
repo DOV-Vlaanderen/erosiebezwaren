@@ -8,9 +8,8 @@ import uuid
 
 from valuelabel import EnabledBooleanButton, EnabledFlatBooleanButton, VisibilityBooleanButton
 from sensitivitybuttonbox import SensitivityButtonBox
-from valueinput import DefaultValueDateEdit, ValueComboBox, ValueMappedComboBox, ValueCheckBox, ValueBooleanButton
+from valueinput import DefaultValueDateEdit, ValueComboBox, ValueMappedComboBox, ValueCheckBox, ValueBooleanButton, ValueTextEdit
 from attributecombobox import AttributeFilledCombobox
-from titledtextedit import TitledTextEdit
 
 def _s(widget, parentclass):
     return issubclass(type(widget), parentclass)
@@ -29,8 +28,7 @@ class ElevatedFeatureWidget(QWidget):
         fnSetValue = None
 
         if _s(widget, QLabel) or \
-           _s(widget, QLineEdit) or \
-           _s(widget, TitledTextEdit):
+           _s(widget, QLineEdit):
             fnSetValue = widget.setText
         elif _s(widget, EnabledBooleanButton) or \
              _s(widget, EnabledFlatBooleanButton) or \
@@ -41,7 +39,8 @@ class ElevatedFeatureWidget(QWidget):
              _s(widget, AttributeFilledCombobox) or \
              _s(widget, ValueComboBox) or \
              _s(widget, ValueBooleanButton) or \
-             _s(widget, ValueMappedComboBox):
+             _s(widget, ValueMappedComboBox) or \
+             _s(widget, ValueTextEdit):
             fnSetValue = widget.setValue
 
         if fnSetValue:
@@ -50,8 +49,7 @@ class ElevatedFeatureWidget(QWidget):
     def _getValue(self, widget):
         fnGetValue = None
 
-        if _s(widget, QLineEdit) or \
-           _s(widget, TitledTextEdit):
+        if _s(widget, QLineEdit):
             fnGetValue = widget.text
         elif _s(widget, SensitivityButtonBox) or \
              _s(widget, DefaultValueDateEdit) or \
@@ -59,7 +57,8 @@ class ElevatedFeatureWidget(QWidget):
              _s(widget, AttributeFilledCombobox) or \
              _s(widget, ValueComboBox) or \
              _s(widget, ValueBooleanButton) or \
-             _s(widget, ValueMappedComboBox):
+             _s(widget, ValueMappedComboBox) or \
+             _s(widget, ValueTextEdit):
             fnGetValue = widget.getValue
 
         if fnGetValue:

@@ -149,3 +149,16 @@ class ValueMappedComboBox(QComboBox):
         if self.currentText() in self.textValueMap:
             return self.textValueMap[self.currentText()]
         return None
+
+class ValueTextEdit(QPlainTextEdit):
+    def __init__(self, parent):
+        QPlainTextEdit.__init__(self, parent)
+
+    def setValue(self, value):
+        if value:
+            self.setPlainText(value)
+        else:
+            self.clear()
+
+    def getValue(self):
+        return self.toPlainText()
