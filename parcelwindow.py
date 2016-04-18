@@ -62,7 +62,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             return
 
         editor = self.efwCmb_veldcontrole_door.getValue()
-        if editor:
+        if editor and (editor != self.initialEditor):
             self.main.qsettings.setValue('/Qgis/plugins/Erosiebezwaren/editor', editor)
         self.main.iface.mapCanvas().refresh()
         self.stop()
@@ -76,11 +76,6 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
     def setToday(self):
         self.efw_datum_veldbezoek.setDate(QDate.currentDate())
 
-    def setLastEditor(self):
-        lastEditor = self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/editor')
-        if type(lastEditor) in [str, unicode]:
-            self.efw_veldcontrole_door.setText(lastEditor)
-
     def populate(self):
         ElevatedFeatureWidget.populate(self)
         self.lbv_header.setText('Bewerk advies voor perceel %s\n  van %s' % (self.feature.attribute('uniek_id'), self.feature.attribute('naam')))
@@ -88,6 +83,8 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
 
         if not self.efwCmb_veldcontrole_door.getValue():
             self.efwCmb_veldcontrole_door.setValue(self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/editor', None))
+
+        self.initialEditor = self.efwCmb_veldcontrole_door.getValue()
 
 class ParcelWindow(QMainWindow):
     saved = pyqtSignal('QgsVectorLayer', 'QString')
