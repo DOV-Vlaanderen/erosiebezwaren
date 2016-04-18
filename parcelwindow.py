@@ -17,8 +17,9 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.efwCmb_advies_behandeld.setValues([
             'Te behandelen',
             'Veldcontrole gebeurd',
+            'Conform eerder advies',
             'Beslist zonder veldcontrole',
-            'Afgehandeld ALBON'
+            'Herberekening afwachten'
         ])
 
         self.efwCmb_advies_aanvaarding.setValues([
