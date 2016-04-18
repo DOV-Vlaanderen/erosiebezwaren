@@ -37,7 +37,8 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             'Katrien Oorts'
         ])
 
-        self.efwCmb_advies_aanvaarding.setEnabled(self.feature.attribute('datum_bezwaar') != None)
+        self.efwCmb_advies_aanvaarding.setEnabled(self.isObjection())
+        self.efw_jaarlijks_herberekenen.setEnabled(not self.isObjection())
 
         QObject.connect(self.btn_setToday, SIGNAL('clicked(bool)'), self.setToday)
         QObject.connect(self.btn_minimize, SIGNAL('clicked()'), self.minimize)
@@ -45,6 +46,9 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         QObject.connect(self.btn_cancel, SIGNAL('clicked()'), self.cancel)
  
         self.populate()
+
+    def isObjection(self):
+        return self.feature.attribute('datum_bezwaar') != None
 
     def minimize(self):
         self.parent.showMinimized()
@@ -79,8 +83,13 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
 
     def populate(self):
         ElevatedFeatureWidget.populate(self)
+
         self.lbv_header.setText('Bewerk advies voor perceel %s\n  van %s' % (self.feature.attribute('uniek_id'), self.feature.attribute('naam')))
         self.parent.setWindowTitle('Bewerk advies %s' % self.feature.attribute('uniek_id'))
+
+        if self.feature.attribute('jaarlijks_herberekenen') == None:
+            # defaults to true
+            self.efw_jaarlijks_herberekenen.setValue(1)
 
         if not self.efwCmb_veldcontrole_door.getValue():
             self.efwCmb_veldcontrole_door.setValue(self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/editor', None))

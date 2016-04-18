@@ -95,6 +95,10 @@ class ValueBooleanButton(QPushButton):
         style += "background-color: #CBE195;"
         style += "color: #000000;"
         style += "}"
+
+        style += "QPushButton:disabled {"
+        style += "color: #909090;"
+        style += "}"
         self.setStyleSheet(style)
 
 class ValueComboBox(QComboBox):
