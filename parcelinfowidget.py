@@ -257,6 +257,8 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
             'Te behandelen': ('#00ffee', '#000000'),
             'Veldcontrole gebeurd': ('#00aca1', '#000000'),
             'Beslist zonder veldcontrole': ('#8D8900', '#ffffff'),
+            'Conform eerder advies': ('#8D8900', '#ffffff'),
+            'Herberekening afwachten': ('#8D8900', '#ffffff'),
             'Afgehandeld ALBON': ('#00857c', '#ffffff')
         })
 
