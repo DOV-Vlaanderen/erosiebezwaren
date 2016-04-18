@@ -17,3 +17,5 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
         self.layout().insertWidget(1, contentWidget)
 
         self.setWindowTitle('Bezwaar %s' % self.feature.attribute('uniek_id'))
+
+        contentWidget.tabWidget.setCurrentIndex(2)

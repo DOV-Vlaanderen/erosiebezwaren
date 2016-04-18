@@ -271,11 +271,16 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
         self.efw_gesplitst_perceel.setValueMap(jaNee)
         self.efw_samengevoegd_perceel.setValueMap(jaNee)
 
-        QObject.connect(self.btn_showPhotos, SIGNAL('clicked(bool)'), self.showPhotos)
-        QObject.connect(self.efwBtnAndereBezwaren_datum_bezwaar, SIGNAL('clicked(bool)'), self.showParcelList)
-        QObject.connect(self.efwBtn_herindiening_bezwaar, SIGNAL('clicked(bool)'), self.showPreviousObjections)
-
         self.populate()
+
+        if type(parent) is ParcelInfoWidget:
+            QObject.connect(self.btn_showPhotos, SIGNAL('clicked(bool)'), self.showPhotos)
+            QObject.connect(self.efwBtnAndereBezwaren_datum_bezwaar, SIGNAL('clicked(bool)'), self.showParcelList)
+            QObject.connect(self.efwBtn_herindiening_bezwaar, SIGNAL('clicked(bool)'), self.showPreviousObjections)
+        else:
+            self.btn_showPhotos.hide()
+            self.efwBtnAndereBezwaren_datum_bezwaar.hide()
+            self.efwBtn_herindiening_bezwaar.hide()
 
     def populate(self):
         ElevatedFeatureWidget.populate(self)
