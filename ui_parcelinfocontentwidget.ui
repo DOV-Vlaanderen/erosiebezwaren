@@ -258,6 +258,12 @@ font-weight: bold;
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QScrollArea" name="scrollDetails">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -266,8 +272,8 @@ font-weight: bold;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>350</width>
-            <height>702</height>
+            <width>352</width>
+            <height>698</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
