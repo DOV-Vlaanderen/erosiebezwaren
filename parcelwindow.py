@@ -95,6 +95,13 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             self.efwCmb_veldcontrole_door.setValue(self.main.qsettings.value('/Qgis/plugins/Erosiebezwaren/editor', None))
 
         self.initialEditor = self.efwCmb_veldcontrole_door.getValue()
+        self.populateArea()
+
+    def populateArea(self):
+        if self.feature:
+            self.lbv_oppervlakte.setText('%0.3f ha' % (self.feature.geometry().area()/10000.0))
+        else:
+            self.lbv_oppervlakte.clear()
 
 class ParcelWindow(QMainWindow):
     saved = pyqtSignal('QgsVectorLayer', 'QString')
