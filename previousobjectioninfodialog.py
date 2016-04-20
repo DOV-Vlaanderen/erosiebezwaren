@@ -4,6 +4,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 
 import os
+import subprocess
 
 from ui_previousobjectioninfodialog import Ui_PreviousObjectionInfoDialog
 
