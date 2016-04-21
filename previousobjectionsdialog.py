@@ -12,6 +12,7 @@ from widgets import valuelabel
 class PreviousObjectionsWidget(QWidget):
     def __init__(self, uniek_id, parent, previousObjectionsDialog):
         QWidget.__init__(self, parent)
+        self.parent = parent
         self.uniek_id = uniek_id
         self.previousObjectionsDialog = previousObjectionsDialog
         self.main = self.previousObjectionsDialog.main
@@ -83,7 +84,7 @@ class PreviousObjectionsWidget(QWidget):
         s = SpatialiteIterator(self.main.utils.getLayerByName('bezwaren_2015'))
         oldFt = s.queryExpression("uniek_id = '%s'" % feature.attribute('oud_bezwaar_id'))[0]
 
-        d = PreviousObjectionInfoDialog(self, self.main, oldFt)
+        d = PreviousObjectionInfoDialog(self.parent, self.main, oldFt)
         QObject.connect(d, SIGNAL('finished(int)'), clearHighlightedObjections)
         d.show()
 

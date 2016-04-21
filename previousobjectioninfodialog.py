@@ -17,7 +17,7 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
         self.setupUi(self)
 
         contentWidget = ParcelInfoContentWidget(self, self.main, self.feature)
-        self.layout().addWidget(contentWidget)
+        self.layout().insertWidget(2, contentWidget)
         self.addToolbarButtons()
 
         self.setWindowTitle('Bezwaar %s' % self.feature.attribute('uniek_id'))

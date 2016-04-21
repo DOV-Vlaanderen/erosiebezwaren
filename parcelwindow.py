@@ -117,6 +117,8 @@ class ParcelWindow(QMainWindow):
         self.parcelEditWidget = ParcelEditWidget(self, self.main, self.layer, self.parcel)
         self.setCentralWidget(self.parcelEditWidget)
 
+        self.setMinimumSize(1200, 1000)
+
     def closeEvent(self, event):
         self.parcelEditWidget.stop()
         self.closed.emit()

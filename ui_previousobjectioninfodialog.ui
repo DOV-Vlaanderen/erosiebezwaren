@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>566</width>
     <height>791</height>
    </rect>
   </property>
@@ -66,8 +66,32 @@
      </property>
     </spacer>
    </item>
+   <item>
+    <widget class="QPushButton" name="btn_close">
+     <property name="text">
+      <string>Sluiten</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_close</sender>
+   <signal>clicked()</signal>
+   <receiver>PreviousObjectionInfoDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>309</x>
+     <y>765</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>357</x>
+     <y>678</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

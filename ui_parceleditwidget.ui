@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>800</height>
+    <width>811</width>
+    <height>620</height>
    </rect>
   </property>
-  <property name="minimumSize">
+  <property name="maximumSize">
    <size>
-    <width>1000</width>
-    <height>800</height>
+    <width>1920</width>
+    <height>1200</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -47,16 +47,6 @@
      </item>
      <item>
       <widget class="QLabel" name="lbv_header">
-       <property name="font">
-        <font>
-         <pointsize>14</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">* { font-weight: bold; }</string>
-       </property>
        <property name="text">
         <string>Bewerk advies</string>
        </property>
@@ -91,8 +81,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>598</width>
-             <height>660</height>
+             <width>409</width>
+             <height>522</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -184,7 +174,14 @@
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="ValueComboBox" name="efwCmb_veldcontrole_door"/>
+             <widget class="ValueComboBox" name="efwCmb_veldcontrole_door">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
             <item row="4" column="0">
              <widget class="QLabel" name="lb_advies_behandeld">
@@ -333,7 +330,14 @@
              </widget>
             </item>
             <item row="11" column="1">
-             <widget class="ValueTextEdit" name="efw_observaties_watererosie"/>
+             <widget class="ValueTextEdit" name="efw_observaties_watererosie">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
             <item row="12" column="0" colspan="2">
              <widget class="QLabel" name="label">
@@ -380,7 +384,10 @@
        <property name="title">
         <string>Details</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0">
+        <property name="spacing">
+         <number>12</number>
+        </property>
         <item>
          <widget class="QScrollArea" name="scrollArea_2">
           <property name="frameShape">
@@ -398,7 +405,7 @@
              <x>0</x>
              <y>0</y>
              <width>324</width>
-             <height>660</height>
+             <height>480</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -514,9 +521,6 @@ font-weight: bold;
                  <widget class="QScrollArea" name="scrollDetails">
                   <property name="frameShape">
                    <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Plain</enum>
                   </property>
                   <property name="widgetResizable">
                    <bool>true</bool>
@@ -981,8 +985,8 @@ font-weight: bold;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>284</width>
-                     <height>430</height>
+                     <width>138</width>
+                     <height>318</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -1202,9 +1206,9 @@ font-weight: bold;
                    <property name="geometry">
                     <rect>
                      <x>0</x>
-                     <y>-46</y>
-                     <width>271</width>
-                     <height>508</height>
+                     <y>0</y>
+                     <width>170</width>
+                     <height>526</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_15">
