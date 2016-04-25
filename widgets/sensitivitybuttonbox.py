@@ -38,6 +38,10 @@ class SensitivityButton(QPushButton):
         style += "background-color: %s;" % self.bgcolor
         style += "color: %s;" % self.textcolor
         style += "}"
+
+        style += "QPushButton:disabled {"
+        style += "color: #909090;"
+        style += "}"
         self.setStyleSheet(style)
 
 class SensitivityButtonBox(QWidget):
@@ -55,6 +59,8 @@ class SensitivityButtonBox(QWidget):
                         SensitivityButton(self, 'medium', 'Medium', '#ffaa00', '#000000'),
                         SensitivityButton(self, 'hoog', 'Hoog', '#ff0000', '#ffffff'),
                         SensitivityButton(self, 'zeer hoog', 'Zeer hoog', '#a800e6', '#ffffff')]
+
+        self.valueList = [b.value for b in self.buttons]
 
         for i in range(len(self.buttons)):
             self.layout.addWidget(self.buttons[i], i/3, i%3)
@@ -91,7 +97,24 @@ class SensitivityButtonBox(QWidget):
             self.setUnchecked()
         else:
             for btn in self.buttons:
-                if btn.value == value:
-                    btn.setChecked(True)
-                    self.valueChanged.emit(value)
-                    break
+                btn.setChecked(btn.value == value)
+            self.valueChanged.emit(value)
+
+    def setEnabled(self, enabled):
+        for i in range(len(self.buttons)):
+            self.buttons[i].setEnabled(enabled)
+
+    def setMaxValue(self, maxValue):
+        self.setEnabled(False)
+        self.buttons[-1].setEnabled(True)
+
+        for i in range(len(self.buttons)-1):
+            if self.buttons[i].value == maxValue:
+                break
+            self.buttons[i].setEnabled(True)
+
+        if self.getValue() not in self.valueList or maxValue not in self.valueList:
+            return
+
+        if self.valueList.index(self.getValue()) >= self.valueList.index(maxValue):
+            self.setValue(None)

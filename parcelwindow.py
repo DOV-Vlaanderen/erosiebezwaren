@@ -46,6 +46,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         QObject.connect(self.btn_cancel, SIGNAL('clicked()'), self.cancel)
  
         self.populate()
+        self.connectValidators()
 
     def isObjection(self):
         return self.feature.attribute('datum_bezwaar') != None
@@ -102,6 +103,52 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             self.lbv_oppervlakte.setText('%0.3f ha' % (self.feature.geometry().area()/10000.0))
         else:
             self.lbv_oppervlakte.clear()
+
+    def connectValidators(self):
+        QObject.connect(self.efwCmb_advies_behandeld, SIGNAL('currentIndexChanged(int)'), self._validate)
+        QObject.connect(self.efwCmb_advies_aanvaarding, SIGNAL('currentIndexChanged(int)'), self._validate)
+        QObject.connect(self.efw_advies_nieuwe_kleur, SIGNAL('valueChanged(QString)'), self._checkSaveable)
+        self._validate()
+
+    def _validate(self, *args):
+        advies_behandeld = self.efwCmb_advies_behandeld.getValue()
+        if advies_behandeld == 'Te behandelen':
+            self.efwCmb_advies_aanvaarding.setValue(None)
+            self.efwCmb_advies_aanvaarding.setEnabled(False)
+        else:
+            self.efwCmb_advies_aanvaarding.setEnabled(self.isObjection())
+
+        if advies_behandeld == 'Veldcontrole gebeurd':
+            self.efw_landbouwer_aanwezig.setEnabled(True)
+        else:
+            self.efw_landbouwer_aanwezig.setValue(0)
+            self.efw_landbouwer_aanwezig.setEnabled(False)
+
+        advies_aanvaarding = self.efwCmb_advies_aanvaarding.getValue()
+        if advies_aanvaarding == 1:
+            self.efw_advies_nieuwe_kleur.setEnabled(True)
+            self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute('advies_nieuwe_kleur'))
+            self.efw_advies_nieuwe_kleur.setMaxValue(self.feature.attribute('kleur_2015'))
+        elif advies_aanvaarding == 0:
+            self.efw_advies_nieuwe_kleur.setEnabled(False)
+            self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute('kleur_2015'))
+        else:
+            self.efw_advies_nieuwe_kleur.setEnabled(False)
+            self.efw_advies_nieuwe_kleur.setValue(None)
+
+        if not self.isObjection() and advies_behandeld and advies_behandeld != 'Te behandelen':
+            self.efw_advies_nieuwe_kleur.setEnabled(True)
+
+    def _checkSaveable(self):
+        self.btn_save.setEnabled(self._isSaveable())
+
+    def _isSaveable(self):
+        advies_behandeld = self.efwCmb_advies_behandeld.getValue()
+        advies_aanvaarding = self.efwCmb_advies_aanvaarding.getValue()
+        if advies_behandeld == 'Te behandelen' and advies_aanvaarding == None:
+            return True
+
+        return self.efw_advies_nieuwe_kleur.getValue() != None
 
 class ParcelWindow(QMainWindow):
     saved = pyqtSignal('QgsVectorLayer', 'QString')
