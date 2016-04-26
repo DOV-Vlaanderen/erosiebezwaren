@@ -37,7 +37,10 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             'Katrien Oorts'
         ])
 
-        self.efwCmb_advies_aanvaarding.setEnabled(self.isObjection())
+        if not self.isObjection():
+            self.efwCmb_advies_aanvaarding.hide()
+            self.efwCmb_advies_aanvaarding.setEnabled(False)
+
         self.efw_jaarlijks_herberekenen.setEnabled(not self.isObjection())
 
         QObject.connect(self.btn_setToday, SIGNAL('clicked(bool)'), self.setToday)
@@ -112,13 +115,13 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
 
     def _validate(self, *args):
         advies_behandeld = self.efwCmb_advies_behandeld.getValue()
-        if advies_behandeld == 'Te behandelen':
+        if advies_behandeld in ('Te behandelen', 'Herberekening afwachten'):
             self.efwCmb_advies_aanvaarding.setValue(None)
             self.efwCmb_advies_aanvaarding.setEnabled(False)
         else:
             self.efwCmb_advies_aanvaarding.setEnabled(self.isObjection())
 
-        if advies_behandeld == 'Veldcontrole gebeurd':
+        if advies_behandeld in ('Veldcontrole gebeurd', 'Conform eerder advies', 'Herberekening afwachten'):
             self.efw_landbouwer_aanwezig.setEnabled(True)
         else:
             self.efw_landbouwer_aanwezig.setValue(0)
@@ -129,14 +132,17 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             self.efw_advies_nieuwe_kleur.setEnabled(True)
             self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute('advies_nieuwe_kleur'))
             self.efw_advies_nieuwe_kleur.setMaxValue(self.feature.attribute('kleur_2015'))
+            self.efw_jaarlijks_herberekenen.setValue(0)
         elif advies_aanvaarding == 0:
             self.efw_advies_nieuwe_kleur.setEnabled(False)
             self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute('kleur_2015'))
+            self.efw_jaarlijks_herberekenen.setValue(1)
         else:
             self.efw_advies_nieuwe_kleur.setEnabled(False)
             self.efw_advies_nieuwe_kleur.setValue(None)
+            self.efw_jaarlijks_herberekenen.setValue(1)
 
-        if not self.isObjection() and advies_behandeld and advies_behandeld != 'Te behandelen':
+        if not self.isObjection() and advies_behandeld and advies_behandeld not in ('Te behandelen', 'Herberekening afwachten'):
             self.efw_advies_nieuwe_kleur.setEnabled(True)
 
     def _checkSaveable(self):
@@ -145,7 +151,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
     def _isSaveable(self):
         advies_behandeld = self.efwCmb_advies_behandeld.getValue()
         advies_aanvaarding = self.efwCmb_advies_aanvaarding.getValue()
-        if advies_behandeld == 'Te behandelen' and advies_aanvaarding == None:
+        if advies_behandeld in ('Te behandelen', 'Herberekening afwachten') and advies_aanvaarding == None:
             return True
 
         return self.efw_advies_nieuwe_kleur.getValue() != None
