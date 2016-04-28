@@ -10,6 +10,7 @@ import subprocess
 import time
 
 from parcelidentifier import ParcelIdentifyAction
+from pixelmeasure import PixelMeasureAction
 from mapswitchdialog import MapSwitchButton
 from farmersearchdialog import FarmerSearchDialog
 from gpszoomdialog import GpsZoomDialog
@@ -86,6 +87,10 @@ class Actions(object):
         measureAction = self.main.iface.actionMeasure()
         measureAction.setIcon(QIcon(':/icons/icons/measure.png'))
         self.toolbar.addAction(measureAction)
+
+        self.pixelMeasureAction = PixelMeasureAction(self.main, self.parent)
+        self.pixelMeasureAction.setVisible(False)
+        self.toolbar.addAction(self.pixelMeasureAction)
 
     def deactivate(self):
         self.parcelIdentifyAction.deactivate()

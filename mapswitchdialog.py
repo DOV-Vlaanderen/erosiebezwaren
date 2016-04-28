@@ -62,6 +62,13 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
             mapView['disabledLayers'] = self.allLayers - mapView['enabledLayers']
         self.toggleLayersGroups(enable=mapView['enabledLayers'], disable=mapView['disabledLayers'])
         self.action.setText(mapView['label'])
+
+        if mapView['label'] == 'Watererosie 30':
+            self.main.actions.pixelMeasureAction.setVisible(True)
+        else:
+            self.main.actions.pixelMeasureAction.setVisible(False)
+            self.main.actions.pixelMeasureAction.stopMeasure()
+
         self.accept()
 
     def toMapRoutekaart(self):
