@@ -112,6 +112,11 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         QObject.connect(self.efwCmb_advies_aanvaarding, SIGNAL('currentIndexChanged(int)'), self._validate)
         QObject.connect(self.efw_advies_nieuwe_kleur, SIGNAL('valueChanged(QString)'), self._checkSaveable)
         self._validate()
+        self._checkSaveable()
+
+        self.efwCmb_advies_behandeld.setValue(self.feature.attribute('advies_behandeld'))
+        self.efwCmb_advies_aanvaarding.setValue(self.feature.attribute('advies_aanvaarding'))
+        self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute('advies_nieuwe_kleur'))
 
     def _validate(self, *args):
         advies_behandeld = self.efwCmb_advies_behandeld.getValue()
@@ -132,20 +137,23 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             self.efw_advies_nieuwe_kleur.setEnabled(True)
             self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute('advies_nieuwe_kleur'))
             self.efw_advies_nieuwe_kleur.setMaxValue(self.feature.attribute('kleur_2015'))
-            self.efw_jaarlijks_herberekenen.setValue(0)
+            if self.feature.attribute('jaarlijks_herberekenen') == None:
+                self.efw_jaarlijks_herberekenen.setValue(0)
         elif advies_aanvaarding == 0:
             self.efw_advies_nieuwe_kleur.setEnabled(False)
             self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute('kleur_2015'))
-            self.efw_jaarlijks_herberekenen.setValue(1)
+            if self.feature.attribute('jaarlijks_herberekenen') == None:
+                self.efw_jaarlijks_herberekenen.setValue(1)
         else:
             self.efw_advies_nieuwe_kleur.setEnabled(False)
             self.efw_advies_nieuwe_kleur.setValue(None)
-            self.efw_jaarlijks_herberekenen.setValue(1)
+            if self.feature.attribute('jaarlijks_herberekenen') == None:
+                self.efw_jaarlijks_herberekenen.setValue(1)
 
         if not self.isObjection() and advies_behandeld and advies_behandeld not in ('Te behandelen', 'Herberekening afwachten'):
             self.efw_advies_nieuwe_kleur.setEnabled(True)
 
-    def _checkSaveable(self):
+    def _checkSaveable(self, *args):
         self.btn_save.setEnabled(self._isSaveable())
 
     def _isSaveable(self):
