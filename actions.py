@@ -95,4 +95,5 @@ class Actions(object):
     def deactivate(self):
         self.parcelIdentifyAction.deactivate()
         self.mapSwitchButton.deactivate()
+        self.pixelMeasureAction.deactivate()
         del(self.toolbar)
