@@ -14,7 +14,7 @@ class RasterBlockWrapper(QObject):
         self.pixelSizeY = self.rasterLayer.rasterUnitsPerPixelY()
         self.pixelArea = self.pixelSizeX*self.pixelSizeY
 
-        self._buffer = 5
+        self._buffer = max(self.pixelSizeX, self.pixelSizeY)
         self.geomBbox.grow(self._buffer)
 
         self.blockBbox = self._alignRectangleToGrid(self.geomBbox)
@@ -78,7 +78,7 @@ class PixelisedVectorLayer(QgsVectorLayer):
         self.main = main
 
         props = self.rendererV2().symbol().symbolLayer(0).properties()
-        props['color'] = '255,255,255,128'
+        props['color'] = '255,255,255,64'
         props['outline_color'] = '0,0,0,255'
         props['outline_width'] = '1'
         self.rendererV2().setSymbol(QgsFillSymbolV2.createSimple(props))
