@@ -975,8 +975,8 @@ font-weight: bold;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>182</width>
-            <height>570</height>
+            <width>352</width>
+            <height>552</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1281,11 +1281,18 @@ font-weight: bold;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>170</width>
-            <height>526</height>
+            <width>352</width>
+            <height>542</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_15">
+           <item>
+            <widget class="QPushButton" name="btn_monitoring">
+             <property name="text">
+              <string>Monitoring</string>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QLabel" name="lb_bo">
              <property name="styleSheet">

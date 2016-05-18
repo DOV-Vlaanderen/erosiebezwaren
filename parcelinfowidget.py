@@ -15,6 +15,7 @@ from ui_parcelinfocontentwidget import Ui_ParcelInfoContentWidget
 from widgets import valuelabel
 from widgets.elevatedfeaturewidget import ElevatedFeatureWidget
 from parcelwindow import ParcelWindow
+from monitoringwindow import MonitoringWindow
 from photodialog import PhotoDialog
 from parcellistdialog import ParcelListDialog
 from previousobjectionsdialog import PreviousObjectionsDialog
@@ -277,10 +278,12 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
 
         if type(parent) is ParcelInfoWidget:
             QObject.connect(self.btn_showPhotos, SIGNAL('clicked(bool)'), self.showPhotos)
+            QObject.connect(self.btn_monitoring, SIGNAL('clicked(bool)'), self.showMonitoring)
             QObject.connect(self.efwBtnAndereBezwaren_datum_bezwaar, SIGNAL('clicked(bool)'), self.showParcelList)
             QObject.connect(self.efwBtn_herindiening_bezwaar, SIGNAL('clicked(bool)'), self.showPreviousObjections)
         else:
             self.btn_showPhotos.hide()
+            self.btn_monitoring.hide()
             self.efwBtnAndereBezwaren_datum_bezwaar.hide()
             self.efwBtn_herindiening_bezwaar.hide()
 
@@ -410,6 +413,11 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
         cmd = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe')
         cmd += ' "%s"' % self.photoPath
         subprocess.Popen(cmd)
+
+    def showMonitoring(self):
+        if self.feature:
+            m = MonitoringWindow(self.main, self.feature)
+            m.show()
 
     def toggleGpsDms(self, checked):
         switch = {'true': 'false', 'false': 'true'}
