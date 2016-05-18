@@ -17,7 +17,6 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         self.efwCmb_advies_behandeld.setValues([
             'Te behandelen',
             'Veldcontrole gebeurd',
-            'Conform eerder advies',
             'Beslist zonder veldcontrole',
             'Herberekening afwachten'
         ])
@@ -40,6 +39,8 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         if not self.isObjection():
             self.efwCmb_advies_aanvaarding.hide()
             self.efwCmb_advies_aanvaarding.setEnabled(False)
+            self.efw_conform_eerder_advies.hide()
+            self.efw_conform_eerder_advies.setEnabled(False)
 
         self.efw_jaarlijks_herberekenen.setEnabled(not self.isObjection())
 
@@ -126,7 +127,7 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         else:
             self.efwCmb_advies_aanvaarding.setEnabled(self.isObjection())
 
-        if advies_behandeld in ('Veldcontrole gebeurd', 'Conform eerder advies', 'Herberekening afwachten'):
+        if advies_behandeld in ('Veldcontrole gebeurd', 'Herberekening afwachten'):
             self.efw_landbouwer_aanwezig.setEnabled(True)
         else:
             self.efw_landbouwer_aanwezig.setValue(0)
