@@ -289,7 +289,7 @@
             <item row="9" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="ValueBooleanButton" name="efw_conform_eerder_advies">
+               <widget class="ValueBooleanButton" name="btn_conform_eerder_advies">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
