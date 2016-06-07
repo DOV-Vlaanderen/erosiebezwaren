@@ -154,6 +154,12 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         if not self.isObjection() and advies_behandeld and advies_behandeld not in ('Te behandelen', 'Herberekening afwachten'):
             self.efw_advies_nieuwe_kleur.setEnabled(True)
 
+        if self.feature.attribute('herindiening_bezwaar') == 'true' and advies_behandeld not in ('Te behandelen', 'Herberekening afwachten'):
+            self.efw_conform_eerder_advies.setEnabled(True)
+        else:
+            self.efw_conform_eerder_advies.setValue(0)
+            self.efw_conform_eerder_advies.setEnabled(False)
+
     def _checkSaveable(self, *args):
         self.btn_save.setEnabled(self._isSaveable())
 
