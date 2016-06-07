@@ -273,7 +273,7 @@ font-weight: bold;
             <x>0</x>
             <y>0</y>
             <width>352</width>
-            <height>698</height>
+            <height>724</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -466,7 +466,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="efw_watererosie_0_2016">
+            <widget class="ValueLabel" name="efw_watererosie_0_2016">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
@@ -499,7 +499,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="efw_watererosie_30_2016">
+            <widget class="ValueLabel" name="efw_watererosie_30_2016">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
@@ -530,7 +530,20 @@ font-weight: bold;
               <number>20</number>
              </property>
              <property name="buddy">
-              <cstring>lb_bewerkingserosie</cstring>
+              <cstring></cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ValueLabel" name="efw_bewerkingserosie_2016">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic;}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="indent">
+              <number>20</number>
              </property>
             </widget>
            </item>
@@ -555,7 +568,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="efw_totale_erosie_2016">
+            <widget class="ValueLabel" name="efw_totale_erosie_2016">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
