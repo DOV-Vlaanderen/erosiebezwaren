@@ -389,12 +389,13 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
                 enableTabAdvies(True)
                 return
 
+            fields = self.feature.fields()
             for i in range(self.scrollContentsAdvies.layout().count()):
                 w = self.scrollContentsAdvies.layout().itemAt(i).widget()
                 if w:
                     m = re.match(r'^efw[^_]*_(.*)$', w.objectName())
                     if m:
-                        if self.feature.attribute(m.group(1)):
+                        if fields.indexFromName(m.group(1)) > -1 and self.feature.attribute(m.group(1)):
                             enableTabAdvies(True)
                             return
 
