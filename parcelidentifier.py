@@ -21,9 +21,25 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         if table and view:
             self.main.iface.setActiveLayer(table)
             results = self.identify(mouseEvent.x(), mouseEvent.y(), self.ActiveLayer, self.VectorLayer)
-            if results:
+            resultFid = None
+
+            # Check for overlapping features:
+            #   - if one of them is an objection, select that
+            #   - if none of them is an objection, sort them to always select the same feature
+            if len(results) == 1:
+                resultFid = results[0].mFeature.id()
+            elif len(results) > 1:
+                fts = sorted([r.mFeature for r in results], key = lambda x: x.attribute('uniek_id'))
+                fts_objections = [ft for ft in fts if ft.attribute('datum_bezwaar')]
+
+                if len(fts_objections) == 1:
+                    resultFid = fts_objections[0].id()
+                elif len(fts_objections) == 0:
+                    resultFid = fts[0].id()
+
+            if resultFid:
                 fr = QgsFeatureRequest()
-                fr.setFilterFid(results[0].mFeature.id())
+                fr.setFilterFid(resultFid)
                 feature = view.getFeatures(fr).next()
                 self.main.parcelInfoWidget.setLayer(view)
                 self.main.parcelInfoWidget.setFeature(feature)
