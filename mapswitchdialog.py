@@ -13,8 +13,8 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         self.setupUi(self)
 
         self.visibleBase = set(['Overzichtskaart', 'percelenkaart_table', 'Topokaart'])
-        self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie', '2013 potentiele bodemerosie',
-            'watererosie30', 'bewerkingserosie', 'dem_kul', 'dem_agiv', 'Overzichtskaart', 'percelenkaart_table', 'Topokaart', 'Bodemkaart'])
+        self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2016 potentiele bodemerosie', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie',
+            '2013 potentiele bodemerosie', 'watererosie30', 'bewerkingserosie', 'dem_kul', 'dem_agiv', 'Overzichtskaart', 'percelenkaart_table', 'Topokaart', 'Bodemkaart'])
         self.activeDem = None
 
         QObject.connect(self.btn_routekaart, SIGNAL('clicked(bool)'), self.toMapRoutekaart)
@@ -22,6 +22,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         QObject.connect(self.btn_erosie2013, SIGNAL('clicked(bool)'), self.toMapErosie2013)
         QObject.connect(self.btn_erosie2014, SIGNAL('clicked(bool)'), self.toMapErosie2014)
         QObject.connect(self.btn_erosie2015, SIGNAL('clicked(bool)'), self.toMapErosie2015)
+        QObject.connect(self.btn_erosie2016, SIGNAL('clicked(bool)'), self.toMapErosie2016)
         QObject.connect(self.btn_watererosie_30, SIGNAL('clicked(bool)'), self.toMapWatererosie30)
         QObject.connect(self.btn_bewerkingserosie, SIGNAL('clicked(bool)'), self.toMapBewerkingserosie)
         QObject.connect(self.btn_afstromingskaart, SIGNAL('clicked(bool)'), self.toMapAfstromingskaart)
@@ -104,6 +105,13 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
             'enabledLayers': self.visibleBase.union(['2015 potentiele bodemerosie']),
             'autoDisable': True,
             'label': 'Erosiekaart 2015'
+        })
+
+    def toMapErosie2016(self):
+        self.toMapView({
+            'enabledLayers': self.visibleBase.union(['2016 potentiele bodemerosie']),
+            'autoDisable': True,
+            'label': 'Erosiekaart 2016'
         })
 
     def toMapWatererosie30(self):
