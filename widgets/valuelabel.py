@@ -20,6 +20,32 @@ class ValueLabel(QLabel):
             self.buddy().show()
         QLabel.show(self)
 
+class SplitMergedValueLabel(QLabel):
+    def setText(self, text):
+        if text and text != '':
+            value = float(text)
+            if value < 80:
+                QLabel.setText(self, 'Ja (overlap %0.1f%%)' % value)
+            else:
+                QLabel.setText(self, 'Nee')
+            self.show()
+        else:
+            self.clear()
+
+    def clear(self):
+        self.hide()
+        QLabel.clear(self)
+
+    def hide(self):
+        if self.buddy():
+            self.buddy().hide()
+        QLabel.hide(self)
+
+    def show(self):
+        if self.buddy():
+            self.buddy().show()
+        QLabel.show(self)
+
 class ValueMappedLabel(ValueLabel):
     def __init__(self, parent):
         ValueLabel.__init__(self, parent)

@@ -1495,7 +1495,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="ValueMappedLabel" name="efw_gesplitst_perceel">
+            <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2015_met_2016">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
@@ -1518,7 +1518,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="ValueMappedLabel" name="efw_samengevoegd_perceel">
+            <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2016_met_2015">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
@@ -1590,6 +1590,11 @@ font-weight: bold;
   <customwidget>
    <class>VisibilityBooleanButton</class>
    <extends>QPushButton</extends>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SplitMergedValueLabel</class>
+   <extends>QLabel</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
  </customwidgets>

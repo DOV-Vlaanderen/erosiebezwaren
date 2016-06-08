@@ -270,8 +270,6 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
         jaNee = {0: 'Nee', 1: 'Ja'}
         self.efw_jaarlijks_herberekenen.setValueMap(jaNee)
         self.efw_landbouwer_aanwezig.setValueMap(jaNee)
-        self.efw_gesplitst_perceel.setValueMap(jaNee)
-        self.efw_samengevoegd_perceel.setValueMap(jaNee)
 
         self.populate()
 
