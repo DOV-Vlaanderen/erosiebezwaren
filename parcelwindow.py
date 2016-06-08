@@ -42,8 +42,6 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             self.efw_conform_eerder_advies.hide()
             self.efw_conform_eerder_advies.setEnabled(False)
 
-        self.efw_jaarlijks_herberekenen.setEnabled(not self.isObjection())
-
         QObject.connect(self.btn_setToday, SIGNAL('clicked(bool)'), self.setToday)
         QObject.connect(self.btn_minimize, SIGNAL('clicked()'), self.minimize)
         QObject.connect(self.btn_save, SIGNAL('clicked()'), self.save)
@@ -138,18 +136,21 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             self.efw_advies_nieuwe_kleur.setEnabled(True)
             self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute('advies_nieuwe_kleur'))
             self.efw_advies_nieuwe_kleur.setMaxValue(self.feature.attribute('kleur_2015'))
-            if self.feature.attribute('jaarlijks_herberekenen') == None:
-                self.efw_jaarlijks_herberekenen.setValue(0)
+            self.efw_jaarlijks_herberekenen.setEnabled(False)
+            self.efw_jaarlijks_herberekenen.setValue(0)
         elif advies_aanvaarding == 0:
             self.efw_advies_nieuwe_kleur.setEnabled(False)
             self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute('kleur_2015'))
+            self.efw_jaarlijks_herberekenen.setEnabled(True)
             if self.feature.attribute('jaarlijks_herberekenen') == None:
                 self.efw_jaarlijks_herberekenen.setValue(1)
+            else:
+                self.efw_jaarlijks_herberekenen.setValue(self.feature.attribute('jaarlijks_herberekenen'))
         else:
             self.efw_advies_nieuwe_kleur.setEnabled(False)
             self.efw_advies_nieuwe_kleur.setValue(None)
-            if self.feature.attribute('jaarlijks_herberekenen') == None:
-                self.efw_jaarlijks_herberekenen.setValue(1)
+            self.efw_jaarlijks_herberekenen.setEnabled(False)
+            self.efw_jaarlijks_herberekenen.setValue(1)
 
         if not self.isObjection() and advies_behandeld and advies_behandeld not in ('Te behandelen', 'Herberekening afwachten'):
             self.efw_advies_nieuwe_kleur.setEnabled(True)
