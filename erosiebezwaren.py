@@ -41,8 +41,10 @@ class Erosiebezwaren(object):
 
     def unload(self):
         self.iface.removePluginMenu('DOV - Erosiebezwaren', self.action)
-        self.selectionManager.deactivate()
-        self.annotationManager.deactivate()
+
+        # FIXME: commented out to prevent segfault on QGis exit..?
+        #self.selectionManager.deactivate()
+        #self.annotationManager.deactivate()
         self.actions.deactivate()
         self.iface.removeDockWidget(self.parcelInfoDock)
 
