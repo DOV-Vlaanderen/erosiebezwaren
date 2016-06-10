@@ -273,7 +273,7 @@ font-weight: bold;
             <x>0</x>
             <y>0</y>
             <width>352</width>
-            <height>698</height>
+            <height>724</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -466,7 +466,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="efw_watererosie_0_2016">
+            <widget class="ValueLabel" name="efw_watererosie_0_2016">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
@@ -499,7 +499,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="efw_watererosie_30_2016">
+            <widget class="ValueLabel" name="efw_watererosie_30_2016">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
@@ -530,7 +530,20 @@ font-weight: bold;
               <number>20</number>
              </property>
              <property name="buddy">
-              <cstring>lb_bewerkingserosie</cstring>
+              <cstring></cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ValueLabel" name="efw_bewerkingserosie_2016">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic;}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="indent">
+              <number>20</number>
              </property>
             </widget>
            </item>
@@ -555,7 +568,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="efw_totale_erosie_2016">
+            <widget class="ValueLabel" name="efw_totale_erosie_2016">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
@@ -1239,6 +1252,29 @@ font-weight: bold;
             </widget>
            </item>
            <item>
+            <widget class="QLabel" name="lb_conform_eerder_advies">
+             <property name="text">
+              <string>Conform eerder advies</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ValueMappedLabel" name="efw_conform_eerder_advies">
+             <property name="styleSheet">
+              <string notr="true">* { font-style: italic; }</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="indent">
+              <number>20</number>
+             </property>
+             <property name="buddy">
+              <cstring>lb_conform_eerder_advies</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
             <spacer name="verticalSpacer_3">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -1489,7 +1525,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="ValueMappedLabel" name="efw_gesplitst_perceel">
+            <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2015_met_2016">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
@@ -1512,7 +1548,7 @@ font-weight: bold;
             </widget>
            </item>
            <item>
-            <widget class="ValueMappedLabel" name="efw_samengevoegd_perceel">
+            <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2016_met_2015">
              <property name="styleSheet">
               <string notr="true">* { font-style: italic;}</string>
              </property>
@@ -1584,6 +1620,11 @@ font-weight: bold;
   <customwidget>
    <class>VisibilityBooleanButton</class>
    <extends>QPushButton</extends>
+   <header>Erosiebezwaren/widgets/valuelabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SplitMergedValueLabel</class>
+   <extends>QLabel</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
  </customwidgets>

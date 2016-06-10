@@ -550,7 +550,7 @@ font-weight: bold;
                      <x>0</x>
                      <y>0</y>
                      <width>271</width>
-                     <height>664</height>
+                     <height>690</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -733,7 +733,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLabel" name="efw_watererosie_0_2016">
+                     <widget class="ValueLabel" name="efw_watererosie_0_2016">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -766,7 +766,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLabel" name="efw_watererosie_30_2016">
+                     <widget class="ValueLabel" name="efw_watererosie_30_2016">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -797,7 +797,20 @@ font-weight: bold;
                        <number>20</number>
                       </property>
                       <property name="buddy">
-                       <cstring>lb_bewerkingserosie</cstring>
+                       <cstring></cstring>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="ValueLabel" name="efw_bewerkingserosie_2016">
+                      <property name="styleSheet">
+                       <string notr="true">* { font-style: italic;}</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="indent">
+                       <number>20</number>
                       </property>
                      </widget>
                     </item>
@@ -822,7 +835,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLabel" name="efw_totale_erosie_2016">
+                     <widget class="ValueLabel" name="efw_totale_erosie_2016">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -1004,8 +1017,8 @@ font-weight: bold;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>284</width>
-                     <height>385</height>
+                     <width>137</width>
+                     <height>318</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -1226,8 +1239,8 @@ font-weight: bold;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>271</width>
-                     <height>508</height>
+                     <width>168</width>
+                     <height>526</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_15">

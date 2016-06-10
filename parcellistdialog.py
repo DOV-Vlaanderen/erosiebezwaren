@@ -29,7 +29,7 @@ class ParcelListWidget(QWidget):
         s = SpatialiteIterator(self.layer)
 
         parcelList = s.queryExpression(stmt)
-        for p in sorted(parcelList, key = lambda x: int(x.attribute('perceelsnr_va_2015'))):
+        for p in sorted(parcelList, key = lambda x: int(x.attribute('perceelsnr_va_2016'))):
             p.layer = self.layer
             self.addParcel(p)
 
@@ -52,7 +52,7 @@ class ParcelListWidget(QWidget):
         self.parcelList.append(parcel)
         self.main.selectionManager.select(parcel, mode=1)
 
-        btn = QPushButton(str(parcel.attribute('perceelsnr_va_2015')), self)
+        btn = QPushButton(str(parcel.attribute('perceelsnr_va_2016')), self)
         btn.setSizePolicy(self.horMaxSizePolicy)
         QObject.connect(btn, SIGNAL('clicked(bool)'), lambda: self.goToParcel(parcel))
         self.layout.addWidget(btn, row, 0)
@@ -66,8 +66,8 @@ class ParcelListWidget(QWidget):
 
         lb2 = valuelabel.SensitivityColorLabel(self)
         lb2.setSizePolicy(self.horMaxSizePolicy)
-        lb2.setText('2015')
-        lb2.setText(parcel.attribute('kleur_2015'))
+        lb2.setText('2016')
+        lb2.setText(parcel.attribute('kleur_2016'))
         self.layout.addWidget(lb2, row, 2)
 
 class ParcelListDialog(QDialog, Ui_ParcelListDialog):
