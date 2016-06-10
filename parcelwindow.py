@@ -36,12 +36,11 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             'Katrien Oorts'
         ])
 
-        self.btn_conform_eerder_advies.setValue(0) # FIXME: transform to elevatedfeaturewidget
         if not self.isObjection():
             self.efwCmb_advies_aanvaarding.hide()
             self.efwCmb_advies_aanvaarding.setEnabled(False)
-            self.btn_conform_eerder_advies.hide()
-            self.btn_conform_eerder_advies.setEnabled(False)
+            self.efw_conform_eerder_advies.hide()
+            self.efw_conform_eerder_advies.setEnabled(False)
 
         QObject.connect(self.btn_setToday, SIGNAL('clicked(bool)'), self.setToday)
         QObject.connect(self.btn_minimize, SIGNAL('clicked()'), self.minimize)
@@ -131,12 +130,6 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
         else:
             self.efw_landbouwer_aanwezig.setValue(0)
             self.efw_landbouwer_aanwezig.setEnabled(False)
-
-        if advies_behandeld in ('Veldcontrole gebeurd', 'Beslist zonder veldcontrole'):
-            self.btn_conform_eerder_advies.setEnabled(True)
-        else:
-            self.btn_conform_eerder_advies.setValue(0)
-            self.btn_conform_eerder_advies.setEnabled(False)
 
         advies_aanvaarding = self.efwCmb_advies_aanvaarding.getValue()
         if advies_aanvaarding == 1:
