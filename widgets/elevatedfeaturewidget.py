@@ -10,6 +10,7 @@ from valuelabel import EnabledBooleanButton, EnabledFlatBooleanButton, Visibilit
 from sensitivitybuttonbox import SensitivityButtonBox
 from valueinput import DefaultValueDateEdit, ValueComboBox, ValueMappedComboBox, ValueCheckBox, ValueBooleanButton, ValueTextEdit
 from attributecombobox import AttributeFilledCombobox
+from monitoringwidgets import MonitoringItemWidget
 
 def _s(widget, parentclass):
     return issubclass(type(widget), parentclass)
@@ -40,7 +41,8 @@ class ElevatedFeatureWidget(QWidget):
              _s(widget, ValueComboBox) or \
              _s(widget, ValueBooleanButton) or \
              _s(widget, ValueMappedComboBox) or \
-             _s(widget, ValueTextEdit):
+             _s(widget, ValueTextEdit) or \
+             _s(widget, MonitoringItemWidget):
             fnSetValue = widget.setValue
 
         if fnSetValue:
@@ -58,7 +60,8 @@ class ElevatedFeatureWidget(QWidget):
              _s(widget, ValueComboBox) or \
              _s(widget, ValueBooleanButton) or \
              _s(widget, ValueMappedComboBox) or \
-             _s(widget, ValueTextEdit):
+             _s(widget, ValueTextEdit) or \
+             _s(widget, MonitoringItemWidget):
             fnGetValue = widget.getValue
 
         if fnGetValue:
