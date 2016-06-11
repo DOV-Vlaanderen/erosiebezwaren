@@ -68,7 +68,8 @@ class ParcelButtonBar(QWidget):
     def isEditable(self):
         if self.feature:
             if self.feature.attribute('uniek_id') and \
-               self.feature.attribute('datum_uit') == None:
+               self.feature.attribute('datum_uit') == None and \
+               self.parent.monitoringOpen == False:
                return True
         return False
 
@@ -175,6 +176,7 @@ class ParcelButtonBar(QWidget):
             QObject.connect(w, SIGNAL('saved(QgsVectorLayer, QString)'), reloadFeature)
             QObject.connect(w, SIGNAL('closed()'), lambda: clearEditWindow(fid))
             QObject.connect(w, SIGNAL('windowStateChanged()'), self.populateEditButton)
+            QObject.connect(w, SIGNAL('closed()'), self.parent.contentWidget.populateMonitoringButton)
             self.editWindows[fid] = w
 
         self.btn_edit.setIcon(QIcon(':/icons/icons/edit.png'))
@@ -189,6 +191,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.setupUi(self)
 
         self.objectionPath = []
+        self.monitoringOpen = False
 
         self.buttonBar = ParcelButtonBar(self, self.main, self.layer, parcel)
         self.contentWidget = ParcelInfoContentWidget(self, self.main, parcel)
@@ -199,6 +202,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
 
         QObject.connect(self.buttonBar.btn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showObjection)
         QObject.connect(self.buttonBar.btn_zoomto, SIGNAL('clicked(bool)'), self.zoomTo)
+        QObject.connect(self.buttonBar.btn_edit, SIGNAL('clicked(bool)'), self.contentWidget.populateMonitoringButton)
 
     def setLayer(self, layer):
         self.layer = layer
@@ -300,6 +304,7 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
         self.populateShowPhotos()
         self.populateArea()
         self.populateTabAdvies()
+        self.populateMonitoringButton()
 
     def populateAdvies(self):
         style = "* {"
@@ -352,6 +357,12 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
             self.lbv_oppervlakte.setText('%0.3f ha' % (self.feature.geometry().area()/10000.0))
         else:
             self.lbv_oppervlakte.clear()
+
+    def populateMonitoringButton(self):
+        if self.parent.monitoringOpen or len(self.parent.buttonBar.editWindows) > 0:
+            self.btn_monitoring.setEnabled(False)
+        else:
+            self.btn_monitoring.setEnabled(True)
 
     def populateShowPhotos(self):
         def showPhotos(enabled):
@@ -415,9 +426,20 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
         subprocess.Popen(cmd)
 
     def showMonitoring(self):
-        if self.feature:
-            m = MonitoringWindow(self.main, self.feature)
-            m.show()
+        def setMonitoringOpen(value):
+            self.parent.monitoringOpen = value
+
+        setMonitoringOpen(True)
+        self.parent.buttonBar.populateEditButton()
+        self.populateMonitoringButton()
+        QCoreApplication.processEvents()
+        self.btn_monitoring.repaint()
+
+        m = MonitoringWindow(self.main, self.feature, self.parent.layer)
+        QObject.connect(m, SIGNAL('closed()'), lambda: setMonitoringOpen(False))
+        QObject.connect(m, SIGNAL('closed()'), lambda: self.populateMonitoringButton())
+        QObject.connect(m, SIGNAL('closed()'), lambda: self.parent.buttonBar.populateEditButton())
+        m.show()
 
     def toggleGpsDms(self, checked):
         switch = {'true': 'false', 'false': 'true'}
