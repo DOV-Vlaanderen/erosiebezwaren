@@ -141,8 +141,11 @@ class PhotoDialog(QDialog, Ui_PhotoDialog):
     def loadPhotos(self):
         for p in os.listdir(self.photoPath):
             if self.filter(p) and p not in self.loadedPhotos:
-                self.verticalPhotoLayout.addWidget(Photo(os.path.join(self.photoPath, p)))
-                self.loadedPhotos.add(p)
+                try:
+                    self.verticalPhotoLayout.addWidget(Photo(os.path.join(self.photoPath, p)))
+                    self.loadedPhotos.add(p)
+                except IOError:
+                    continue
 
         self.buttonBox.button(QDialogButtonBox.Save).setEnabled(len(self.loadedPhotos)>0)
         if len(self.loadedPhotos) == 0:
