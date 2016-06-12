@@ -38,7 +38,7 @@
         <x>0</x>
         <y>0</y>
         <width>530</width>
-        <height>496</height>
+        <height>500</height>
        </rect>
       </property>
       <property name="minimumSize">
@@ -57,7 +57,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Retry|QDialogButtonBox::Save</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
      </property>
     </widget>
    </item>
