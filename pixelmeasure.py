@@ -146,7 +146,10 @@ class PixelMeasureAction(QAction):
     def stopMeasure(self):
         self.setChecked(False)
         if self.layer:
-            QgsMapLayerRegistry.instance().removeMapLayer(self.layer)
+            try:
+                QgsMapLayerRegistry.instance().removeMapLayer(self.layer)
+            except RuntimeError:
+                pass
             self.layer = None
 
     def deactivate(self):
