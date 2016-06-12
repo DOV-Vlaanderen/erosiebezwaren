@@ -119,7 +119,7 @@ class PixelisedVectorLayer(QgsVectorLayer):
 class PixelMeasureAction(QAction):
     def __init__(self, main, parent):
         self.main = main
-        QAction.__init__(self, QIcon(':/icons/icons/identify.png'), 'Bereken pixelwaarden', parent)
+        QAction.__init__(self, QIcon(':/icons/icons/pixelmeasure.png'), 'Bereken pixelwaarden', parent)
 
         self.mapCanvas = self.main.iface.mapCanvas()
         self.previousMapTool = None
