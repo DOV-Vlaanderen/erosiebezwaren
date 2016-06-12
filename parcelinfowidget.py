@@ -359,7 +359,7 @@ class ParcelInfoContentWidget(ElevatedFeatureWidget, Ui_ParcelInfoContentWidget)
             self.lbv_oppervlakte.clear()
 
     def populateMonitoringButton(self):
-        if self.parent.monitoringOpen or len(self.parent.buttonBar.editWindows) > 0:
+        if self.btn_monitoring.isVisible() and (self.parent.monitoringOpen or len(self.parent.buttonBar.editWindows) > 0):
             self.btn_monitoring.setEnabled(False)
         else:
             self.btn_monitoring.setEnabled(True)
