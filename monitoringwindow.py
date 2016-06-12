@@ -103,7 +103,7 @@ class MonitoringWindow(QMainWindow):
         self.monitoringWidget = MonitoringWidget(self, self.main, self.feature, self.layer)
         self.setCentralWidget(self.monitoringWidget)
 
-        self.setMinimumSize(800, 800)
+        self.setMinimumSize(800, 1000)
 
     def closeEvent(self, event):
         self.closed.emit()
