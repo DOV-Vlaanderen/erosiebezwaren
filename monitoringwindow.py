@@ -4,8 +4,9 @@ from PyQt4.QtGui import *
 from qgis.core import *
 
 from ui_monitoringwidget import Ui_MonitoringWidget
-from widgets.monitoringwidgets import BasisPakketWidget, BufferStrookHellingWidget
+from widgets.monitoringwidgets import BasisPakketWidget, BufferStrookHellingWidget, TeeltTechnischWidget
 from widgets.elevatedfeaturewidget import ElevatedFeatureWidget
+from widgets.valueinput import ValueComboBox, ValueTextEdit
 
 class MonitoringWidget(ElevatedFeatureWidget, Ui_MonitoringWidget):
     def __init__(self, parent, main, feature, layer):
@@ -18,13 +19,31 @@ class MonitoringWidget(ElevatedFeatureWidget, Ui_MonitoringWidget):
         QObject.connect(self.btn_save, SIGNAL('clicked()'), self.save)
         QObject.connect(self.btn_cancel, SIGNAL('clicked()'), self.stop)
 
+        self.lbv_header.setText('Bewerk monitoring voor perceel %s\n  van %s' % (self.feature.attribute('uniek_id'), self.feature.attribute('naam')))
+
         self.efw_basispakket = BasisPakketWidget(self)
+        self.efw_basispakket.setGeenMtrglEnabled(self.feature.attribute('landbouwer_aanwezig') == 1)
         self.lyt_basispakket.addWidget(self.efw_basispakket)
 
-        self.bufferStrookHellingWidget = BufferStrookHellingWidget(self)
-        self.lyt_bufferstrook.addWidget(self.bufferStrookHellingWidget)
+        self.efw_bufferstrook_helling = BufferStrookHellingWidget(self)
+        self.lyt_bufferstrook.addWidget(self.efw_bufferstrook_helling)
+
+        self.efw_bufferstrook_mtrgl = ValueComboBox(self)
+        self.efw_bufferstrook_mtrgl.initialValues = []
+        self.efw_bufferstrook_mtrgl.setValues([
+            'Standaardinvulling',
+            'Attest',
+            'Onvoldoende invulling',
+            'Geen maatregel',
+            'Geen info'
+        ])
+        self.lyt_bufferstrook.addWidget(self.efw_bufferstrook_mtrgl)
+
+        self.efw_teelttechnisch = TeeltTechnischWidget(self)
+        self.lyt_teelttechnisch.addWidget(self.efw_teelttechnisch)
 
         self.populate()
+        self.connectValidators()
 
     def save(self):
         if self.feature:
@@ -40,6 +59,36 @@ class MonitoringWidget(ElevatedFeatureWidget, Ui_MonitoringWidget):
         self.btn_cancel.repaint()
         self.parent.close()
 
+    def connectValidators(self):
+        QObject.connect(self.efw_basispakket, SIGNAL('valueChanged()'), self._validate)
+        QObject.connect(self.efw_bufferstrook_helling, SIGNAL('valueChanged()'), self._validate)
+        QObject.connect(self.efw_bufferstrook_mtrgl, SIGNAL('valueChanged()'), self._validate)
+        QObject.connect(self.efw_teelttechnisch, SIGNAL('valueChanged()'), self._validate)
+        self._validate()
+
+    def _validate(self, *args):
+        disabledOptions = set()
+
+        if 'voor_groen' not in self.efw_basispakket.getValue():
+            disabledOptions |= set(['directinzaai', 'strip-till'])
+
+        if 'voor_ploegen' in self.efw_basispakket.getValue():
+            disabledOptions |= set(['nietkerend', 'directinzaai', 'strip-till'])
+
+        self.efw_teelttechnisch.setDisabledOptions(disabledOptions)
+
+        self._checkSaveable()
+
+    def _checkSaveable(self, *args):
+        self.btn_save.setEnabled(self._isSaveable())
+
+    def _isSaveable(self):
+        return \
+            len(set([i.strip().split('_')[0] for i in self.efw_basispakket.getValue().split(';')])) == 2 and \
+            self.efw_bufferstrook_helling.getValue() != None and \
+            self.efw_bufferstrook_mtrgl.getValue() != None and \
+            self.efw_teelttechnisch.getValue() != ''
+
 class MonitoringWindow(QMainWindow):
     closed = pyqtSignal()
 
@@ -49,10 +98,12 @@ class MonitoringWindow(QMainWindow):
         self.feature = feature
         self.layer = layer
 
+        self.setWindowTitle('Bewerk monitoring %s' % self.feature.attribute('uniek_id'))
+
         self.monitoringWidget = MonitoringWidget(self, self.main, self.feature, self.layer)
         self.setCentralWidget(self.monitoringWidget)
 
-        self.setMinimumSize(1200, 1000)
+        self.setMinimumSize(800, 800)
 
     def closeEvent(self, event):
         self.closed.emit()
