@@ -43,7 +43,7 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
                     self.photoPath = photoPath
                     self.btn_showPhotos = QPushButton()
                     self.btn_showPhotos.setIcon(QIcon(":/icons/icons/photo.png"))
-                    self.btn_showPhotos.setIconSize(QSize(36, 36))
+                    self.btn_showPhotos.setIconSize(QSize(64, 64))
                     self.btn_showPhotos.setSizePolicy(QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum))
                     QObject.connect(self.btn_showPhotos, SIGNAL('clicked(bool)'), self.showPhotos)
                     self.buttonBarLayout.addWidget(self.btn_showPhotos)
@@ -72,7 +72,7 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
 
                 self.btn_bezwaarformulier = QPushButton()
                 self.btn_bezwaarformulier.setIcon(QIcon(":/icons/icons/pdf.png"))
-                self.btn_bezwaarformulier.setIconSize(QSize(36, 36))
+                self.btn_bezwaarformulier.setIconSize(QSize(64, 64))
                 self.btn_bezwaarformulier.setSizePolicy(QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum))
                 QObject.connect(self.btn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showObjectionForm)
                 self.buttonBarLayout.addWidget(self.btn_bezwaarformulier)
