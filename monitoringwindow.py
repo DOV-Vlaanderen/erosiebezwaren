@@ -66,7 +66,7 @@ class MonitoringWidget(ElevatedFeatureWidget, Ui_MonitoringWidget):
     def connectValidators(self):
         QObject.connect(self.efw_basispakket, SIGNAL('valueChanged()'), self._validate)
         QObject.connect(self.efw_bufferstrook_helling, SIGNAL('valueChanged()'), self._validate)
-        QObject.connect(self.efw_bufferstrook_mtrgl, SIGNAL('valueChanged()'), self._validate)
+        QObject.connect(self.efw_bufferstrook_mtrgl, SIGNAL('currentIndexChanged(int)'), self._validate)
         QObject.connect(self.efw_teelttechnisch, SIGNAL('valueChanged()'), self._validate)
         self._validate()
 
