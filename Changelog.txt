@@ -1,3 +1,9 @@
+erosiebezwaren (2.0.1)
+
+  * Gebruik erosieklasse van 2016 bij validatie advies.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Mon, 13 Jun 2016 18:26:20 +0200
+
 erosiebezwaren (2.0.0)
 
   * Aanpassing datamodel voor campagne 2016.
