@@ -25,9 +25,13 @@ class MonitoringWidget(ElevatedFeatureWidget, Ui_MonitoringWidget):
         self.efw_basispakket.setGeenMtrglEnabled(self.feature.attribute('landbouwer_aanwezig') == 1)
         self.lyt_basispakket.addWidget(self.efw_basispakket)
 
+        label = QLabel('Hellingtype', self)
+        self.lyt_bufferstrook.addWidget(label)
         self.efw_bufferstrook_helling = BufferStrookHellingWidget(self)
         self.lyt_bufferstrook.addWidget(self.efw_bufferstrook_helling)
 
+        label = QLabel('Maatregel', self)
+        self.lyt_bufferstrook.addWidget(label)
         self.efw_bufferstrook_mtrgl = ValueComboBox(self)
         self.efw_bufferstrook_mtrgl.initialValues = []
         self.efw_bufferstrook_mtrgl.setValues([
