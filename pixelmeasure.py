@@ -133,6 +133,9 @@ class PixelMeasureAction(QAction):
         QObject.connect(self, SIGNAL('triggered(bool)'), self.activate)
 
     def populateVisible(self):
+        if not self.rasterLayer:
+            self.rasterLayer = self.main.utils.getLayerByName('watererosie30')
+
         if self.rasterLayer and self.rasterLayerActive and \
             ((self.rasterLayer.hasScaleBasedVisibility() and \
             self.rasterLayer.minimumScale() <= self.mapCanvas.scale() < self.rasterLayer.maximumScale()) or \
