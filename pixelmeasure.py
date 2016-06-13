@@ -122,11 +122,28 @@ class PixelMeasureAction(QAction):
         QAction.__init__(self, QIcon(':/icons/icons/pixelmeasure.png'), 'Bereken pixelwaarden', parent)
 
         self.mapCanvas = self.main.iface.mapCanvas()
+        QObject.connect(self.mapCanvas, SIGNAL('extentsChanged()'), self.populateVisible)
+
+        self.rasterLayer = self.main.utils.getLayerByName('watererosie30')
+        self.rasterLayerActive = False
         self.previousMapTool = None
         self.layer = None
 
         self.setCheckable(True)
         QObject.connect(self, SIGNAL('triggered(bool)'), self.activate)
+
+    def populateVisible(self):
+        if self.rasterLayer and self.rasterLayerActive and \
+            ((self.rasterLayer.hasScaleBasedVisibility() and \
+            self.rasterLayer.minimumScale() <= self.mapCanvas.scale() < self.rasterLayer.maximumScale()) or \
+            (not self.rasterLayer.hasScaleBasedVisibility())):
+            self.setVisible(True)
+        else:
+            self.setVisible(False)
+
+    def setRasterLayerActive(self, active):
+        self.rasterLayerActive = active
+        self.populateVisible()
 
     def activate(self, checked):
         if checked:
@@ -135,8 +152,7 @@ class PixelMeasureAction(QAction):
             self.stopMeasure()
 
     def startMeasure(self):
-        rasterLayer = self.main.utils.getLayerByName('watererosie30')
-        layer = PixelisedVectorLayer(self.main, path='Polygon?crs=epsg:31370', baseName='Pixelberekening', providerLib='memory', rasterLayer=rasterLayer)
+        layer = PixelisedVectorLayer(self.main, path='Polygon?crs=epsg:31370', baseName='Pixelberekening', providerLib='memory', rasterLayer=self.rasterLayer)
         self.layer = QgsMapLayerRegistry.instance().addMapLayer(layer, False)
         QgsProject.instance().layerTreeRoot().insertLayer(0, layer)
         self.main.iface.setActiveLayer(self.layer)
@@ -154,4 +170,5 @@ class PixelMeasureAction(QAction):
 
     def deactivate(self):
         QObject.disconnect(self, SIGNAL('triggered(bool)'), self.startMeasure)
+        QObject.connect(self.mapCanvas, SIGNAL('extentsChanged()'), self.populateVisible)
         self.stopMeasure()

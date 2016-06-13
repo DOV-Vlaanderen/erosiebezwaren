@@ -65,9 +65,9 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         self.action.setText(mapView['label'])
 
         if mapView['label'] == 'Watererosie 30':
-            self.main.actions.pixelMeasureAction.setVisible(True)
+            self.main.actions.pixelMeasureAction.setRasterLayerActive(True)
         else:
-            self.main.actions.pixelMeasureAction.setVisible(False)
+            self.main.actions.pixelMeasureAction.setRasterLayerActive(False)
             self.main.actions.pixelMeasureAction.stopMeasure()
 
         self.accept()
