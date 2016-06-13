@@ -1,3 +1,13 @@
+erosiebezwaren (2.0.0)
+
+  * Aanpassing datamodel voor campagne 2016.
+  * Update advies popup, inclusief invoervalidatie.
+  * Adviezen 2015 toegankelijk via oude bezwaren.
+  * Monitoring erosiebestrijdingsmaatregelen toegevoegd.
+  * Berekenen gemiddelde pixelwaarde op basis van getekende invoer.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Mon, 13 Jun 2016 15:16:21 +0200
+
 erosiebezwaren (1.5.5)
 
   * Ondersteuning toegevoegd voor Camera app van Windows 10.
