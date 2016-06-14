@@ -14,7 +14,8 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
 
         self.visibleBase = set(['Overzichtskaart', 'percelenkaart_table', 'Topokaart'])
         self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2016 potentiele bodemerosie', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie',
-            '2013 potentiele bodemerosie', 'watererosie30', 'bewerkingserosie', 'dem_kul', 'dem_agiv', 'Overzichtskaart', 'percelenkaart_table', 'Topokaart', 'Bodemkaart'])
+            '2013 potentiele bodemerosie', 'watererosie30', 'bewerkingserosie', 'dem_kul', 'dem_agiv', 'Overzichtskaart', 'percelenkaart_table', 'Topokaart',
+            'Bodemkaart', 'Erosiebestrijdingswerken'])
         self.activeDem = None
 
         QObject.connect(self.btn_routekaart, SIGNAL('clicked(bool)'), self.toMapRoutekaart)
@@ -29,6 +30,7 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         QObject.connect(self.btn_dem_kul, SIGNAL('clicked(bool)'), self.toMapDEMKul)
         QObject.connect(self.btn_dem_agiv, SIGNAL('clicked(bool)'), self.toMapDEMAgiv)
         QObject.connect(self.btn_bodemkaart, SIGNAL('clicked(bool)'), self.toMapBodemkaart)
+        QObject.connect(self.btn_erosiebestrijding, SIGNAL('clicked(bool)'), self.toMapErosiebestrijding)
 
         self.populate()
 
@@ -164,6 +166,13 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
             'enabledLayers': (self.visibleBase - set(['Topokaart'])).union(['Bodemkaart']),
             'autoDisable': True,
             'label': 'Bodemkaart'
+        })
+
+    def toMapErosiebestrijding(self):
+        self.toMapView({
+            'enabledLayers': self.visibleBase.union(['Erosiebestrijdingswerken']),
+            'autoDisable': True,
+            'label': 'Erosiebestrijdingswerken'
         })
 
     def updateRasterColors(self):
