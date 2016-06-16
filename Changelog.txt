@@ -1,3 +1,10 @@
+erosiebezwaren (2.0.2)
+
+  * Kaartlaag 'Uitgevoerde gemeentelijke erosiebestrijdingswerken' toegevoegd.
+  * Kaartlaag 'Bewerkingserosie' verwijderd.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Thu, 16 Jun 2016 11:33:18 +0200
+
 erosiebezwaren (2.0.1)
 
   * Gebruik erosieklasse van 2016 bij validatie advies.
