@@ -298,26 +298,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="btn_bewerkingserosie">
-          <property name="text">
-           <string>Bewerkingserosie</string>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/icons/icons/map.png</normaloff>:/icons/icons/map.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextUnderIcon</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
          <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
