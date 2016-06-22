@@ -383,6 +383,9 @@
        <property name="title">
         <string>Erosie</string>
        </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
          <widget class="QToolButton" name="btn_erosiebestrijding">
