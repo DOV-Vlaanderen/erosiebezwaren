@@ -33,7 +33,8 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             'Petra Deproost',
             'Joost Salomez',
             'Liesbeth Vandekerckhove',
-            'Katrien Oorts'
+            'Katrien Oorts',
+            'Sabine Buyle'
         ])
 
         if not self.isObjection():
