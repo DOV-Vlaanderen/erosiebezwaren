@@ -1,3 +1,12 @@
+erosiebezwaren (2.0.3)
+
+  * Als er in de kaart van 2016 geen kleur gekend is voor het perceel (< 80%
+      overlap), moet nieuwe kleur selecteerbaar zijn door gebruiker indien advies
+      niet aanvaard is.
+  * Sabine toegevoegd als editor.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Thu, 30 Jun 2016 11:19:19 +0200
+
 erosiebezwaren (2.0.2)
 
   * Kaartlaag 'Uitgevoerde gemeentelijke erosiebestrijdingswerken' toegevoegd.
