@@ -1023,7 +1023,7 @@ font-weight: bold;
            <item>
             <widget class="QLabel" name="lb_veldcontrole_door">
              <property name="text">
-              <string>Veldcontrole door</string>
+              <string>Behandeld door</string>
              </property>
             </widget>
            </item>
