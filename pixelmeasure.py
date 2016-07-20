@@ -15,10 +15,12 @@ class RasterBlockWrapper(QObject):
         self.pixelArea = self.pixelSizeX*self.pixelSizeY
 
         self._buffer = max(self.pixelSizeX, self.pixelSizeY)
-        self.geomBbox.grow(self._buffer)
+        self.geomBbox = self.geomBbox.buffer(self._buffer)
 
         self.blockBbox = self._alignRectangleToGrid(self.geomBbox)
-        self.block = self.rasterLayer.dataProvider().block(self.band, self.blockBbox, self.blockBbox.width()/self.pixelSizeX, self.blockBbox.height()/self.pixelSizeY)
+        self.blockWidth = int(self.blockBbox.width()/self.pixelSizeX)
+        self.blockHeight = int(self.blockBbox.height()/self.pixelSizeY)
+        self.block = self.rasterLayer.dataProvider().block(self.band, self.blockBbox, self.blockWidth, self.blockHeight)
 
         self.newGeometry = None
         self.stats = {}
@@ -41,8 +43,8 @@ class RasterBlockWrapper(QObject):
     def _process(self):
         valSum = 0
         valCnt = 0
-        for r in range(self.block.height()):
-            for c in range(self.block.width()):
+        for r in range(self.blockHeight):
+            for c in range(self.blockWidth):
                 cellRect = QgsRectangle()
                 cellRect.setXMinimum(self.blockBbox.xMinimum()+(c*self.pixelSizeX))
                 cellRect.setYMinimum(self.blockBbox.yMaximum()-(r*self.pixelSizeY)-self.pixelSizeY)
@@ -166,7 +168,7 @@ class PixelMeasureAction(QAction):
         self.setChecked(False)
         if self.layer:
             try:
-                QgsMapLayerRegistry.instance().removeMapLayer(self.layer)
+                QgsMapLayerRegistry.instance().removeMapLayer(self.layer.id())
             except RuntimeError:
                 pass
             self.layer = None
