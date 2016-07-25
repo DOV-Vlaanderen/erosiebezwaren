@@ -1,3 +1,10 @@
+erosiebezwaren (2.0.4)
+
+  * Maak pixelberekening compatibel met QGis 2.8
+  * Vervang "veldcontrole door" door "behandeld door" in infopaneel.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Mon, 25 Jul 2016 10:32:27 +0200
+
 erosiebezwaren (2.0.3)
 
   * Als er in de kaart van 2016 geen kleur gekend is voor het perceel (< 80%
