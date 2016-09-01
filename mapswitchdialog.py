@@ -172,7 +172,8 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
             return
 
         currentExtent = self.main.iface.mapCanvas().extent()
-        bandStats = self.activeDem.dataProvider().bandStatistics(1, QgsRasterBandStats.Max | QgsRasterBandStats.Min, currentExtent, 1000)
+        bandStats = self.activeDem.dataProvider().bandStatistics(1, QgsRasterBandStats.Max | QgsRasterBandStats.Min,
+                                                                 currentExtent, 1000)
         vmax = bandStats.maximumValue
         vmin = bandStats.minimumValue
 
@@ -187,7 +188,8 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         colorRampShader.setColorRampItemList(colorList)
         colorRampShader.setColorRampType(QgsColorRampShader.INTERPOLATED)
         rasterShader.setRasterShaderFunction(colorRampShader)
-        pseudoColorRenderer = QgsSingleBandPseudoColorRenderer(self.activeDem.dataProvider(), self.activeDem.type(), rasterShader)
+        pseudoColorRenderer = QgsSingleBandPseudoColorRenderer(self.activeDem.dataProvider(), self.activeDem.type(),
+                                                               rasterShader)
         self.activeDem.setRenderer(pseudoColorRenderer)
         self.activeDem.triggerRepaint()
 
