@@ -20,7 +20,8 @@ class RasterBlockWrapper(QObject):
         self.blockBbox = self._alignRectangleToGrid(self.geomBbox)
         self.blockWidth = int(self.blockBbox.width()/self.pixelSizeX)
         self.blockHeight = int(self.blockBbox.height()/self.pixelSizeY)
-        self.block = self.rasterLayer.dataProvider().block(self.band, self.blockBbox, self.blockWidth, self.blockHeight)
+        self.block = self.rasterLayer.dataProvider().block(self.band, self.blockBbox, self.blockWidth,
+                                                           self.blockHeight)
 
         self.newGeometry = None
         self.stats = {}
@@ -30,8 +31,10 @@ class RasterBlockWrapper(QObject):
     def _alignRectangleToGrid(self, rect):
         rasterExtent = self.rasterLayer.extent()
         newRect = QgsRectangle()
-        newRect.setXMinimum(rasterExtent.xMinimum() + (round((rect.xMinimum()-(rasterExtent.xMinimum()))/self.pixelSizeX)*self.pixelSizeX))
-        newRect.setYMinimum(rasterExtent.yMinimum() + (round((rect.yMinimum()-rasterExtent.yMinimum())/self.pixelSizeY)*self.pixelSizeY))
+        newRect.setXMinimum(rasterExtent.xMinimum() + (round((rect.xMinimum()-(rasterExtent.xMinimum()))/
+                                                             self.pixelSizeX)*self.pixelSizeX))
+        newRect.setYMinimum(rasterExtent.yMinimum() + (round((rect.yMinimum()-rasterExtent.yMinimum())/
+                                                             self.pixelSizeY)*self.pixelSizeY))
         newRect.setXMaximum(newRect.xMinimum() + (int(rect.width()/self.pixelSizeX)*self.pixelSizeX))
         newRect.setYMaximum(newRect.yMinimum() + (int(rect.height()/self.pixelSizeY)*self.pixelSizeY))
         return newRect
@@ -157,7 +160,8 @@ class PixelMeasureAction(QAction):
             self.stopMeasure()
 
     def startMeasure(self):
-        layer = PixelisedVectorLayer(self.main, path='Polygon?crs=epsg:31370', baseName='Pixelberekening', providerLib='memory', rasterLayer=self.rasterLayer)
+        layer = PixelisedVectorLayer(self.main, path='Polygon?crs=epsg:31370', baseName='Pixelberekening',
+                                     providerLib='memory', rasterLayer=self.rasterLayer)
         self.layer = QgsMapLayerRegistry.instance().addMapLayer(layer, False)
         QgsProject.instance().layerTreeRoot().insertLayer(0, layer)
         self.main.iface.setActiveLayer(self.layer)
