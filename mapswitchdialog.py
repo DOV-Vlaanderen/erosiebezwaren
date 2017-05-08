@@ -13,17 +13,18 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
         self.setupUi(self)
 
         self.visibleBase = set(['Overzichtskaart', 'percelenkaart_table', 'Topokaart'])
-        self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2016 potentiele bodemerosie', '2015 potentiele bodemerosie', '2014 potentiele bodemerosie',
-            '2013 potentiele bodemerosie', 'watererosie30', 'dem_kul', 'dem_agiv', 'Overzichtskaart', 'percelenkaart_table', 'Topokaart',
-            'Bodemkaart', 'Erosiebestrijdingswerken'])
+        self.allLayers = set(['Orthofoto', 'Afstromingskaart', '2017 potentiele bodemerosie',
+                              '2016 potentiele bodemerosie', '2015 potentiele bodemerosie',
+                              '2014 potentiele bodemerosie', 'watererosie30', 'dem_kul', 'dem_agiv', 'Overzichtskaart',
+                              'percelenkaart_table', 'Topokaart', 'Bodemkaart', 'Erosiebestrijdingswerken'])
         self.activeDem = None
 
         QObject.connect(self.btn_routekaart, SIGNAL('clicked(bool)'), self.toMapRoutekaart)
         QObject.connect(self.btn_orthofoto, SIGNAL('clicked(bool)'), self.toMapOrthofoto)
-        QObject.connect(self.btn_erosie2013, SIGNAL('clicked(bool)'), self.toMapErosie2013)
         QObject.connect(self.btn_erosie2014, SIGNAL('clicked(bool)'), self.toMapErosie2014)
         QObject.connect(self.btn_erosie2015, SIGNAL('clicked(bool)'), self.toMapErosie2015)
         QObject.connect(self.btn_erosie2016, SIGNAL('clicked(bool)'), self.toMapErosie2016)
+        QObject.connect(self.btn_erosie2017, SIGNAL('clicked(bool)'), self.toMapErosie2017)
         QObject.connect(self.btn_watererosie_30, SIGNAL('clicked(bool)'), self.toMapWatererosie30)
         QObject.connect(self.btn_afstromingskaart, SIGNAL('clicked(bool)'), self.toMapAfstromingskaart)
         QObject.connect(self.btn_dem_kul, SIGNAL('clicked(bool)'), self.toMapDEMKul)
@@ -87,13 +88,6 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
             'label': 'Orthofoto'
         })
 
-    def toMapErosie2013(self):
-        self.toMapView({
-            'enabledLayers': self.visibleBase.union(['2013 potentiele bodemerosie']),
-            'autoDisable': True,
-            'label': 'Erosiekaart 2013'
-        })
-
     def toMapErosie2014(self):
         self.toMapView({
             'enabledLayers': self.visibleBase.union(['2014 potentiele bodemerosie']),
@@ -113,6 +107,13 @@ class MapSwitchDialog(QDialog, Ui_MapSwitchDialog):
             'enabledLayers': self.visibleBase.union(['2016 potentiele bodemerosie']),
             'autoDisable': True,
             'label': 'Erosiekaart 2016'
+        })
+
+    def toMapErosie2017(self):
+        self.toMapView({
+            'enabledLayers': self.visibleBase.union(['2017 potentiele bodemerosie']),
+            'autoDisable': True,
+            'label': 'Erosiekaart 2017'
         })
 
     def toMapWatererosie30(self):

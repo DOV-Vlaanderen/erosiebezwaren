@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>744</width>
+    <width>708</width>
     <height>616</height>
    </rect>
   </property>
@@ -108,6 +108,26 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
+         <widget class="QToolButton" name="btn_erosie2017">
+          <property name="text">
+           <string>2017</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/icons/icons/map.png</normaloff>:/icons/icons/map.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextUnderIcon</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QToolButton" name="btn_erosie2016">
           <property name="text">
            <string>2016</string>
@@ -151,26 +171,6 @@
          <widget class="QToolButton" name="btn_erosie2014">
           <property name="text">
            <string>2014</string>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/icons/icons/map.png</normaloff>:/icons/icons/map.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="toolButtonStyle">
-           <enum>Qt::ToolButtonTextUnderIcon</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="btn_erosie2013">
-          <property name="text">
-           <string>2013</string>
           </property>
           <property name="icon">
            <iconset resource="resources.qrc">
