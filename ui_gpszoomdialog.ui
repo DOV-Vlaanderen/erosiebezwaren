@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>280</width>
-    <height>203</height>
+    <width>519</width>
+    <height>264</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,6 +67,13 @@
       </layout>
      </item>
      <item>
+      <widget class="QLineEdit" name="led_latDecDeg">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Lengteligging</string>
@@ -81,10 +88,10 @@
           <string> °</string>
          </property>
          <property name="minimum">
-          <number>-90</number>
+          <number>-180</number>
          </property>
          <property name="maximum">
-          <number>90</number>
+          <number>180</number>
          </property>
         </widget>
        </item>
@@ -112,6 +119,9 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="led_lonDecDeg"/>
      </item>
     </layout>
    </item>
