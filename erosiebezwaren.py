@@ -31,7 +31,7 @@ class Erosiebezwaren(object):
         self.iface.addPluginToMenu('DOV - Erosiebezwaren', self.action)
 
         self.utils = utils.Utils(self)
-        self.selectionManager = SelectionManager(self, self.settings.getValue('layers/tempSelection'))
+        self.selectionManagerPolygons = SelectionManager(self, self.settings.getValue('layers/tempSelectionPolygons'))
         self.annotationManager = AnnotationManager(self)
         self.actions = actions.Actions(self, self.iface.mainWindow(), self.toolbar)
 
@@ -43,7 +43,7 @@ class Erosiebezwaren(object):
         self.iface.removePluginMenu('DOV - Erosiebezwaren', self.action)
 
         # FIXME: commented out to prevent segfault on QGis exit..?
-        #self.selectionManager.deactivate()
+        #self.selectionManagerPolygons.deactivate()
         #self.annotationManager.deactivate()
         self.actions.deactivate()
         self.iface.removeDockWidget(self.parcelInfoDock)
@@ -52,5 +52,5 @@ class Erosiebezwaren(object):
         del(self.toolbar)
         del(self.parcelInfoWidget)
         del(self.parcelInfoDock)
-        del(self.selectionManager)
+        del(self.selectionManagerPolygons)
         del(self.annotationManager)

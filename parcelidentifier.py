@@ -12,7 +12,7 @@ class MapToolParcelIdentifier(QgsMapToolIdentify):
         self.previousActiveLayer = None
 
     def activate(self):
-        self.main.selectionManager.activate()
+        self.main.selectionManagerPolygons.activate()
         QgsMapToolIdentify.activate(self)
 
     def canvasReleaseEvent(self, mouseEvent):

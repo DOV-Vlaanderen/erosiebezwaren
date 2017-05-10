@@ -211,13 +211,13 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         ElevatedFeatureWidget.populate(self)
         if self.feature:
             self.showInfo()
-            self.main.selectionManager.clear()
+            self.main.selectionManagerPolygons.clear()
             if self.feature.attribute('advies_behandeld'):
                 s = SpatialiteIterator(self.layer)
                 fts = s.queryExpression("producentnr_zo = '%s' and datum_bezwaar is not null" % self.feature.attribute('producentnr_zo'), attributes=[])
                 for f in fts:
-                    self.main.selectionManager.select(f, mode=1, toggleRendering=False)
-            self.main.selectionManager.select(self.feature, mode=0, toggleRendering=True)
+                    self.main.selectionManagerPolygons.select(f, mode=1, toggleRendering=False)
+            self.main.selectionManagerPolygons.select(self.feature, mode=0, toggleRendering=True)
         else:
             self.clear()
 
@@ -231,7 +231,7 @@ class ParcelInfoWidget(ElevatedFeatureWidget, Ui_ParcelInfoWidget):
         self.lb_geenselectie.show()
         self.buttonBar.hide()
         self.contentWidget.hide()
-        self.main.selectionManager.clear()
+        self.main.selectionManagerPolygons.clear()
 
     def showInfo(self):
         self.buttonBar.show()

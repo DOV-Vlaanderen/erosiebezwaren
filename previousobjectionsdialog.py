@@ -72,12 +72,12 @@ class PreviousObjectionsWidget(QWidget):
             self.layout.addWidget(btnDetails, row, 4)
 
     def highlightObjection(self, feature):
-        self.main.selectionManager.clearWithMode(mode=2, toggleRendering=False)
-        self.main.selectionManager.select(feature, mode=2)
+        self.main.selectionManagerPolygons.clearWithMode(mode=2, toggleRendering=False)
+        self.main.selectionManagerPolygons.select(feature, mode=2)
 
     def showInfo(self, feature):
         def clearHighlightedObjections():
-            self.main.selectionManager.clearWithMode(mode=2)
+            self.main.selectionManagerPolygons.clearWithMode(mode=2)
 
         self.highlightObjection(feature)
 
@@ -101,4 +101,4 @@ class PreviousObjectionsDialog(QDialog, Ui_PreviousObjectionsDialog):
         self.scrollAreaLayout.insertWidget(0, PreviousObjectionsWidget(self.uniek_id, self.scrollAreaWidgetContents, self))
 
     def exit(self):
-        self.main.selectionManager.clearWithMode(mode=2)
+        self.main.selectionManagerPolygons.clearWithMode(mode=2)

@@ -50,7 +50,7 @@ class ParcelListWidget(QWidget):
     def addParcel(self, parcel):
         row = self.layout.rowCount()
         self.parcelList.append(parcel)
-        self.main.selectionManager.select(parcel, mode=1)
+        self.main.selectionManagerPolygons.select(parcel, mode=1)
 
         btn = QPushButton(str(parcel.attribute('perceelsnr_va_2016')), self)
         btn.setSizePolicy(self.horMaxSizePolicy)
@@ -74,7 +74,7 @@ class ParcelListDialog(QDialog, Ui_ParcelListDialog):
     def __init__(self, parcelInfoWidget):
         self.parcelInfoWidget = parcelInfoWidget
         self.main = self.parcelInfoWidget.main
-        self.main.selectionManager.activate()
+        self.main.selectionManagerPolygons.activate()
         QDialog.__init__(self, self.main.iface.mainWindow())
         self.setupUi(self)
 
@@ -95,4 +95,4 @@ class ParcelListDialog(QDialog, Ui_ParcelListDialog):
 
     def __clearSelection(self):
         if not self.parcelInfoWidget.feature:
-            self.main.selectionManager.clear()
+            self.main.selectionManagerPolygons.clear()
