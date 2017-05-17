@@ -9,11 +9,12 @@ import subprocess
 from ui_previousobjectioninfodialog import Ui_PreviousObjectionInfoDialog
 
 class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
-    def __init__(self, parent, main, feature):
+    def __init__(self, parent, main, feature, jaar):
         from parcelinfowidget import ParcelInfoContentWidget
         QDialog.__init__(self, parent)
         self.main = main
         self.feature = feature
+        self.jaar = jaar
         self.setupUi(self)
 
         contentWidget = ParcelInfoContentWidget(self, self.main, self.feature)
@@ -37,7 +38,8 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
             # and replace all of them afterwards with backward slashes.
             fid = self.feature.attribute('uniek_id')
             if fid:
-                photoPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'fotos_2015', str(fid)])
+                photoPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'fotos_%i' % self.jaar,
+                                      str(fid)])
                 photoPath = photoPath.replace('/', '\\')
                 if os.path.exists(photoPath) and len(os.listdir(photoPath)) > 0:
                     self.photoPath = photoPath
@@ -56,7 +58,8 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
             except KeyError:
                 return
 
-            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'bezwaren_2015', str(self.feature.attribute('producentnr'))])
+            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'bezwaren_%i' % jaar,
+                                      str(self.feature.attribute('producentnr'))])
             objectionPath = objectionPath.replace('/', '\\')
             self.objectionPath = []
             if os.path.exists(objectionPath):

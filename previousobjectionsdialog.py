@@ -65,7 +65,7 @@ class PreviousObjectionsWidget(QWidget):
         lb3.setText(feature.attribute('na'))
         self.layout.addWidget(lb3, row, 3)
 
-        if feature.attribute('jaar') == 2015:
+        if feature.attribute('jaar') >= 2015:
             btnDetails = QPushButton('info', self)
             QObject.connect(btnDetails, SIGNAL('clicked(bool)'), lambda: self.showInfo(feature))
             btnDetails.setSizePolicy(self.horMaxSizePolicy)
@@ -81,10 +81,10 @@ class PreviousObjectionsWidget(QWidget):
 
         self.highlightObjection(feature)
 
-        s = SpatialiteIterator(self.main.utils.getLayerByName('bezwaren_2015'))
+        s = SpatialiteIterator(self.main.utils.getLayerByName('bezwaren_%i' % feature.attribute('jaar')))
         oldFt = s.queryExpression("uniek_id = '%s'" % feature.attribute('oud_bezwaar_id'))[0]
 
-        d = PreviousObjectionInfoDialog(self.parent, self.main, oldFt)
+        d = PreviousObjectionInfoDialog(self.parent, self.main, oldFt, feature.attribute('jaar'))
         QObject.connect(d, SIGNAL('finished(int)'), clearHighlightedObjections)
         d.show()
 
