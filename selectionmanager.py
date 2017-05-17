@@ -46,18 +46,21 @@ class SelectionManager(object):
         if toggleRendering:
             self.main.iface.mapCanvas().setRenderFlag(True)
 
-    def select(self, feature, mode=0, label="", toggleRendering=True):
+    def selectGeometry(self, geometry, mode=0, label="", toggleRendering=True):
         if not self.__getLayer():
             return
         f = QgsFeature()
         f.fields().append(QgsField('mode', QVariant.Int, 'int', 1, 0))
         f.fields().append(QgsField('label', QVariant.String, 'string', 1, 0))
-        f.setGeometry(feature.geometry())
+        f.setGeometry(geometry)
         f.setAttributes([mode, label])
         self.main.iface.mapCanvas().setRenderFlag(False)
         self.layer.addFeature(f)
         if toggleRendering:
             self.main.iface.mapCanvas().setRenderFlag(True)
+
+    def select(self, feature, mode=0, label="", toggleRendering=True):
+        self.selectGeometry(feature.geometry())
 
     def clearWithMode(self, mode, toggleRendering=True):
         if not self.__getLayer():

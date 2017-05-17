@@ -28,6 +28,8 @@ class GpsZoomDialog(QDialog, Ui_GpsZoomDialog):
         QDialog.__init__(self, self.main.iface.mainWindow())
         self.setupUi(self)
 
+        self.main.selectionManagerPoints.activate()
+
         self.led_latDecDeg.setValidator(RoundingDoubleValidator(self.led_latDecDeg, -90.0, 90.0, 10))
         self.led_lonDecDeg.setValidator(RoundingDoubleValidator(self.led_lonDecDeg, -180.0, 180.0, 10))
 
@@ -87,6 +89,10 @@ class GpsZoomDialog(QDialog, Ui_GpsZoomDialog):
             self.sb_lonSec.setValue(lonSec)
         if not disable == 'deg':
             self.led_lonDecDeg.setText('%f' % self.point.x())
+
+        self.main.selectionManagerPoints.clearWithMode(0)
+        p = self.transform_4326_to_31370.transform(self.point)
+        self.main.selectionManagerPoints.selectGeometry(QgsGeometry.fromPoint(p))
 
         self.connectChangedSignals()
 

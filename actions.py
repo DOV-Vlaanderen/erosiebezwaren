@@ -21,6 +21,8 @@ class Actions(object):
         self.parent = parent
         self.toolbar = toolbar
 
+        self.gpsDialog = None
+
         self.addAllActionsToToolbar()
 
     def showKeyboard(self):
@@ -36,9 +38,14 @@ class Actions(object):
         d = FarmerSearchDialog(self.main)
         d.show()
 
-    def zoomToGps(self):
-        d = GpsZoomDialog(self.main)
-        d.show()
+    def zoomToGps(self, checked):
+        if checked:
+            self.gpsDialog = GpsZoomDialog(self.main)
+            self.gpsDialog.show()
+        else:
+            if self.gpsDialog:
+                self.gpsDialog.hide()
+            self.main.selectionManagerPoints.clearWithMode(0)
 
     def addAllActionsToToolbar(self):
         exitAction = QAction(QIcon(':/icons/icons/exit.png'), 'Applicatie afsluiten', self.parent)
@@ -67,6 +74,7 @@ class Actions(object):
         self.toolbar.addAction(zoomOutAction)
 
         gpsAction = QAction(QIcon(':/icons/icons/zoomgps.png'), u"Zoom naar GPS coördinaten", self.parent)
+        gpsAction.setCheckable(True)
         QObject.connect(gpsAction, SIGNAL('triggered(bool)'), self.zoomToGps)
         self.toolbar.addAction(gpsAction)
 

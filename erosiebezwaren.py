@@ -32,6 +32,7 @@ class Erosiebezwaren(object):
 
         self.utils = utils.Utils(self)
         self.selectionManagerPolygons = SelectionManager(self, self.settings.getValue('layers/tempSelectionPolygons'))
+        self.selectionManagerPoints = SelectionManager(self, self.settings.getValue('layers/tempSelectionPoints'))
         self.annotationManager = AnnotationManager(self)
         self.actions = actions.Actions(self, self.iface.mainWindow(), self.toolbar)
 
@@ -44,6 +45,7 @@ class Erosiebezwaren(object):
 
         # FIXME: commented out to prevent segfault on QGis exit..?
         #self.selectionManagerPolygons.deactivate()
+        #self.selectionManagerPoints.deactivate()
         #self.annotationManager.deactivate()
         self.actions.deactivate()
         self.iface.removeDockWidget(self.parcelInfoDock)
@@ -53,4 +55,5 @@ class Erosiebezwaren(object):
         del(self.parcelInfoWidget)
         del(self.parcelInfoDock)
         del(self.selectionManagerPolygons)
+        del(self.selectionManagerPoints)
         del(self.annotationManager)
