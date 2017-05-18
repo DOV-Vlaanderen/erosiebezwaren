@@ -58,7 +58,7 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
             except KeyError:
                 return
 
-            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'bezwaren_%i' % jaar,
+            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'bezwaren_%i' % self.jaar,
                                       str(self.feature.attribute('producentnr'))])
             objectionPath = objectionPath.replace('/', '\\')
             self.objectionPath = []
