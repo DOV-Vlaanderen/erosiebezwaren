@@ -90,8 +90,8 @@ class GpsZoomDialog(QDialog, Ui_GpsZoomDialog):
         if not disable == 'deg':
             self.led_lonDecDeg.setText('%f' % self.point.x())
 
-        self.main.selectionManagerPoints.clearWithMode(0)
         p = self.transform_4326_to_31370.transform(self.point)
+        self.main.selectionManagerPoints.clearWithMode(0, toggleRendering=False)
         self.main.selectionManagerPoints.selectGeometry(QgsGeometry.fromPoint(p))
 
         self.connectChangedSignals()
