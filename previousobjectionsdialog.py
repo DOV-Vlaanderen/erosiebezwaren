@@ -42,7 +42,13 @@ class PreviousObjectionsWidget(QWidget):
         for i in self.previousObjectionsLayer.getFeatures(QgsFeatureRequest(QgsExpression(expr))):
             objectionList.append(i)
 
-        for i in sorted(objectionList, key = lambda x: int(x.attribute('jaar'))):
+        filteredObjectionList = []
+        for i in objectionList:
+            perceel_2017 = i.attribute('perceel_2017').split(',')
+            if self.uniek_id in perceel_2017:
+                filteredObjectionList.append(i)
+
+        for i in sorted(filteredObjectionList, key = lambda x: int(x.attribute('jaar'))):
             self.addObjection(i)
 
     def addObjection(self, feature):
