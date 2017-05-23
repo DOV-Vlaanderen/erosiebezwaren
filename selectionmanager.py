@@ -60,7 +60,7 @@ class SelectionManager(object):
             self.main.iface.mapCanvas().setRenderFlag(True)
 
     def select(self, feature, mode=0, label="", toggleRendering=True):
-        self.selectGeometry(feature.geometry())
+        self.selectGeometry(feature.geometry(), mode=mode, label=label, toggleRendering=toggleRendering)
 
     def clearWithMode(self, mode, toggleRendering=True):
         if not self.__getLayer():
