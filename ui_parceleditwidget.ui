@@ -489,14 +489,14 @@ font-weight: bold;
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lb_perceelsnr_va2016">
+             <widget class="QLabel" name="lb_perceelsnr_va2017">
               <property name="text">
-               <string>Perceelsnummer VA2016</string>
+               <string>Perceelsnummer VA2017</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="ValueLabel" name="efw2_perceelsnr_va_2016">
+             <widget class="ValueLabel" name="efw2_perceelsnr_va_2017">
               <property name="styleSheet">
                <string notr="true">* { font-style: italic; }</string>
               </property>
@@ -507,7 +507,7 @@ font-weight: bold;
                <number>20</number>
               </property>
               <property name="buddy">
-               <cstring>lb_perceelsnr_va2016</cstring>
+               <cstring>lb_perceelsnr_va2017</cstring>
               </property>
              </widget>
             </item>
@@ -567,6 +567,25 @@ font-weight: bold;
                        <number>0</number>
                       </property>
                       <item>
+                       <widget class="SensitivityColorLabel" name="efw_kleur_2017">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+                        </property>
+                        <property name="text">
+                         <string>2017</string>
+                        </property>
+                        <property name="margin">
+                         <number>4</number>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
                        <widget class="SensitivityColorLabel" name="efw_kleur_2016">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -623,25 +642,6 @@ font-weight: bold;
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="SensitivityColorLabel" name="efw_kleur_2013">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
-                        </property>
-                        <property name="text">
-                         <string>2013</string>
-                        </property>
-                        <property name="margin">
-                         <number>4</number>
-                        </property>
-                       </widget>
-                      </item>
                      </layout>
                     </item>
                     <item>
@@ -653,6 +653,25 @@ font-weight: bold;
                     </item>
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_9">
+                      <item>
+                       <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2017">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+                        </property>
+                        <property name="text">
+                         <string>2017</string>
+                        </property>
+                        <property name="margin">
+                         <number>4</number>
+                        </property>
+                       </widget>
+                      </item>
                       <item>
                        <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2016">
                         <property name="sizePolicy">
@@ -720,20 +739,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueLabel" name="efw_watererosie_0_2015">
-                      <property name="styleSheet">
-                       <string notr="true">* { font-style: italic;}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="indent">
-                       <number>20</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="ValueLabel" name="efw_watererosie_0_2016">
+                     <widget class="ValueLabel" name="efw_watererosie_0_2017">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -753,20 +759,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueLabel" name="efw_watererosie_30_2015">
-                      <property name="styleSheet">
-                       <string notr="true">* { font-style: italic;}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="indent">
-                       <number>20</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="ValueLabel" name="efw_watererosie_30_2016">
+                     <widget class="ValueLabel" name="efw_watererosie_30_2017">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -786,23 +779,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueLabel" name="efw_bewerkingserosie_2015">
-                      <property name="styleSheet">
-                       <string notr="true">* { font-style: italic;}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="indent">
-                       <number>20</number>
-                      </property>
-                      <property name="buddy">
-                       <cstring></cstring>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="ValueLabel" name="efw_bewerkingserosie_2016">
+                     <widget class="ValueLabel" name="efw_bewerkingserosie_2017">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -822,20 +799,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueLabel" name="efw_totale_erosie_2015">
-                      <property name="styleSheet">
-                       <string notr="true">* { font-style: italic;}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="indent">
-                       <number>20</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="ValueLabel" name="efw_totale_erosie_2016">
+                     <widget class="ValueLabel" name="efw_totale_erosie_2017">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -1440,7 +1404,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueMappedLabel" name="efw_gesplitst_perceel">
+                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2016_met_2017">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -1463,7 +1427,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueMappedLabel" name="efw_samengevoegd_perceel">
+                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2017_met_2016">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -1602,12 +1566,12 @@ font-weight: bold;
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
   <customwidget>
-   <class>ValueMappedLabel</class>
+   <class>InvertedVisibilityBooleanLabel</class>
    <extends>QLabel</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
   <customwidget>
-   <class>InvertedVisibilityBooleanLabel</class>
+   <class>SplitMergedValueLabel</class>
    <extends>QLabel</extends>
    <header>Erosiebezwaren/widgets/valuelabel.h</header>
   </customwidget>
