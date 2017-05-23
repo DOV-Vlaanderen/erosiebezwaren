@@ -1,3 +1,12 @@
+erosiebezwaren (3.0.0)
+
+  * Aanpassing datamodel voor campagne 2017.
+  * Zoom naar GPS ook in decimale graden.
+  * Toon locatie van GPS coördinaten op kaart.
+  * Fix bug waarbij teveel oude bezwaren werden weergegeven voor een perceel.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Tue, 23 May 2017 11:35:15 +0200
+
 erosiebezwaren (2.0.4)
 
   * Maak pixelberekening compatibel met QGis 2.8
