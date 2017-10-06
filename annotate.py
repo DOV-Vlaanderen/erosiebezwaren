@@ -1,4 +1,5 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+"""Module containing the AnnotationManager class."""
 
 #  DOV Erosiebezwaren, QGis plugin to assess field erosion on tablets
 #  Copyright (C) 2015-2017  Roel Huybrechts
@@ -17,24 +18,50 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
+import PyQt4.QtCore as QtCore
+import PyQt4.QtGui as QtGui
+
 
 class AnnotationManager(object):
+    """Class defining the annotation actions and their behaviour.
+
+    Annotations include drawing lines and polygons in their respective layers
+    and adding a comment in the relevant attribute field.
+    """
+
     def __init__(self, main):
+        """Initialisation.
+
+        Initialise the two actions and define their callback functions.
+
+        Parameters
+        ----------
+        main : erosiebezwaren.Erosiebezwaren
+            Instance of main class.
+
+        """
         def drawArrow(start):
             if start:
                 if self.currentlyEditing:
-                    QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
+                    QtCore.QObject.disconnect(
+                        self.main.iface.mapCanvas(),
+                        QtCore.SIGNAL('mapToolSet(QgsMapTool*)'),
+                        self.mapToolChanged)
                     self.main.utils.stopEditInLayer(self.currentlyEditing[0])
                     self.currentlyEditing[1].setChecked(False)
-                self.currentlyEditing = (self.main.settings.getValue('layers/pijlen'), self.annotateArrow)
-                self.main.utils.editInLayer(self.main.settings.getValue('layers/pijlen'))
-                QObject.connect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
+                self.currentlyEditing = (self.main.settings.getValue(
+                    'layers/pijlen'), self.annotateArrow)
+                self.main.utils.editInLayer(self.main.settings.getValue(
+                    'layers/pijlen'))
+                QtCore.QObject.connect(
+                    self.main.iface.mapCanvas(),
+                    QtCore.SIGNAL('mapToolSet(QgsMapTool*)'),
+                    self.mapToolChanged)
             else:
-                QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
+                QtCore.QObject.disconnect(
+                    self.main.iface.mapCanvas(),
+                    QtCore.SIGNAL('mapToolSet(QgsMapTool*)'),
+                    self.mapToolChanged)
                 if self.currentlyEditing:
                     self.main.utils.stopEditInLayer(self.currentlyEditing[0])
                 self.currentlyEditing = None
@@ -42,14 +69,25 @@ class AnnotationManager(object):
         def drawPolygon(start):
             if start:
                 if self.currentlyEditing:
-                    QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
+                    QtCore.QObject.disconnect(
+                        self.main.iface.mapCanvas(),
+                        QtCore.SIGNAL('mapToolSet(QgsMapTool*)'),
+                        self.mapToolChanged)
                     self.main.utils.stopEditInLayer(self.currentlyEditing[0])
                     self.currentlyEditing[1].setChecked(False)
-                self.currentlyEditing = (self.main.settings.getValue('layers/polygonen'), self.annotatePolygon)
-                self.main.utils.editInLayer(self.main.settings.getValue('layers/polygonen'))
-                QObject.connect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
+                self.currentlyEditing = (self.main.settings.getValue(
+                    'layers/polygonen'), self.annotatePolygon)
+                self.main.utils.editInLayer(self.main.settings.getValue(
+                    'layers/polygonen'))
+                QtCore.QObject.connect(
+                    self.main.iface.mapCanvas(),
+                    QtCore.SIGNAL('mapToolSet(QgsMapTool*)'),
+                    self.mapToolChanged)
             else:
-                QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
+                QtCore.QObject.disconnect(
+                    self.main.iface.mapCanvas(),
+                    QtCore.SIGNAL('mapToolSet(QgsMapTool*)'),
+                    self.mapToolChanged)
                 if self.currentlyEditing:
                     self.main.utils.stopEditInLayer(self.currentlyEditing[0])
                 self.currentlyEditing = None
@@ -57,24 +95,52 @@ class AnnotationManager(object):
         self.main = main
         self.currentlyEditing = None
 
-        self.annotateArrow = QAction(QIcon(':/icons/icons/pijlen.png'), 'Teken een pijl', self.main.iface)
+        self.annotateArrow = QtGui.QAction(QtGui.QIcon(
+            ':/icons/icons/pijlen.png'), 'Teken een pijl', self.main.iface)
         self.annotateArrow.setCheckable(True)
-        QObject.connect(self.annotateArrow, SIGNAL('triggered(bool)'),  drawArrow)
+        QtCore.QObject.connect(self.annotateArrow,
+                               QtCore.SIGNAL('triggered(bool)'), drawArrow)
 
-        self.annotatePolygon = QAction(QIcon(':/icons/icons/polygonen.png'), 'Teken een polygoon', self.main.iface)
+        self.annotatePolygon = QtGui.QAction(
+            QtGui.QIcon(':/icons/icons/polygonen.png'), 'Teken een polygoon',
+            self.main.iface)
         self.annotatePolygon.setCheckable(True)
-        QObject.connect(self.annotatePolygon, SIGNAL('triggered(bool)'), drawPolygon)
+        QtCore.QObject.connect(self.annotatePolygon,
+                               QtCore.SIGNAL('triggered(bool)'), drawPolygon)
 
     def getActions(self):
+        """Return the two annotation actions, to add them to the toolbar.
+
+        Returns
+        -------
+        (drawArrow, drawPolygon) : tuple
+            Tuple containing pointers to the actions to draw an arrow and
+            draw a polygon, respectively.
+
+        """
         return (self.annotateArrow, self.annotatePolygon)
 
-    def mapToolChanged(self, mt):
-        QObject.disconnect(self.main.iface.mapCanvas(), SIGNAL('mapToolSet(QgsMapTool*)'), self.mapToolChanged)
+    def mapToolChanged(self, mt=None):
+        """Stop editing if the user changes the mapTool.
+
+        Listener for the `mapToolSet` signal.
+
+        Parameters
+        ----------
+        mt : QGisGui.QgsMapTool, optional
+            Current mapTool.
+
+        """
+        QtCore.QObject.disconnect(self.main.iface.mapCanvas(),
+                                  QtCore.SIGNAL('mapToolSet(QgsMapTool*)'),
+                                  self.mapToolChanged)
         if self.currentlyEditing:
             self.main.utils.stopEditInLayer(self.currentlyEditing[0])
             self.currentlyEditing[1].setChecked(False)
             self.currentlyEditing = None
 
     def deactivate(self):
+        """Stop editing if currently in edit mode."""
         if self.currentlyEditing:
-            self.main.utils.stopEditInLayer(self.currentlyEditing[0]) # triggers mapToolChanged
+            # triggers mapToolChanged
+            self.main.utils.stopEditInLayer(self.currentlyEditing[0])

@@ -1,4 +1,5 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+"""Module containing the Utils class."""
 
 #  DOV Erosiebezwaren, QGis plugin to assess field erosion on tablets
 #  Copyright (C) 2015-2017  Roel Huybrechts
@@ -17,22 +18,53 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from qgis.gui import *
 
 class Utils(object):
+    """General utility methods used in the application."""
+
     def __init__(self, main):
+        """Initialisation.
+
+        Parameters
+        ----------
+        main : erosiebezwaren.Erosiebezwaren
+            Instance of main class.
+
+        """
         self.main = main
 
     def getLayerByName(self, name):
+        """Find a layer by name.
+
+        Parameters
+        ----------
+        name : str
+            Name of the layer.
+
+        Returns
+        -------
+        QgsMapLayer
+            The first maplayer with the given name, or `None` if no layer with
+            the given name exists.
+
+        """
         for layer in self.main.iface.legendInterface().layers():
             if layer.name() == name:
                 return layer
+        return None
 
     def editInLayer(self, name):
+        """Start drawing a new feature in the layer with the given name.
+
+        Sets the layer as the active layer, enables edit mode and start the
+        'add feature' action.
+
+        Parameters
+        ----------
+        name : str
+            The name of the layer.
+
+        """
         layer = self.getLayerByName(name)
         if layer:
             self.main.iface.setActiveLayer(layer)
@@ -40,12 +72,33 @@ class Utils(object):
             self.main.iface.actionAddFeature().trigger()
 
     def stopEditInLayer(self, name):
+        """Stop editing in lthe layer with the given name.
+
+        Commit pending changes and end the edit command.
+
+        Parameters
+        ----------
+        name : str
+            The name of the layer.
+
+        """
         layer = self.getLayerByName(name)
         if layer:
             layer.commitChanges()
             layer.endEditCommand()
 
     def toggleLayersGroups(self, enable, disable):
+        """Toggle the visibility of the given layers or layergroups.
+
+        Parameters
+        ----------
+        enable : list of str
+            List of the names of layers or layergroups to enable (set visible).
+        disable : list of str
+            List of the names of layers or layergroups to disable (set
+            invisible.)
+
+        """
         legendInterface = self.main.iface.legendInterface()
 
         groups = legendInterface.groups()

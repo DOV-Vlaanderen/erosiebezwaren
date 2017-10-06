@@ -1,4 +1,5 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+"""Module containing the PreviousObjectionInfoDialog class."""
 
 #  DOV Erosiebezwaren, QGis plugin to assess field erosion on tablets
 #  Copyright (C) 2015-2017  Roel Huybrechts
@@ -17,20 +18,38 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
+import PyQt4.QtCore as QtCore
+import PyQt4.QtGui as QtGui
+import qgis.core as QGisCore
 
 import os
 import subprocess
 
+from parcelinfowidget import ParcelInfoContentWidget
 from ui_previousobjectioninfodialog import Ui_PreviousObjectionInfoDialog
 
-class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
+
+class PreviousObjectionInfoDialog(QtGui.QDialog,
+                                  Ui_PreviousObjectionInfoDialog):
+    """Dialog showing more information about a previous objection."""
+
     def __init__(self, parent, main, feature, jaar):
-        from parcelinfowidget import ParcelInfoContentWidget
-        QDialog.__init__(self, parent)
+        """Initialisation.
+
+        Parameters
+        ----------
+        parent : QtGui.QWidget
+            Widget to use as parent widget.
+        main : erosiebezwaren.Erosiebezwaren
+            Instance to main class.
+        feature : QGisCore.QgsFeature
+            Feature containing all information about the previous objection.
+        jaar : int
+            Year of the campagne of the previous objection. This is used to
+            find the photos and objection form in the respective directories.
+
+        """
+        QtGui.QDialog.__init__(self, parent)
         self.main = main
         self.feature = feature
         self.jaar = jaar
@@ -45,40 +64,61 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
         contentWidget.tabWidget.setCurrentIndex(2)
 
     def addToolbarButtons(self):
+        """Add photo and/or objection form buttons to the toolbar."""
         self.addPhotoButton()
         self.addObjectionFormButton()
         if self.buttonBarLayout.count() > 1:
             self.buttonBarLayout.setContentsMargins(-1, 6, -1, 6)
 
     def addPhotoButton(self):
+        """Add the 'show photo' button to the toolbar.
+
+        Only adds the button if there are photos of this objection available.
+        """
         self.photoPath = None
         if self.feature:
-            # QgsProject.instance().fileName() returns path with forward slashes, even on Windows. Append subdirectories with forward slashes too
-            # and replace all of them afterwards with backward slashes.
+            # QGisCore.QgsProject.instance().fileName() returns path with
+            # forward slashes, even on Windows. Append subdirectories with
+            # forward slashes too and replace all of them afterwards with
+            # backward slashes.
             fid = self.feature.attribute('uniek_id')
             if fid:
-                photoPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'fotos_%i' % self.jaar,
-                                      str(fid)])
+                photoPath = '/'.join([os.path.dirname(
+                    QGisCore.QgsProject.instance().fileName()),
+                                      'fotos_%i' % self.jaar, str(fid)])
                 photoPath = photoPath.replace('/', '\\')
-                if os.path.exists(photoPath) and len(os.listdir(photoPath)) > 0:
+                if os.path.exists(photoPath) and \
+                        len(os.listdir(photoPath)) > 0:
                     self.photoPath = photoPath
-                    self.btn_showPhotos = QPushButton()
-                    self.btn_showPhotos.setIcon(QIcon(":/icons/icons/photo.png"))
-                    self.btn_showPhotos.setIconSize(QSize(64, 64))
-                    self.btn_showPhotos.setSizePolicy(QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum))
-                    QObject.connect(self.btn_showPhotos, SIGNAL('clicked(bool)'), self.showPhotos)
+                    self.btn_showPhotos = QtGui.QPushButton()
+                    self.btn_showPhotos.setIcon(
+                        QtGui.QIcon(":/icons/icons/photo.png"))
+                    self.btn_showPhotos.setIconSize(QtCore.QSize(64, 64))
+                    self.btn_showPhotos.setSizePolicy(QtGui.QSizePolicy(
+                        QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Maximum))
+                    QtCore.QObject.connect(self.btn_showPhotos,
+                                           QtCore.SIGNAL('clicked(bool)'),
+                                           self.showPhotos)
                     self.buttonBarLayout.addWidget(self.btn_showPhotos)
 
     def addObjectionFormButton(self):
+        """Add the 'show objection form' button to the toolbar.
+
+        Only adds the button if there are forms available for this objection.
+        """
         if self.feature:
             try:
                 cmdShow = os.environ['COMSPEC'] + ' /c start "" "%s"'
-                cmdExplore = os.path.join(os.environ['SYSTEMROOT'], 'explorer.exe') + ' "%s"'
+                cmdExplore = os.path.join(os.environ['SYSTEMROOT'],
+                                          'explorer.exe') + ' "%s"'
             except KeyError:
                 return
 
-            objectionPath = '/'.join([os.path.dirname(QgsProject.instance().fileName()), 'bezwaren_%i' % self.jaar,
-                                      str(self.feature.attribute('producentnr'))])
+            objectionPath = '/'.join([os.path.dirname(
+                QGisCore.QgsProject.instance().fileName()),
+                                      'bezwaren_%i' % self.jaar,
+                                      str(self.feature.attribute(
+                                          'producentnr'))])
             objectionPath = objectionPath.replace('/', '\\')
             self.objectionPath = []
             if os.path.exists(objectionPath):
@@ -87,19 +127,29 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
                 if len(exts) == 1 and 'pdf' in exts:
                     # only pdfs
                     for f in fileList:
-                        self.objectionPath.append(cmdShow % (objectionPath + '/' + f))
+                        self.objectionPath.append(cmdShow % (objectionPath +
+                                                             '/' + f))
                 elif len(exts) > 0:
                     # other thing(s)
                     self.objectionPath.append(cmdExplore % objectionPath)
 
-                self.btn_bezwaarformulier = QPushButton()
-                self.btn_bezwaarformulier.setIcon(QIcon(":/icons/icons/pdf.png"))
-                self.btn_bezwaarformulier.setIconSize(QSize(64, 64))
-                self.btn_bezwaarformulier.setSizePolicy(QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum))
-                QObject.connect(self.btn_bezwaarformulier, SIGNAL('clicked(bool)'), self.showObjectionForm)
+                self.btn_bezwaarformulier = QtGui.QPushButton()
+                self.btn_bezwaarformulier.setIcon(
+                    QtGui.QIcon(":/icons/icons/pdf.png"))
+                self.btn_bezwaarformulier.setIconSize(QtCore.QSize(64, 64))
+                self.btn_bezwaarformulier.setSizePolicy(
+                    QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum,
+                                      QtGui.QSizePolicy.Maximum))
+                QtCore.QObject.connect(self.btn_bezwaarformulier,
+                                       QtCore.SIGNAL('clicked(bool)'),
+                                       self.showObjectionForm)
                 self.buttonBarLayout.addWidget(self.btn_bezwaarformulier)
 
     def showPhotos(self):
+        """Open the directory containing the photos of this parcel in Explorer.
+
+        Used as callback for the 'show photos' button.
+        """
         if not self.photoPath:
             return
 
@@ -108,5 +158,9 @@ class PreviousObjectionInfoDialog(QDialog, Ui_PreviousObjectionInfoDialog):
         subprocess.Popen(cmd)
 
     def showObjectionForm(self):
+        """Open all objection paths (folders or files) in Windows Explorer.
+
+        Used as a callback for the 'show objection' button.
+        """
         for o in self.objectionPath:
             subprocess.Popen(o)

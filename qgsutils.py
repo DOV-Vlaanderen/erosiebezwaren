@@ -1,4 +1,8 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+"""Module for utilities extending QGis capabilities.
+
+Contains the SpatialiteIterator class.
+"""
 
 #  DOV Erosiebezwaren, QGis plugin to assess field erosion on tablets
 #  Copyright (C) 2015-2017  Roel Huybrechts
@@ -17,18 +21,41 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
+import qgis.core as QGisCore
+
 from pyspatialite import dbapi2 as sl
 
+
 class SpatialiteIterator(object):
+    """Class to query a Spatialite layer through a direct db connection."""
+
     def __init__(self, layer):
+        """Initialisation.
+
+        Parameters
+        ----------
+        layer : QGisCore.QgsVectorLayer
+            Layer to query. The connection to the Spatialite is derived from
+            the datasource of the layer.
+
+        """
         self.layer = layer
-        self.ds = QgsDataSourceURI(self.layer.source())
+        self.ds = QGisCore.QgsDataSourceURI(self.layer.source())
 
     def rawQuery(self, sql):
+        """Execute a SQL query and return the raw results.
+
+        Parameters
+        ----------
+        sql : str
+            Query to execute.
+
+        Returns
+        -------
+        results : iterable
+            All results of the query.
+
+        """
         conn = sl.connect(self.ds.database())
         cursor = conn.execute(sql)
         r = cursor.fetchall()
@@ -37,11 +64,27 @@ class SpatialiteIterator(object):
         return r
 
     def query(self, sql, attributes=None):
+        """Execute a SQL query and return the results as QGis Features.
+
+        Parameters
+        ----------
+        sql : str
+            Query to execute.
+        attributes : list, optional
+            Subset of attributes to include in the returned QgsFeature's.
+            Defaults to all attributes.
+
+        Returns
+        -------
+        list of QgsFeature
+            List of QgsFeatures matching the query.
+
+        """
         fids = [i[0] for i in self.rawQuery(sql)]
         if len(fids) < 1:
             return []
 
-        fr = QgsFeatureRequest()
+        fr = QGisCore.QgsFeatureRequest()
         fts = []
         if attributes is not None:
             fr.setSubsetOfAttributes(attributes)
@@ -53,6 +96,22 @@ class SpatialiteIterator(object):
         return fts
 
     def queryExpression(self, expression, attributes=None):
+        """Execute an expression and return the results as QGis Features.
+
+        Parameters
+        ----------
+        expression : str
+            Expression used as the WHERE clause of the query.
+        attributes : list, optional
+            Subset of attributes to include in the returned QgsFeature's.
+            Defaults to all attributes.
+
+        Returns
+        -------
+        list of QgsFeature
+            List of QgsFeatures matching the expression.
+
+        """
         stmt = "SELECT ogc_fid FROM %s WHERE " % self.ds.table()
         stmt += expression
         return self.query(stmt, attributes)

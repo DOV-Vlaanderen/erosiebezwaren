@@ -1,6 +1,7 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-#  A PyQt port of Ariya Hidayat's elegant FlickCharm hack which adds kinetic scrolling to any scrollable Qt widget.
+#  A PyQt port of Ariya Hidayat's elegant FlickCharm hack which adds kinetic
+#  scrolling to any scrollable Qt widget.
 #  Copyright (C) 2008  https://code.google.com/archive/p/flickcharm-python/
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -17,46 +18,48 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+import PyQt4.Qt as Qt
+import PyQt4.QtCore as QtCore
+import PyQt4.QtWebKit as QtWebKit
+import PyQt4.QtGui as QtGui
+
 import copy
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyQt4.QtWebKit import *
-import sys
+
 
 class FlickData:
-    
+
     Steady = 0
     Pressed = 1
     ManualScroll = 2
     AutoScroll = 3
     Stop = 4
-    
+
     def __init__(self):
         self.state = FlickData.Steady
         self.widget = None
-        self.pressPos = QPoint(0, 0)
-        self.offset = QPoint(0, 0)
-        self.dragPos = QPoint(0, 0)
-        self.speed = QPoint(0, 0)
+        self.pressPos = QtCore.QPoint(0, 0)
+        self.offset = QtCore.QPoint(0, 0)
+        self.dragPos = QtCore.QPoint(0, 0)
+        self.speed = QtCore.QPoint(0, 0)
         self.ignored = []
 
 
 class FlickCharmPrivate:
-    
+
     def __init__(self):
         self.flickData = {}
-        self.ticker = QBasicTimer()
+        self.ticker = QtCore.QBasicTimer()
 
 
-class FlickCharm(QObject):
-    
+class FlickCharm(QtCore.QObject):
+
     def __init__(self, parent = None):
-        QObject.__init__(self, parent)
+        QtCore.QObject.__init__(self, parent)
         self.d = FlickCharmPrivate()
-        
-    
+
+
     def activateOn(self, widget):
-        if isinstance(widget, QWebView):
+        if isinstance(widget, QtWebKit.QWebView):
             frame = widget.page().mainFrame()
             frame.setScrollBarPolicy(Qt.Vertical, Qt.ScrollBarAlwaysOff)
             frame.setScrollBarPolicy(Qt.Horizontal, Qt.ScrollBarAlwaysOff)
@@ -74,9 +77,9 @@ class FlickCharm(QObject):
             self.d.flickData[viewport].widget = widget
             self.d.flickData[viewport].state = FlickData.Steady
 
-    
+
     def deactivateFrom(self, widget):
-        if isinstance(widget, QWebView):
+        if isinstance(widget, QtWebKit.QWebView):
             widget.removeEventFilter(self)
             del(self.d.flickData[widget])
         else:
@@ -85,134 +88,134 @@ class FlickCharm(QObject):
             widget.removeEventFilter(self)
             del(self.d.flickData[viewport])
 
-    
+
     def eventFilter(self, object, event):
-        
+
         if not object.isWidgetType():
             return False;
-    
+
         eventType = event.type()
-        if eventType != QEvent.MouseButtonPress and \
-           eventType != QEvent.MouseButtonRelease and \
-           eventType != QEvent.MouseMove:
+        if eventType != QtCore.QEvent.MouseButtonPress and \
+           eventType != QtCore.QEvent.MouseButtonRelease and \
+           eventType != QtCore.QEvent.MouseMove:
             return False
-    
+
         if event.modifiers() != Qt.NoModifier:
             return False
-    
+
         if not self.d.flickData.has_key(object):
             return False
-        
+
         data = self.d.flickData[object]
         found, newIgnored = removeAll(data.ignored, event)
         if found:
             data.ignored = newIgnored
             return False
-    
+
         consumed = False
-        
+
         if data.state == FlickData.Steady:
-            if eventType == QEvent.MouseButtonPress:
+            if eventType == QtCore.QEvent.MouseButtonPress:
                 if event.buttons() == Qt.LeftButton:
                     consumed = True
                     data.state = FlickData.Pressed
                     data.pressPos = copy.copy(event.pos())
                     data.offset = scrollOffset(data.widget)
-        
+
         elif data.state == FlickData.Pressed:
-            if eventType == QEvent.MouseButtonRelease:
+            if eventType == QtCore.QEvent.MouseButtonRelease:
                 consumed = True
                 data.state = FlickData.Steady
-                event1 = QMouseEvent(QEvent.MouseButtonPress,
-                                     data.pressPos, Qt.LeftButton,
-                                     Qt.LeftButton, Qt.NoModifier)
-                event2 = QMouseEvent(event)
+                event1 = QtCore.QMouseEvent(QtCore.QEvent.MouseButtonPress,
+                                            data.pressPos, Qt.LeftButton,
+                                            Qt.LeftButton, Qt.NoModifier)
+                event2 = QtCore.QMouseEvent(event)
                 data.ignored.append(event1)
                 data.ignored.append(event2)
-                QApplication.postEvent(object, event1)
-                QApplication.postEvent(object, event2)
-            elif eventType == QEvent.MouseMove: 
+                QtGui.QApplication.postEvent(object, event1)
+                QtGui.QApplication.postEvent(object, event2)
+            elif eventType == QtCore.QEvent.MouseMove:
                 consumed = True
                 data.state = FlickData.ManualScroll
-                data.dragPos = QCursor.pos()
+                data.dragPos = QtGui.QCursor.pos()
                 if not self.d.ticker.isActive():
                     self.d.ticker.start(20, self)
-    
+
         elif data.state == FlickData.ManualScroll:
-            if eventType == QEvent.MouseMove:
+            if eventType == QtCore.QEvent.MouseMove:
                 consumed = True
                 pos = event.pos()
                 delta = pos - data.pressPos
                 setScrollOffset(data.widget, data.offset - delta)
-            elif eventType == QEvent.MouseButtonRelease: 
+            elif eventType == QtCore.QEvent.MouseButtonRelease:
                 consumed = True
                 data.state = FlickData.AutoScroll
-    
+
         elif data.state == FlickData.AutoScroll:
-            if eventType == QEvent.MouseButtonPress:
+            if eventType == QtCore.QEvent.MouseButtonPress:
                 consumed = True
                 data.state = FlickData.Stop
-                data.speed = QPoint(0, 0)
-            elif eventType == QEvent.MouseButtonRelease:
+                data.speed = QtCore.QPoint(0, 0)
+            elif eventType == QtCore.QEvent.MouseButtonRelease:
                 consumed = True
                 data.state = FlickData.Steady
-                data.speed = QPoint(0, 0)
-    
+                data.speed = QtCore.QPoint(0, 0)
+
         elif data.state == FlickData.Stop:
-            if eventType == QEvent.MouseButtonRelease:
+            if eventType == QtCore.QEvent.MouseButtonRelease:
                 consumed = True
                 data.state = FlickData.Steady
-            elif eventType == QEvent.MouseMove:
+            elif eventType == QtCore.QEvent.MouseMove:
                 consumed = True
                 data.state = FlickData.ManualScroll
-                data.dragPos = QCursor.pos()
+                data.dragPos = QtGui.QCursor.pos()
                 if not self.d.ticker.isActive():
                     self.d.ticker.start(20, self)
-    
+
         return consumed
 
-    
+
     def timerEvent(self, event):
         count = 0
         for data in self.d.flickData.values():
             if data.state == FlickData.ManualScroll:
                 count += 1
-                cursorPos = QCursor.pos()
+                cursorPos = QtGui.QCursor.pos()
                 data.speed = cursorPos - data.dragPos
-                data.dragPos = cursorPos    
+                data.dragPos = cursorPos
             elif data.state == FlickData.AutoScroll:
                 count += 1
                 data.speed = deaccelerate(data.speed)
                 p = scrollOffset(data.widget)
                 setScrollOffset(data.widget, p - data.speed)
-                if data.speed == QPoint(0, 0):
+                if data.speed == QtCore.QPoint(0, 0):
                     data.state = FlickData.Steady
-    
+
         if count == 0:
             self.d.ticker.stop()
-    
-        QObject.timerEvent(self, event);
-    
-    
+
+        QtCore.QObject.timerEvent(self, event);
+
+
 def scrollOffset(widget):
-    if isinstance(widget, QWebView):
+    if isinstance(widget, QtWebKit.QWebView):
         frame = widget.page().mainFrame()
         x = frame.evaluateJavaScript("window.scrollX").toInt()[0]
         y = frame.evaluateJavaScript("window.scrollY").toInt()[0]
     else:
         x = widget.horizontalScrollBar().value()
         y = widget.verticalScrollBar().value()
-    return QPoint(x, y)
-        
-        
+    return QtCore.QPoint(x, y)
+
+
 def setScrollOffset(widget, p):
-    if isinstance(widget, QWebView):
+    if isinstance(widget, QtWebKit.QWebView):
         frame = widget.page().mainFrame()
         frame.evaluateJavaScript("window.scrollTo(%d,%d);" % (p.x(), p.y()))
     else:
         widget.horizontalScrollBar().setValue(p.x())
         widget.verticalScrollBar().setValue(p.y())
-      
+
 
 def deaccelerate(speed, a=1, maxVal=64):
     x = qBound(-maxVal, speed.x(), maxVal)
@@ -225,12 +228,12 @@ def deaccelerate(speed, a=1, maxVal=64):
         y = max(0, y - a)
     elif y < 0:
         y = min(0, y + a)
-    return QPoint(x, y)
+    return QtCore.QPoint(x, y)
 
 
 def qBound(minVal, current, maxVal):
     return max(min(current, maxVal), minVal)
-    
+
 
 def removeAll(list, val):
     found = False

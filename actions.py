@@ -1,4 +1,5 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+"""Module containing the Actions class."""
 
 #  DOV Erosiebezwaren, QGis plugin to assess field erosion on tablets
 #  Copyright (C) 2015-2017  Roel Huybrechts
@@ -17,23 +18,37 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
+import PyQt4.QtCore as QtCore
+import PyQt4.QtGui as QtGui
 
 import os
 import subprocess
-import time
 
-from parcelidentifier import ParcelIdentifyAction
-from pixelmeasure import PixelMeasureAction
-from mapswitchdialog import MapSwitchButton
 from farmersearchdialog import FarmerSearchDialog
 from gpszoomdialog import GpsZoomDialog
+from mapswitchdialog import MapSwitchButton
+from parcelidentifier import ParcelIdentifyAction
+from pixelmeasure import PixelMeasureAction
+
 
 class Actions(object):
+    """Class defining all actions and a method to add them to the toolbar."""
+
     def __init__(self, main, parent, toolbar):
+        """Initialisation.
+
+        Initialise instance and add all actions to the toolbar.
+
+        Parameters
+        ----------
+        main : erosiebezwaren.Erosiebezwaren
+            Instance of main class.
+        parent : QtGui.QWidget
+            Widget used as parent widget for the actions.
+        toolbar : QtGui.QToolBar
+            Toolbar to add the actions to.
+
+        """
         self.main = main
         self.parent = parent
         self.toolbar = toolbar
@@ -43,19 +58,38 @@ class Actions(object):
         self.addAllActionsToToolbar()
 
     def showKeyboard(self):
-        cmd = os.path.join(os.environ['COMMONPROGRAMFILES'], 'microsoft shared', 'ink', 'TabTip.exe')
-        sp = subprocess.Popen(cmd, env=os.environ, shell=True)
+        """Open up the Windows on screen keyboard."""
+        cmd = os.path.join(os.environ['COMMONPROGRAMFILES'],
+                           'microsoft shared', 'ink', 'TabTip.exe')
+        subprocess.Popen(cmd, env=os.environ, shell=True)
 
-    def toggleFullscreen(self, t):
+    def toggleFullscreen(self, checked=True):
+        """Toggle fullscreen mode on the QGis window.
+
+        Parameters
+        ----------
+        checked : boolean, optional
+            Current state of the toggle action.
+
+        """
         self.main.iface.actionToggleFullScreen().trigger()
         mB = self.main.iface.mainWindow().menuBar()
         mB.setVisible(not mB.isVisible())
 
     def searchFarmer(self):
+        """Open the dialog to search for a farmer."""
         d = FarmerSearchDialog(self.main)
         d.show()
 
     def zoomToGps(self, checked):
+        u"""Open the dialog to zoom to GPS coördinates or clear the marker.
+
+        Parameters
+        ----------
+        checked : boolean
+            Currect state of the toggle action.
+
+        """
         if checked:
             self.gpsDialog = GpsZoomDialog(self.main)
             self.gpsDialog.show()
@@ -65,8 +99,11 @@ class Actions(object):
             self.main.selectionManagerPoints.clearWithMode(0)
 
     def addAllActionsToToolbar(self):
-        exitAction = QAction(QIcon(':/icons/icons/exit.png'), 'Applicatie afsluiten', self.parent)
-        QObject.connect(exitAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.actionExit().trigger())
+        """Initialise all actions and add them to the toolbar."""
+        exitAction = QtGui.QAction(QtGui.QIcon(':/icons/icons/exit.png'),
+                                   'Applicatie afsluiten', self.parent)
+        QtCore.QObject.connect(exitAction, QtCore.SIGNAL('triggered(bool)'),
+                               lambda: self.main.iface.actionExit().trigger())
         self.toolbar.addAction(exitAction)
         self.toolbar.addSeparator()
 
@@ -77,47 +114,64 @@ class Actions(object):
             self.toolbar.addAction(action)
         self.toolbar.addSeparator()
 
-        farmerSearchAction = QAction(QIcon(':/icons/icons/searchfarmer.png'), "Landbouwer opzoeken", self.parent)
-        QObject.connect(farmerSearchAction, SIGNAL('triggered(bool)'), self.searchFarmer)
+        farmerSearchAction = QtGui.QAction(
+            QtGui.QIcon(':/icons/icons/searchfarmer.png'),
+            "Landbouwer opzoeken", self.parent)
+        QtCore.QObject.connect(farmerSearchAction,
+                               QtCore.SIGNAL('triggered(bool)'),
+                               self.searchFarmer)
         self.toolbar.addAction(farmerSearchAction)
         self.toolbar.addSeparator()
 
-        zoomInAction = QAction(QIcon(':/icons/icons/zoomin.png'), "Zoom in", self.parent)
-        QObject.connect(zoomInAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomIn())
+        zoomInAction = QtGui.QAction(
+            QtGui.QIcon(':/icons/icons/zoomin.png'), "Zoom in", self.parent)
+        QtCore.QObject.connect(zoomInAction, QtCore.SIGNAL('triggered(bool)'),
+                               lambda: self.main.iface.mapCanvas().zoomIn())
         self.toolbar.addAction(zoomInAction)
 
-        zoomOutAction = QAction(QIcon(':/icons/icons/zoomout.png'), "Zoom uit", self.parent)
-        QObject.connect(zoomOutAction, SIGNAL('triggered(bool)'), lambda: self.main.iface.mapCanvas().zoomOut())
+        zoomOutAction = QtGui.QAction(QtGui.QIcon(':/icons/icons/zoomout.png'),
+                                      "Zoom uit", self.parent)
+        QtCore.QObject.connect(zoomOutAction, QtCore.SIGNAL('triggered(bool)'),
+                               lambda: self.main.iface.mapCanvas().zoomOut())
         self.toolbar.addAction(zoomOutAction)
 
-        gpsAction = QAction(QIcon(':/icons/icons/zoomgps.png'), u"Zoom naar GPS coördinaten", self.parent)
+        gpsAction = QtGui.QAction(QtGui.QIcon(':/icons/icons/zoomgps.png'),
+                                  u"Zoom naar GPS coördinaten", self.parent)
         gpsAction.setCheckable(True)
-        QObject.connect(gpsAction, SIGNAL('triggered(bool)'), self.zoomToGps)
+        QtCore.QObject.connect(gpsAction, QtCore.SIGNAL('triggered(bool)'),
+                               self.zoomToGps)
         self.toolbar.addAction(gpsAction)
 
-        toggleFullscreenAction = QAction(QIcon(':/icons/icons/fullscreen.png'), "Volledig scherm aan/uit", self.parent)
-        QObject.connect(toggleFullscreenAction, SIGNAL('triggered(bool)'), self.toggleFullscreen)
+        toggleFullscreenAction = QtGui.QAction(
+            QtGui.QIcon(':/icons/icons/fullscreen.png'),
+            "Volledig scherm aan/uit", self.parent)
+        QtCore.QObject.connect(toggleFullscreenAction,
+                               QtCore.SIGNAL('triggered(bool)'),
+                               self.toggleFullscreen)
         toggleFullscreenAction.setCheckable(True)
         self.toolbar.addAction(toggleFullscreenAction)
 
         self.toolbar.addSeparator()
 
-        self.parcelIdentifyAction = ParcelIdentifyAction(self.main, self.parent)
+        self.parcelIdentifyAction = ParcelIdentifyAction(self.main,
+                                                         self.parent)
         self.toolbar.addAction(self.parcelIdentifyAction)
 
         touchAction = self.main.iface.actionTouch()
-        touchAction.setIcon(QIcon(':/icons/icons/movemap.png'))
+        touchAction.setIcon(QtGui.QIcon(':/icons/icons/movemap.png'))
         self.toolbar.addAction(touchAction)
 
         measureAction = self.main.iface.actionMeasure()
-        measureAction.setIcon(QIcon(':/icons/icons/measure.png'))
+        measureAction.setIcon(QtGui.QIcon(':/icons/icons/measure.png'))
         self.toolbar.addAction(measureAction)
 
-        self.pixelMeasureAction = PixelMeasureAction(self.main, self.parent)
+        self.pixelMeasureAction = PixelMeasureAction(self.main, self.parent,
+                                                     'watererosie30')
         self.pixelMeasureAction.setVisible(False)
         self.toolbar.addAction(self.pixelMeasureAction)
 
     def deactivate(self):
+        """Deactivate actions that need it and delete the toolbar."""
         self.parcelIdentifyAction.deactivate()
         self.mapSwitchButton.deactivate()
         self.pixelMeasureAction.deactivate()

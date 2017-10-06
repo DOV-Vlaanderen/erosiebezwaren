@@ -1,4 +1,5 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+"""Module containing the MonitoringWindow and MonitoringWidget classes."""
 
 #  DOV Erosiebezwaren, QGis plugin to assess field erosion on tablets
 #  Copyright (C) 2015-2017  Roel Huybrechts
@@ -17,39 +18,65 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
+import PyQt4.QtCore as QtCore
+import PyQt4.QtGui as QtGui
 
 from ui_monitoringwidget import Ui_MonitoringWidget
-from widgets.monitoringwidgets import BasisPakketWidget, BufferStrookHellingWidget, TeeltTechnischWidget
 from widgets.elevatedfeaturewidget import ElevatedFeatureWidget
-from widgets.valueinput import ValueComboBox, ValueTextEdit
+from widgets.monitoringwidgets import BasisPakketWidget
+from widgets.monitoringwidgets import BufferStrookHellingWidget
+from widgets.monitoringwidgets import TeeltTechnischWidget
+from widgets.valueinput import ValueComboBox
+
 
 class MonitoringWidget(ElevatedFeatureWidget, Ui_MonitoringWidget):
+    """Class grouping the three monitoringwidgets into one widget.
+
+    This widget is used as central widget in the MonitoringWindow to edit the
+    monitoring fields for a specific parcel.
+    """
+
     def __init__(self, parent, main, feature, layer):
+        """Initialisation.
+
+        Parameters
+        ----------
+        parent : QtGui.QMainWindow
+            Parent window of this widget.
+        main : erosiebezwaren.Erosiebezwaren
+            Instance of main class.
+        feature : QGisCore.QgsFeature
+            Parcel to edit monitoring for.
+        layer : QGisCore.QgsVectorLayer
+            Layer to save the changed fields to.
+
+        """
         ElevatedFeatureWidget.__init__(self, parent)
         self.main = main
         self.feature = feature
         self.layer = layer
         self.setupUi(self)
 
-        QObject.connect(self.btn_save, SIGNAL('clicked()'), self.save)
-        QObject.connect(self.btn_cancel, SIGNAL('clicked()'), self.stop)
+        QtCore.QObject.connect(self.btn_save, QtCore.SIGNAL('clicked()'),
+                               self.save)
+        QtCore.QObject.connect(self.btn_cancel, QtCore.SIGNAL('clicked()'),
+                               self.stop)
 
-        self.lbv_header.setText('Bewerk monitoring voor perceel %s\n  van %s' % (self.feature.attribute('uniek_id'), self.feature.attribute('naam')))
+        self.lbv_header.setText('Bewerk monitoring voor perceel %s\n  van %s'
+                                % (self.feature.attribute('uniek_id'),
+                                   self.feature.attribute('naam')))
 
         self.efw_basispakket = BasisPakketWidget(self)
-        self.efw_basispakket.setGeenMtrglEnabled(self.feature.attribute('landbouwer_aanwezig') == 1)
+        self.efw_basispakket.setGeenMtrglEnabled(self.feature.attribute(
+            'landbouwer_aanwezig') == 1)
         self.lyt_basispakket.addWidget(self.efw_basispakket)
 
-        label = QLabel('Hellingtype', self)
+        label = QtGui.QLabel('Hellingtype', self)
         self.lyt_bufferstrook.addWidget(label)
         self.efw_bufferstrook_helling = BufferStrookHellingWidget(self)
         self.lyt_bufferstrook.addWidget(self.efw_bufferstrook_helling)
 
-        label = QLabel('Maatregel', self)
+        label = QtGui.QLabel('Maatregel', self)
         self.lyt_bufferstrook.addWidget(label)
         self.efw_bufferstrook_mtrgl = ValueComboBox(self)
         self.efw_bufferstrook_mtrgl.initialValues = []
@@ -69,64 +96,117 @@ class MonitoringWidget(ElevatedFeatureWidget, Ui_MonitoringWidget):
         self.connectValidators()
 
     def save(self):
+        """Save the changes made to the feature to the layer.
+
+        If we were able to save succesfully, close the window by calling
+        `stop`.
+        """
         if self.feature:
             success = self.saveFeature()
             if success:
                 self.stop()
 
     def stop(self):
+        """Close the parent window."""
         self.btn_save.setEnabled(False)
         self.btn_cancel.setEnabled(False)
-        QCoreApplication.processEvents()
+        QtCore.QCoreApplication.processEvents()
         self.btn_save.repaint()
         self.btn_cancel.repaint()
         self.parent.close()
 
     def connectValidators(self):
-        QObject.connect(self.efw_basispakket, SIGNAL('valueChanged()'), self._validate)
-        QObject.connect(self.efw_bufferstrook_helling, SIGNAL('valueChanged()'), self._validate)
-        QObject.connect(self.efw_bufferstrook_mtrgl, SIGNAL('currentIndexChanged(int)'), self._validate)
-        QObject.connect(self.efw_teelttechnisch, SIGNAL('valueChanged()'), self._validate)
+        """Connect validation to the changed signals of the entry widgets."""
+        QtCore.QObject.connect(
+            self.efw_basispakket,
+            QtCore.SIGNAL('valueChanged()'), self._validate)
+        QtCore.QObject.connect(
+            self.efw_bufferstrook_helling,
+            QtCore.SIGNAL('valueChanged()'), self._validate)
+        QtCore.QObject.connect(
+            self.efw_bufferstrook_mtrgl,
+            QtCore.SIGNAL('currentIndexChanged(int)'), self._validate)
+        QtCore.QObject.connect(
+            self.efw_teelttechnisch,
+            QtCore.SIGNAL('valueChanged()'), self._validate)
         self._validate()
 
     def _validate(self, *args):
+        """Validate.
+
+        Change the value of certain widgets depending on the value of others.
+        """
         disabledOptions = set()
 
         if 'voor_groen' not in self.efw_basispakket.getValue():
             disabledOptions |= set(['directinzaai', 'strip-till'])
 
         if 'voor_ploegen' in self.efw_basispakket.getValue():
-            disabledOptions |= set(['nietkerend', 'directinzaai', 'strip-till'])
+            disabledOptions |= set(['nietkerend', 'directinzaai',
+                                    'strip-till'])
 
         self.efw_teelttechnisch.setDisabledOptions(disabledOptions)
 
         self._checkSaveable()
 
     def _checkSaveable(self, *args):
+        """Enable or disable the save button according to the validation.
+
+        Only allows saving if all widgets validate.
+        """
         self.btn_save.setEnabled(self._isSaveable())
 
     def _isSaveable(self):
+        """Check whether we are allowed to save.
+
+        Returns
+        -------
+        boolean
+            True if validation succeeded and we can save the feature, False if
+            validation failed and we should correct before being allowed to
+            save.
+
+        """
         return \
-            len(set([i.strip().split('_')[0] for i in self.efw_basispakket.getValue().split(';')])) == 2 and \
-            self.efw_bufferstrook_helling.getValue() != None and \
-            self.efw_bufferstrook_mtrgl.getValue() != None and \
+            len(set([i.strip().split('_')[0] for i in
+                     self.efw_basispakket.getValue().split(';')])) == 2 and \
+            self.efw_bufferstrook_helling.getValue() is not None and \
+            self.efw_bufferstrook_mtrgl.getValue() is not None and \
             self.efw_teelttechnisch.getValue() != ''
 
-class MonitoringWindow(QMainWindow):
-    closed = pyqtSignal()
+
+class MonitoringWindow(QtGui.QMainWindow):
+    """Window showing the MonitoringWidget for a specific field."""
+
+    closed = QtCore.pyqtSignal()
 
     def __init__(self, main, feature, layer):
-        QMainWindow.__init__(self, main.iface.mainWindow())
+        """Initialisation.
+
+        Parameters
+        ----------
+        main : erosiebezwaren.Erosiebezwaren
+            Instance of main class.
+        feature : QGisCore.QgsFeature
+            Parcel to edit monitoring for.
+        layer : QGisCore.QgsVectorLayer
+            Layer to save the changed fields to.
+
+        """
+        QtGui.QMainWindow.__init__(self, main.iface.mainWindow())
         self.main = main
         self.feature = feature
         self.layer = layer
 
-        self.setWindowTitle('Bewerk monitoring %s' % self.feature.attribute('uniek_id'))
+        self.setWindowTitle('Bewerk monitoring %s' % self.feature.attribute(
+            'uniek_id'))
 
-        self.monitoringWidget = MonitoringWidget(self, self.main, self.feature, self.layer)
+        self.monitoringWidget = MonitoringWidget(self, self.main, self.feature,
+                                                 self.layer)
         self.setCentralWidget(self.monitoringWidget)
 
         self.setMinimumSize(800, 1000)
 
     def closeEvent(self, event):
+        """Emit the closed signal on closing of the window."""
         self.closed.emit()

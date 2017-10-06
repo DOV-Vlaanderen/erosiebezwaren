@@ -1,4 +1,9 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+"""Module containing the widgets of the erosion monitoring dialog.
+
+Contains the classes MonitoringItemWidget, CheckableCell, BasisPakketWidget,
+TeeltTechnischWidget, BufferStrookHellingWidget.
+"""
 
 #  DOV Erosiebezwaren, QGis plugin to assess field erosion on tablets
 #  Copyright (C) 2015-2017  Roel Huybrechts
@@ -17,36 +22,81 @@
 #  with this program; if not, write to the Free Software Foundation, Inc.,
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
+import PyQt4.QtCore as QtCore
+import PyQt4.QtGui as QtGui
 
-class MonitoringItemWidget(QWidget):
-    valueChanged = pyqtSignal()
+
+class MonitoringItemWidget(QtGui.QWidget):
+    """Subclass of a QtGui.QWidget adding an extra 'valueChanged' signal.
+
+    Signals
+    -------
+    valueChanged : QtCore.pyqtSignal()
+        Emitted when (one of) the value(s) of the widget changed.
+    """
+
+    valueChanged = QtCore.pyqtSignal()
 
     def __init__(self, parent):
-        QWidget.__init__(self, parent)
+        """Initialisation.
 
-class CheckableCell(QPushButton):
+        Parameters
+        ----------
+        parent : QtGui.QWidget
+            The widget to use as the parent widget.
+
+        """
+        QtGui.QWidget.__init__(self, parent)
+
+
+class CheckableCell(QtGui.QPushButton):
+    """Class for a button with boolean states.
+
+    It shows an 'X' when selected, or empty when not selected.
+    """
+
     def __init__(self, objectName, label, parent):
-        QPushButton.__init__(self, label, parent)
+        """Initialisation.
+
+        Parameters
+        ----------
+        objectName : str
+            The name to use as objectName of the widget.
+        label : str
+            The label to use as default label.
+        parent : QtGui.QWidget
+            The widget to use as parent widget.
+
+        """
+        QtGui.QPushButton.__init__(self, label, parent)
         self.setObjectName(objectName)
 
         self.setCheckable(True)
         self.__setStyleSheet()
 
-        QObject.connect(self, SIGNAL('clicked()'), self.__updateValue)
+        QtCore.QObject.connect(self, QtCore.SIGNAL('clicked()'),
+                               self.__updateValue)
 
     def setValue(self, checked):
+        """Update the value of the cell.
+
+        Parameters
+        ----------
+        checked : boolean
+            The new value of the cell.
+
+        """
         self.setChecked(checked)
         self.setText('X') if checked else self.setText('')
 
     def __updateValue(self):
+        """Update the value of the cell based on its 'checked' status."""
         self.setValue(self.isChecked())
 
     def __setStyleSheet(self):
-        style = "QPushButton, QPushButton:checked, QPushButton:disabled {"
+        """Set the stylesheet for the QPushButton."""
+        style = "QPushButton, QPushButton:checked, "
+        style += "QPushButton:disabled {"
         style += "border: none;"
         style += "background-color: white;"
         style += "border-radius: 4px;"
@@ -58,15 +108,26 @@ class CheckableCell(QPushButton):
         style += "}"
         self.setStyleSheet(style)
 
+
 class BasisPakketWidget(MonitoringItemWidget):
+    """Class for the widget for the 'basispakket' set."""
+
     def __init__(self, parent):
+        """Initialisation.
+
+        Parameters
+        ----------
+        parent : QtGui.QWidget
+            Widget to use a parent widget.
+
+        """
         MonitoringItemWidget.__init__(self, parent)
 
-        self.layout = QGridLayout(self)
+        self.layout = QtGui.QGridLayout(self)
         self.setLayout(self.layout)
 
-        self.horMaxSizePolicy = QSizePolicy()
-        self.horMaxSizePolicy.setHorizontalPolicy(QSizePolicy.Maximum)
+        self.horMaxSizePolicy = QtGui.QSizePolicy()
+        self.horMaxSizePolicy.setHorizontalPolicy(QtGui.QSizePolicy.Maximum)
 
         self.geenMtrglEnabled = True
 
@@ -86,15 +147,16 @@ class BasisPakketWidget(MonitoringItemWidget):
             ('na', 'Na hoofdteelt')
         ]
 
-        self.cells = dict(zip([p[0] for p in self.periods], [{} for i in range(len(self.periods))]))
+        self.cells = dict(zip([p[0] for p in self.periods],
+                              [{} for i in range(len(self.periods))]))
 
         for i in range(len(self.periods)):
-            label = QLabel(self.periods[i][1])
+            label = QtGui.QLabel(self.periods[i][1])
             label.setSizePolicy(self.horMaxSizePolicy)
             self.layout.addWidget(label, 0, i+1)
 
         for i in range(len(self.options)):
-            label = QLabel(self.options[i][1])
+            label = QtGui.QLabel(self.options[i][1])
             label.setSizePolicy(self.horMaxSizePolicy)
             self.layout.addWidget(label, i+1, 0)
 
@@ -102,16 +164,24 @@ class BasisPakketWidget(MonitoringItemWidget):
             for j in range(len(self.periods)):
                 option = self.options[i]
                 period = self.periods[j]
-                cell = CheckableCell('%s_%s' % (period[0], option[0]), '', self)
-                QObject.connect(cell, SIGNAL('toggled(bool)'), self._validate)
-                QObject.connect(cell, SIGNAL('toggled(bool)'), lambda x: self.valueChanged.emit())
+                cell = CheckableCell('%s_%s' % (period[0], option[0]), '',
+                                     self)
+                QtCore.QObject.connect(cell, QtCore.SIGNAL('toggled(bool)'),
+                                       self._validate)
+                QtCore.QObject.connect(cell, QtCore.SIGNAL('toggled(bool)'),
+                                       lambda x: self.valueChanged.emit())
                 self.cells[period[0]][option[0]] = cell
-                self.layout.addWidget(self.cells[period[0]][option[0]], i+1, j+1)
+                self.layout.addWidget(self.cells[period[0]][option[0]],
+                                      i+1, j+1)
 
     def _validate(self, *args):
+        """Validate the values of this widget."""
         for p in self.periods:
-            geenChecked = [self.cells[p[0]][i] for i in self.cells[p[0]] if i.startswith('geen') and self.cells[p[0]][i].isChecked()]
-            geenMtrgl = [self.cells[p[0]][i] for i in self.cells[p[0]] if i == 'geenmtrgl'][0]
+            geenChecked = [self.cells[p[0]][i] for i in self.cells[p[0]]
+                           if i.startswith('geen') and
+                           self.cells[p[0]][i].isChecked()]
+            geenMtrgl = [self.cells[p[0]][i] for i in self.cells[p[0]]
+                         if i == 'geenmtrgl'][0]
             if len(geenChecked) > 0:
                 for c in self.cells[p[0]].values():
                     if c != geenChecked[0]:
@@ -125,10 +195,27 @@ class BasisPakketWidget(MonitoringItemWidget):
                         c.setEnabled(True)
 
     def setGeenMtrglEnabled(self, enabled):
+        """Enable or disable 'geen maatregelen'.
+
+        Parameters
+        ----------
+        enabled : boolean
+            Whether to enable (True) or disable (False) the 'geen maatregelen'
+            option.
+
+        """
         self.geenMtrglEnabled = enabled
         self._validate()
 
     def setValue(self, value):
+        """Set the value of the subwidgets based on the given feature value.
+
+        Parameters
+        ----------
+        value : str
+            List of objectNames of cells to check, separated by ';'.
+
+        """
         if value:
             ls = [i.strip() for i in value.strip().split(';')]
         else:
@@ -139,16 +226,37 @@ class BasisPakketWidget(MonitoringItemWidget):
                 self.cells[p][o].setValue('%s_%s' % (p, o) in ls)
 
     def getValue(self):
+        """Get the value of this widget, which is a list of checked cells.
+
+        Returns
+        -------
+        str
+            List of objectNames of checked subwidgets, separated by '; '.
+
+        """
         return '; '.join(
-            sorted(['voor_'+c for c in self.cells['voor'] if self.cells['voor'][c].isChecked()]) + \
-            sorted(['na_'+c for c in self.cells['na'] if self.cells['na'][c].isChecked()])
+            sorted(['voor_'+c for c in self.cells['voor']
+                    if self.cells['voor'][c].isChecked()]) +
+            sorted(['na_'+c for c in self.cells['na']
+                    if self.cells['na'][c].isChecked()])
         )
 
+
 class TeeltTechnischWidget(MonitoringItemWidget):
+    """Class for the widget for the 'teelttechnisch' set."""
+
     def __init__(self, parent):
+        """Initialisation.
+
+        Parameters
+        ----------
+        parent : QtGui.QWidget
+            Widget to use a parent widget.
+
+        """
         MonitoringItemWidget.__init__(self, parent)
 
-        self.layout = QGridLayout(self)
+        self.layout = QtGui.QGridLayout(self)
         self.setLayout(self.layout)
 
         self.options = [
@@ -168,18 +276,22 @@ class TeeltTechnischWidget(MonitoringItemWidget):
         self.disabledCells = []
 
         for i in range(len(self.options)):
-            self.layout.addWidget(QLabel(self.options[i][1]), i+1, 0)
+            self.layout.addWidget(QtGui.QLabel(self.options[i][1]), i+1, 0)
 
         for i in range(len(self.options)):
             option = self.options[i]
             cell = CheckableCell(option[0], '', self)
-            QObject.connect(cell, SIGNAL('toggled(bool)'), self._validate)
-            QObject.connect(cell, SIGNAL('toggled(bool)'), lambda x: self.valueChanged.emit())
+            QtCore.QObject.connect(cell, QtCore.SIGNAL('toggled(bool)'),
+                                   self._validate)
+            QtCore.QObject.connect(cell, QtCore.SIGNAL('toggled(bool)'),
+                                   lambda x: self.valueChanged.emit())
             self.cells[option[0]] = cell
             self.layout.addWidget(self.cells[option[0]], i+1, 1)
 
     def _validate(self, *args):
-        geenChecked = [self.cells[i] for i in self.cells if i.startswith('geen') and self.cells[i].isChecked()]
+        """Validate the values of this widget."""
+        geenChecked = [self.cells[i] for i in self.cells
+                       if i.startswith('geen') and self.cells[i].isChecked()]
         if len(geenChecked) > 0:
             for c in self.cells.values():
                 if c != geenChecked[0]:
@@ -194,6 +306,14 @@ class TeeltTechnischWidget(MonitoringItemWidget):
                     self.cells[c].setEnabled(True)
 
     def setValue(self, value):
+        """Set the value of the subwidgets based on the given feature value.
+
+        Parameters
+        ----------
+        value : str
+            List of options to check, separated by ';'.
+
+        """
         if value:
             ls = [i.strip() for i in value.strip().split(';')]
         else:
@@ -203,17 +323,45 @@ class TeeltTechnischWidget(MonitoringItemWidget):
             self.cells[p].setValue(p in ls)
 
     def getValue(self):
-        return '; '.join(sorted([c for c in self.cells if self.cells[c].isChecked()]))
+        """Get the value of this widget, which is a list of checked options.
+
+        Returns
+        -------
+        str
+            List of objectNames of checked subwidgets, separated by '; '.
+
+        """
+        return '; '.join(sorted([c for c in self.cells
+                                 if self.cells[c].isChecked()]))
 
     def setDisabledOptions(self, options):
+        """Set the options which are to be disabled.
+
+        Parameters
+        ----------
+        options : set of str
+            Set of option names to be disabled.
+
+        """
         self.disabledCells = options
         self._validate()
 
+
 class BufferStrookHellingWidget(MonitoringItemWidget):
+    """Class for the widget for the 'bufferstrook helling' set."""
+
     def __init__(self, parent):
+        """Initialisation.
+
+        Parameters
+        ----------
+        parent : QtGui.QWidget
+            Widget to use a parent widget.
+
+        """
         MonitoringItemWidget.__init__(self, parent)
 
-        self.layout = QVBoxLayout(self)
+        self.layout = QtGui.QVBoxLayout(self)
         self.setLayout(self.layout)
 
         self.options = [
@@ -224,28 +372,34 @@ class BufferStrookHellingWidget(MonitoringItemWidget):
 
         self.widgets = {}
 
-        gb = QGroupBox(self)
-        bg = QButtonGroup(self)
-        gb.setLayout(QVBoxLayout(gb))
+        gb = QtGui.QGroupBox(self)
+        bg = QtGui.QButtonGroup(self)
+        gb.setLayout(QtGui.QVBoxLayout(gb))
         self.layout.addWidget(gb)
 
         for i in self.options:
-            radio = QRadioButton(i[0], gb)
-            QObject.connect(radio, SIGNAL('toggled(bool)'), self._updateParentChild)
-            QObject.connect(radio, SIGNAL('toggled(bool)'), lambda x: self.valueChanged.emit())
+            radio = QtGui.QRadioButton(i[0], gb)
+            QtCore.QObject.connect(radio, QtCore.SIGNAL('toggled(bool)'),
+                                   self._updateParentChild)
+            QtCore.QObject.connect(radio, QtCore.SIGNAL('toggled(bool)'),
+                                   lambda x: self.valueChanged.emit())
             gb.layout().addWidget(radio)
             bg.addButton(radio)
             bgx = None
 
             if len(i[1]) > 0:
-                gbx = QGroupBox(gb)
-                bgx = QButtonGroup(gb)
-                gbx.setLayout(QVBoxLayout(gbx))
+                gbx = QtGui.QGroupBox(gb)
+                bgx = QtGui.QButtonGroup(gb)
+                gbx.setLayout(QtGui.QVBoxLayout(gbx))
                 for j in i[1]:
-                    radiox = QRadioButton(j, gbx)
+                    radiox = QtGui.QRadioButton(j, gbx)
                     radiox.setEnabled(False)
-                    QObject.connect(radiox, SIGNAL('toggled(bool)'), self._updateParentChild)
-                    QObject.connect(radiox, SIGNAL('toggled(bool)'), lambda x: self.valueChanged.emit())
+                    QtCore.QObject.connect(radiox,
+                                           QtCore.SIGNAL('toggled(bool)'),
+                                           self._updateParentChild)
+                    QtCore.QObject.connect(radiox,
+                                           QtCore.SIGNAL('toggled(bool)'),
+                                           lambda x: self.valueChanged.emit())
                     self.widgets[j] = (radiox, None, radio)
                     gbx.layout().addWidget(radiox)
                     bgx.addButton(radiox)
@@ -255,6 +409,14 @@ class BufferStrookHellingWidget(MonitoringItemWidget):
             self.widgets[i[0]] = (radio, bgx, None)
 
     def _updateParentChild(self, toggled):
+        """Update the toggled status of other widgets.
+
+        Parameters
+        ----------
+        toggled : boolean
+            The current status of the widget triggering this slot.
+
+        """
         if toggled:
             w = self.widgets[self.sender().text()]
             if w[1]:
@@ -270,13 +432,30 @@ class BufferStrookHellingWidget(MonitoringItemWidget):
                 w[1].setExclusive(True)
 
     def getValue(self):
+        """Get the value of this widget.
+
+        Returns
+        -------
+        str
+            The current value of this widget.
+
+        """
         checkedWidgets = [w[0] for w in self.widgets.values() if (
-            w[0].isChecked() and w[0].isEnabled() and w[0].text() != 'Uniform')]
+            w[0].isChecked() and w[0].isEnabled()
+            and w[0].text() != 'Uniform')]
 
         if len(checkedWidgets) == 1:
             return checkedWidgets[0].text()
 
     def setValue(self, value):
+        """Set the value of the widget to the given value.
+
+        Parameters
+        ----------
+        value : str
+            Value to check.
+
+        """
         if value:
             self.widgets[value][0].setChecked(True)
 
