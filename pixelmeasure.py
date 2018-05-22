@@ -134,6 +134,11 @@ class RasterBlockWrapper(QtCore.QObject):
         """
         valSum = 0
         valCnt = 0
+
+        noData = None
+        if self.rasterLayer.dataProvider().srcHasNoDataValue(self.band):
+            noData = self.rasterLayer.dataProvider().srcNoDataValue(self.band)
+
         for r in range(self.blockHeight):
             for c in range(self.blockWidth):
                 cellRect = QGisCore.QgsRectangle()
@@ -146,6 +151,11 @@ class RasterBlockWrapper(QtCore.QObject):
                 cellRect.setYMaximum(self.blockBbox.yMaximum() -
                                      (r*self.pixelSizeY))
                 if self._rasterCellMatchesGeometry(cellRect):
+                    value = self.block.value(r, c)
+
+                    if noData and value == noData:
+                        continue
+
                     valSum += self.block.value(r, c)
                     valCnt += 1
                     if not self.newGeometry:
@@ -395,7 +405,7 @@ class PixelMeasureAction(QtGui.QAction):
         Add a PixelisedVectorLayer to the project and start drawing.
         """
         layer = PixelisedVectorLayer(self.main, rasterLayer=self.rasterLayer,
-                                     path='Polygon?crs=epsg:31370',
+                                     path='Multipolygon?crs=epsg:31370',
                                      baseName='Pixelberekening',
                                      providerLib='memory')
         self.layer = QGisCore.QgsMapLayerRegistry.instance().addMapLayer(
