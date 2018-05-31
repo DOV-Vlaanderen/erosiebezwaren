@@ -224,14 +224,14 @@ class ParcelEditWidget(ElevatedFeatureWidget, Ui_ParcelEditWidget):
             self.efw_advies_nieuwe_kleur.setValue(self.feature.attribute(
                 'advies_nieuwe_kleur'))
             self.efw_advies_nieuwe_kleur.setMaxValue(self.feature.attribute(
-                'kleur_2017'))
+                'kleur_2018'))
             self.efw_jaarlijks_herberekenen.setEnabled(False)
             self.efw_jaarlijks_herberekenen.setValue(0)
         elif advies_aanvaarding == 0:
             self.efw_advies_nieuwe_kleur.setEnabled(
-                not self.feature.attribute('kleur_2017'))
+                not self.feature.attribute('kleur_2018'))
             self.efw_advies_nieuwe_kleur.setValue(
-                self.feature.attribute('kleur_2017'))
+                self.feature.attribute('kleur_2018'))
             self.efw_jaarlijks_herberekenen.setEnabled(True)
             if self.feature.attribute('jaarlijks_herberekenen') == None:
                 self.efw_jaarlijks_herberekenen.setValue(1)

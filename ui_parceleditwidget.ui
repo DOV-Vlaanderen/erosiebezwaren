@@ -81,8 +81,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>723</width>
-             <height>662</height>
+             <width>742</width>
+             <height>623</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -423,8 +423,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>324</width>
-             <height>615</height>
+             <width>330</width>
+             <height>623</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -489,14 +489,14 @@ font-weight: bold;
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lb_perceelsnr_va2017">
+             <widget class="QLabel" name="lb_perceelsnr_va_2018">
               <property name="text">
-               <string>Perceelsnummer VA2017</string>
+               <string>Perceelsnummer VA2018</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="ValueLabel" name="efw2_perceelsnr_va_2017">
+             <widget class="ValueLabel" name="efw2_perceelsnr_va_2018">
               <property name="styleSheet">
                <string notr="true">* { font-style: italic; }</string>
               </property>
@@ -507,7 +507,7 @@ font-weight: bold;
                <number>20</number>
               </property>
               <property name="buddy">
-               <cstring>lb_perceelsnr_va2017</cstring>
+               <cstring>lb_perceelsnr_va_2018</cstring>
               </property>
              </widget>
             </item>
@@ -549,8 +549,8 @@ font-weight: bold;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>271</width>
-                     <height>690</height>
+                     <width>288</width>
+                     <height>439</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -566,6 +566,25 @@ font-weight: bold;
                       <property name="spacing">
                        <number>0</number>
                       </property>
+                      <item>
+                       <widget class="SensitivityColorLabel" name="efw_kleur_2018">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+                        </property>
+                        <property name="text">
+                         <string>2018</string>
+                        </property>
+                        <property name="margin">
+                         <number>4</number>
+                        </property>
+                       </widget>
+                      </item>
                       <item>
                        <widget class="SensitivityColorLabel" name="efw_kleur_2017">
                         <property name="sizePolicy">
@@ -623,25 +642,6 @@ font-weight: bold;
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="SensitivityColorLabel" name="efw_kleur_2014">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
-                        </property>
-                        <property name="text">
-                         <string>2014</string>
-                        </property>
-                        <property name="margin">
-                         <number>4</number>
-                        </property>
-                       </widget>
-                      </item>
                      </layout>
                     </item>
                     <item>
@@ -653,6 +653,25 @@ font-weight: bold;
                     </item>
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_9">
+                      <item>
+                       <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2018">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+                        </property>
+                        <property name="text">
+                         <string>2018</string>
+                        </property>
+                        <property name="margin">
+                         <number>4</number>
+                        </property>
+                       </widget>
+                      </item>
                       <item>
                        <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2017">
                         <property name="sizePolicy">
@@ -710,25 +729,6 @@ font-weight: bold;
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2014">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
-                        </property>
-                        <property name="text">
-                         <string>2014</string>
-                        </property>
-                        <property name="margin">
-                         <number>4</number>
-                        </property>
-                       </widget>
-                      </item>
                      </layout>
                     </item>
                     <item>
@@ -739,7 +739,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueLabel" name="efw_watererosie_0_2017">
+                     <widget class="ValueLabel" name="efw_watererosie_0_2018">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -759,47 +759,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueLabel" name="efw_watererosie_30_2017">
-                      <property name="styleSheet">
-                       <string notr="true">* { font-style: italic;}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="indent">
-                       <number>20</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="lb_bewerkingserosie">
-                      <property name="text">
-                       <string>Bewerkingserosie</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="ValueLabel" name="efw_bewerkingserosie_2017">
-                      <property name="styleSheet">
-                       <string notr="true">* { font-style: italic;}</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="indent">
-                       <number>20</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="lb_totale_erosie">
-                      <property name="text">
-                       <string>Totale erosie</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="ValueLabel" name="efw_totale_erosie_2017">
+                     <widget class="ValueLabel" name="efw_watererosie_30_2018">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -981,8 +941,8 @@ font-weight: bold;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>137</width>
-                     <height>318</height>
+                     <width>288</width>
+                     <height>439</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -1203,8 +1163,8 @@ font-weight: bold;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>168</width>
-                     <height>526</height>
+                     <width>288</width>
+                     <height>439</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1404,7 +1364,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2016_met_2017">
+                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2017_met_2018">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -1427,7 +1387,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2017_met_2016">
+                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2018_met_2017">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -1520,6 +1480,16 @@ font-weight: bold;
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ValueBooleanButton</class>
+   <extends>QPushButton</extends>
+   <header>Erosiebezwaren/widgets/valueinput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ValueTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>Erosiebezwaren/widgets/valueinput.h</header>
+  </customwidget>
+  <customwidget>
    <class>SensitivityButtonBox</class>
    <extends>QWidget</extends>
    <header>Erosiebezwaren/widgets/sensitivitybuttonbox.h</header>
@@ -1538,16 +1508,6 @@ font-weight: bold;
   <customwidget>
    <class>ValueMappedComboBox</class>
    <extends>QComboBox</extends>
-   <header>Erosiebezwaren/widgets/valueinput.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ValueBooleanButton</class>
-   <extends>QPushButton</extends>
-   <header>Erosiebezwaren/widgets/valueinput.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ValueTextEdit</class>
-   <extends>QPlainTextEdit</extends>
    <header>Erosiebezwaren/widgets/valueinput.h</header>
   </customwidget>
   <customwidget>
