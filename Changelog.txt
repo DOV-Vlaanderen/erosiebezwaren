@@ -1,3 +1,10 @@
+erosiebezwaren (4.0.0)
+
+  * Aanpassing datamodel voor campagne 2018.
+  * Cellen met 'nodata' worden niet langer meegeteld bij pixelberekening.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Thu, 31 May 2018 12:38:02 +0200
+
 erosiebezwaren (3.0.0)
 
   * Aanpassing datamodel voor campagne 2017.
