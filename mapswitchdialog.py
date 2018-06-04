@@ -59,7 +59,9 @@ class MapSwitchDialog(QtGui.QDialog, Ui_MapSwitchDialog):
                               '2015 potentiele bodemerosie', 'watererosie30',
                               'dem_kul', 'dem_agiv', 'Overzichtskaart',
                               'percelenkaart_table', 'Topokaart', 'Bodemkaart',
-                              'Erosiebestrijdingswerken'])
+                              'Erosiebestrijdingswerken',
+                              'grasbuffers_efficientie_2017',
+                              'grasbuffers_percelen_upstream_efficientie_2017'])
         self.activeDem = None
 
         QtCore.QObject.connect(self.btn_routekaart,
@@ -98,6 +100,9 @@ class MapSwitchDialog(QtGui.QDialog, Ui_MapSwitchDialog):
         QtCore.QObject.connect(self.btn_erosiebestrijding,
                                QtCore.SIGNAL('clicked(bool)'),
                                self.toMapErosiebestrijding)
+        QtCore.QObject.connect(self.btn_grasbuffers,
+                               QtCore.SIGNAL('clicked(bool)'),
+                               self.toMapGrasbuffers)
 
         self.populate()
 
@@ -294,6 +299,16 @@ class MapSwitchDialog(QtGui.QDialog, Ui_MapSwitchDialog):
                 ['Erosiebestrijdingswerken']),
             'autoDisable': True,
             'label': 'Erosiebestrijdingswerken'
+        })
+
+    def toMapGrasbuffers(self):
+        """Switch to the map view 'Grasbuffers'."""
+        self.toMapView({
+            'enabledLayers': self.visibleBase.union(
+                ['grasbuffers_efficientie_2017',
+                 'grasbuffers_percelen_upstream_efficientie_2017']),
+            'autoDisable': True,
+            'label': 'Grasbuffers'
         })
 
     def updateRasterColors(self):
