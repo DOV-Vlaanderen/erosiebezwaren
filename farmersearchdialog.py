@@ -231,18 +231,19 @@ class FarmerSearchDialog(QtGui.QDialog, Ui_FarmerSearchDialog):
         self.onlyObjections = self.withObjection[
             self.cmb_searchType.currentText()]
         if self.reNumber.match(searchText):
-            stmt = ("SELECT producentnr_zo, naam, straat_met_nr, postcode, " +
-                    "gemeente FROM fts_landbouwers WHERE bezwaren = %i AND " +
-                    "producentnr_zo like '%%%s%%' LIMIT 500") % (
-                    self.onlyObjections, self._getRawProducentnr(searchText))
+            stmt = ["SELECT producentnr_zo, naam, straat_met_nr, postcode, " +
+                    "gemeente FROM fts_landbouwers WHERE bezwaren = ? AND " +
+                    "producentnr_zo like ? LIMIT 500",
+                    [self.onlyObjections,
+                     '%%%s%%' % self._getRawProducentnr(searchText)]]
         else:
-            stmt = ("SELECT producentnr_zo, naam, straat_met_nr, postcode, " +
-                    "gemeente FROM fts_landbouwers WHERE bezwaren = %i AND " +
-                    "naam MATCH '%s' LIMIT 500") % (self.onlyObjections,
-                                                    searchText)
+            stmt = ["SELECT producentnr_zo, naam, straat_met_nr, postcode, " +
+                    "gemeente FROM fts_landbouwers WHERE bezwaren = ? AND " +
+                    "naam MATCH ? LIMIT 500",
+                    [self.onlyObjections, searchText]]
 
         s = SpatialiteIterator(self.layer)
-        self.farmerResultWidget.addFromQuery(s.rawQuery(stmt))
+        self.farmerResultWidget.addFromQuery(s.rawQuery(stmt[0], stmt[1]))
 
         if len(self.farmerResultWidget.resultSet) < 1:
             self.farmerResultWidget.setNoResult()

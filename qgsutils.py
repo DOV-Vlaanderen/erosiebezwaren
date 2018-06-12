@@ -42,13 +42,15 @@ class SpatialiteIterator(object):
         self.layer = layer
         self.ds = QGisCore.QgsDataSourceURI(self.layer.source())
 
-    def rawQuery(self, sql):
+    def rawQuery(self, sql, params=None):
         """Execute a SQL query and return the raw results.
 
         Parameters
         ----------
         sql : str
             Query to execute.
+        params : list of str, optional
+            Parameter values to use inside the query.
 
         Returns
         -------
@@ -57,7 +59,12 @@ class SpatialiteIterator(object):
 
         """
         conn = sl.connect(self.ds.database())
-        cursor = conn.execute(sql)
+
+        if params:
+            cursor = conn.execute(sql, params)
+        else:
+            cursor = conn.execute(sql)
+
         r = cursor.fetchall()
         cursor.close()
         conn.close()
