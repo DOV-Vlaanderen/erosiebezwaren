@@ -1,3 +1,9 @@
+erosiebezwaren (4.1.1)
+
+  * Fix bug bij het zoeken naar landbouwers met aanhalingsteken in de naam.
+
+ -- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Thu, 14 Jun 2018 09:21:06 +0200
+
 erosiebezwaren (4.1.0)
 
   * 'Grasbuffers' kaarten toegevoegd.
