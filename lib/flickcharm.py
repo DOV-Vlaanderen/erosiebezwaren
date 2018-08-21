@@ -61,15 +61,15 @@ class FlickCharm(QtCore.QObject):
     def activateOn(self, widget):
         if isinstance(widget, QtWebKit.QWebView):
             frame = widget.page().mainFrame()
-            frame.setScrollBarPolicy(Qt.Vertical, Qt.ScrollBarAlwaysOff)
-            frame.setScrollBarPolicy(Qt.Horizontal, Qt.ScrollBarAlwaysOff)
+            frame.setScrollBarPolicy(Qt.Qt.Vertical, Qt.Qt.ScrollBarAlwaysOff)
+            frame.setScrollBarPolicy(Qt.Qt.Horizontal, Qt.Qt.ScrollBarAlwaysOff)
             widget.installEventFilter(self)
             self.d.flickData[widget] = FlickData()
             self.d.flickData[widget].widget = widget
             self.d.flickData[widget].state = FlickData.Steady
         else:
-            widget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-            widget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+            widget.setHorizontalScrollBarPolicy(Qt.Qt.ScrollBarAlwaysOff)
+            widget.setVerticalScrollBarPolicy(Qt.Qt.ScrollBarAlwaysOff)
             viewport = widget.viewport()
             viewport.installEventFilter(self)
             widget.installEventFilter(self)
@@ -100,7 +100,7 @@ class FlickCharm(QtCore.QObject):
            eventType != QtCore.QEvent.MouseMove:
             return False
 
-        if event.modifiers() != Qt.NoModifier:
+        if event.modifiers() != Qt.Qt.NoModifier:
             return False
 
         if not self.d.flickData.has_key(object):
@@ -116,7 +116,7 @@ class FlickCharm(QtCore.QObject):
 
         if data.state == FlickData.Steady:
             if eventType == QtCore.QEvent.MouseButtonPress:
-                if event.buttons() == Qt.LeftButton:
+                if event.buttons() == Qt.Qt.LeftButton:
                     consumed = True
                     data.state = FlickData.Pressed
                     data.pressPos = copy.copy(event.pos())
@@ -126,10 +126,10 @@ class FlickCharm(QtCore.QObject):
             if eventType == QtCore.QEvent.MouseButtonRelease:
                 consumed = True
                 data.state = FlickData.Steady
-                event1 = QtCore.QMouseEvent(QtCore.QEvent.MouseButtonPress,
-                                            data.pressPos, Qt.LeftButton,
-                                            Qt.LeftButton, Qt.NoModifier)
-                event2 = QtCore.QMouseEvent(event)
+                event1 = Qt.QMouseEvent(QtCore.QEvent.MouseButtonPress,
+                                        data.pressPos, Qt.Qt.LeftButton,
+                                        Qt.Qt.LeftButton, Qt.Qt.NoModifier)
+                event2 = Qt.QMouseEvent(event)
                 data.ignored.append(event1)
                 data.ignored.append(event2)
                 QtGui.QApplication.postEvent(object, event1)
