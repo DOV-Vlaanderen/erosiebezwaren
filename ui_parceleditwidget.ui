@@ -489,14 +489,14 @@ font-weight: bold;
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lb_perceelsnr_va_2018">
+             <widget class="QLabel" name="lb_perceelsnr_va_2019">
               <property name="text">
-               <string>Perceelsnummer VA2018</string>
+               <string>Perceelsnummer VA2019</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="ValueLabel" name="efw2_perceelsnr_va_2018">
+             <widget class="ValueLabel" name="efw2_perceelsnr_va_2019">
               <property name="styleSheet">
                <string notr="true">* { font-style: italic; }</string>
               </property>
@@ -507,7 +507,7 @@ font-weight: bold;
                <number>20</number>
               </property>
               <property name="buddy">
-               <cstring>lb_perceelsnr_va_2018</cstring>
+               <cstring>lb_perceelsnr_va_2019</cstring>
               </property>
              </widget>
             </item>
@@ -567,6 +567,25 @@ font-weight: bold;
                        <number>0</number>
                       </property>
                       <item>
+                       <widget class="SensitivityColorLabel" name="efw_kleur_2019">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+                        </property>
+                        <property name="text">
+                         <string>2019</string>
+                        </property>
+                        <property name="margin">
+                         <number>4</number>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
                        <widget class="SensitivityColorLabel" name="efw_kleur_2018">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -623,25 +642,6 @@ font-weight: bold;
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="SensitivityColorLabel" name="efw_kleur_2015">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
-                        </property>
-                        <property name="text">
-                         <string>2015</string>
-                        </property>
-                        <property name="margin">
-                         <number>4</number>
-                        </property>
-                       </widget>
-                      </item>
                      </layout>
                     </item>
                     <item>
@@ -653,6 +653,25 @@ font-weight: bold;
                     </item>
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_9">
+                      <item>
+                       <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2019">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
+                        </property>
+                        <property name="text">
+                         <string>2019</string>
+                        </property>
+                        <property name="margin">
+                         <number>4</number>
+                        </property>
+                       </widget>
+                      </item>
                       <item>
                        <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2018">
                         <property name="sizePolicy">
@@ -710,25 +729,6 @@ font-weight: bold;
                         </property>
                        </widget>
                       </item>
-                      <item>
-                       <widget class="SensitivityColorLabel" name="efw_erosieklasse_lv_2015">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">* { background-color: #C6C6C6; color: black; border-radius: 4px;}</string>
-                        </property>
-                        <property name="text">
-                         <string>2015</string>
-                        </property>
-                        <property name="margin">
-                         <number>4</number>
-                        </property>
-                       </widget>
-                      </item>
                      </layout>
                     </item>
                     <item>
@@ -739,7 +739,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueLabel" name="efw_watererosie_0_2018">
+                     <widget class="ValueLabel" name="efw_watererosie_0_2019">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -759,7 +759,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="ValueLabel" name="efw_watererosie_30_2018">
+                     <widget class="ValueLabel" name="efw_watererosie_30_2019">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -1364,7 +1364,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2017_met_2018">
+                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2018_met_2019">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>
@@ -1387,7 +1387,7 @@ font-weight: bold;
                      </widget>
                     </item>
                     <item>
-                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2018_met_2017">
+                     <widget class="SplitMergedValueLabel" name="efw_overlap_perceel_2019_met_2018">
                       <property name="styleSheet">
                        <string notr="true">* { font-style: italic;}</string>
                       </property>

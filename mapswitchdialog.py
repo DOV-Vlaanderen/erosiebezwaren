@@ -53,10 +53,10 @@ class MapSwitchDialog(QtGui.QDialog, Ui_MapSwitchDialog):
         self.visibleBase = set(['Overzichtskaart', 'percelenkaart_table',
                                 'Topokaart'])
         self.allLayers = set(['Orthofoto', 'Afstromingskaart',
+                              '2019 potentiele bodemerosie',
                               '2018 potentiele bodemerosie',
                               '2017 potentiele bodemerosie',
-                              '2016 potentiele bodemerosie',
-                              '2015 potentiele bodemerosie', 'watererosie30',
+                              '2016 potentiele bodemerosie', 'watererosie30',
                               'dem_kul', 'dem_agiv', 'Overzichtskaart',
                               'percelenkaart_table', 'Topokaart', 'Bodemkaart',
                               'Erosiebestrijdingswerken',
@@ -70,9 +70,6 @@ class MapSwitchDialog(QtGui.QDialog, Ui_MapSwitchDialog):
         QtCore.QObject.connect(self.btn_orthofoto,
                                QtCore.SIGNAL('clicked(bool)'),
                                self.toMapOrthofoto)
-        QtCore.QObject.connect(self.btn_erosie2015,
-                               QtCore.SIGNAL('clicked(bool)'),
-                               self.toMapErosie2015)
         QtCore.QObject.connect(self.btn_erosie2016,
                                QtCore.SIGNAL('clicked(bool)'),
                                self.toMapErosie2016)
@@ -82,6 +79,9 @@ class MapSwitchDialog(QtGui.QDialog, Ui_MapSwitchDialog):
         QtCore.QObject.connect(self.btn_erosie2018,
                                QtCore.SIGNAL('clicked(bool)'),
                                self.toMapErosie2018)
+        QtCore.QObject.connect(self.btn_erosie2019,
+                               QtCore.SIGNAL('clicked(bool)'),
+                               self.toMapErosie2019)
         QtCore.QObject.connect(self.btn_watererosie_30,
                                QtCore.SIGNAL('clicked(bool)'),
                                self.toMapWatererosie30)
@@ -198,15 +198,6 @@ class MapSwitchDialog(QtGui.QDialog, Ui_MapSwitchDialog):
             'label': 'Orthofoto'
         })
 
-    def toMapErosie2015(self):
-        """Switch to the map view 'Erosiekaart 2015'."""
-        self.toMapView({
-            'enabledLayers': self.visibleBase.union(
-                ['2015 potentiele bodemerosie']),
-            'autoDisable': True,
-            'label': 'Erosiekaart 2015'
-        })
-
     def toMapErosie2016(self):
         """Switch to the map view 'Erosiekaart 2016'."""
         self.toMapView({
@@ -232,6 +223,15 @@ class MapSwitchDialog(QtGui.QDialog, Ui_MapSwitchDialog):
                 ['2018 potentiele bodemerosie']),
             'autoDisable': True,
             'label': 'Erosiekaart 2018'
+        })
+
+    def toMapErosie2019(self):
+        """Switch to the map view 'Erosiekaart 2019'."""
+        self.toMapView({
+            'enabledLayers': self.visibleBase.union(
+                ['2019 potentiele bodemerosie']),
+            'autoDisable': True,
+            'label': 'Erosiekaart 2019'
         })
 
     def toMapWatererosie30(self):

@@ -75,7 +75,7 @@ class ParcelListWidget(QtGui.QWidget):
 
         parcelList = s.queryExpression(stmt)
         for p in sorted(parcelList,
-                        key=lambda x: int(x.attribute('perceelsnr_va_2018'))):
+                        key=lambda x: int(x.attribute('perceelsnr_va_2019'))):
             p.layer = self.layer
             self._addParcel(p)
 
@@ -115,7 +115,7 @@ class ParcelListWidget(QtGui.QWidget):
         self.parcelList.append(parcel)
         self.main.selectionManagerPolygons.select(parcel, mode=1)
 
-        btn = QtGui.QPushButton(str(parcel.attribute('perceelsnr_va_2018')),
+        btn = QtGui.QPushButton(str(parcel.attribute('perceelsnr_va_2019')),
                                 self)
         btn.setSizePolicy(self.horMaxSizePolicy)
         QtCore.QObject.connect(btn, QtCore.SIGNAL('clicked(bool)'),
@@ -131,8 +131,8 @@ class ParcelListWidget(QtGui.QWidget):
 
         lb2 = valuelabel.SensitivityColorLabel(self)
         lb2.setSizePolicy(self.horMaxSizePolicy)
-        lb2.setText('2018')
-        lb2.setText(parcel.attribute('kleur_2018'))
+        lb2.setText('2019')
+        lb2.setText(parcel.attribute('kleur_2019'))
         self.layout.addWidget(lb2, row, 2)
 
 

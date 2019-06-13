@@ -76,7 +76,7 @@ class PreviousObjectionsWidget(QtGui.QWidget):
         if not self.previousObjectionsLayer:
             return
 
-        expr = '"perceel_2018" like \'%%%s%%\'' % (self.uniek_id)
+        expr = '"perceel_2019" like \'%%%s%%\'' % (self.uniek_id)
         objectionList = []
         for i in self.previousObjectionsLayer.getFeatures(
                 QGisCore.QgsFeatureRequest(QGisCore.QgsExpression(expr))):
@@ -84,8 +84,8 @@ class PreviousObjectionsWidget(QtGui.QWidget):
 
         filteredObjectionList = []
         for i in objectionList:
-            perceel_2018 = i.attribute('perceel_2018').split(',')
-            if self.uniek_id in perceel_2018:
+            perceel_2019 = i.attribute('perceel_2019').split(',')
+            if self.uniek_id in perceel_2019:
                 filteredObjectionList.append(i)
 
         for i in sorted(filteredObjectionList,
