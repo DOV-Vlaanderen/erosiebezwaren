@@ -201,7 +201,7 @@ font-weight: bold;
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="efw2_perceelsnr_va_2018">
+    <widget class="ValueLabel" name="efw2_perceelsnr_va_2018">
      <property name="styleSheet">
       <string notr="true">* { font-style: italic; }</string>
      </property>
@@ -224,7 +224,7 @@ font-weight: bold;
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="efw2_perceelsnr_va_2019">
+    <widget class="ValueLabel" name="efw2_perceelsnr_va_2019">
      <property name="styleSheet">
       <string notr="true">* { font-style: italic; }</string>
      </property>
