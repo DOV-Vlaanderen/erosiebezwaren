@@ -1,3 +1,9 @@
+erosiebezwaren (5.0.0)
+
+  * Aanpassing datamodel voor campagne 2019.
+  
+-- Roel Huybrechts <roel.huybrechts@realdolmen.com>  Fri, 14 Jun 2019 11:17:49 +0200
+
 erosiebezwaren (4.1.1)
 
   * Fix bug bij het zoeken naar landbouwers met aanhalingsteken in de naam.
